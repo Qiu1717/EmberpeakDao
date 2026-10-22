@@ -1,8 +1,8 @@
 # 《烬山问道》技术设计
 
-版本：0.1。日期：2026-10-22。状态：阶段 0 设计，尚未实现。
+版本：0.2。日期：2026-10-22。状态：阶段 0 正式设计，所有模块和接口均尚未实现；核心规则取自主方案，待决项不作为实现授权。
 
-唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](../GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
+唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
 ## 1. 范围与技术栈
 
@@ -43,6 +43,7 @@ Windows 单人离线，Godot 4.7.2 stable、GDScript、Git、gl_compatibility。
 | ShrineService | `record_resources(shrine_id)`：记录、补给与突破交互 | 提交祭坛保存事务 |
 | SaveManager | `commit_snapshot(reason)`；`load_snapshot()` | 成功或明确失败；负责统一提交边界 |
 | MapGenerator／EventSystem | 房间图与事件数据解释 | 连接图、事件结果，不直接改内部档案 |
+| NPCManager | 管理对话入口、任务状态和永久标记，不复制事件奖励规则 | 对话／任务事件，经奖励与存档边界提交 |
 | UI／设置 | 显示状态、重绑输入、音量、暂停 | 用户请求，不独立计算成长 |
 
 类型与具体签名随所属阶段实施计划确定；这里的命名是接口方向，不能据此创建空函数。仅共享跨场景且确有需要的服务成为 Autoload，不为每个系统生成单例。
@@ -100,3 +101,27 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 - 阶段 6 前：临时强化何时触发，禁止擅自保留第二条经验条。
 - 阶段 7：保存失败时的交互提示和恢复流程，用故障测试验证。
 - 阶段 10：高阶试炼和化神圆满封顶数值。
+
+## 9. 数据驱动契约
+
+以下为 Resource 设计，不在阶段 0 创建资源类、.tres 或加载器。稳定 ID 用于引用与存档，display_name 仅用于中文展示，不能用显示名作保存键。不存在的 ID、缺失必要字段、非法类型及不合理数值应在加载配置时明确报告，不能静默生成假内容。
+
+| 数据 | 主方案字段与约束 | 目录 |
+|---|---|---|
+| 武器 | weapon_id、display_name、weapon_tier、required_realm、base_damage、attack_speed、attack_range、qi_cost、special_effect_id、animation_set、icon、drop_weight；品阶与稀有度独立 | resources/weapons/ |
+| 敌人 | enemy_id、display_name、max_hp、contact_damage、attack_profiles、movement_speed、telegraph_duration、recovery_duration、armor、loot_table、region_id | resources/enemies/、resources/bosses/ |
+| 境界 | realm_id、小境界顺序、各阶段灵气门槛、属性增量、材料 ID、装备权限与能力解锁；数值冻结前不能填假正式值 | resources/realms/ |
+| 装备与词条 | 稳定 ID、品阶、稀有度、境界要求、属性修正、词条上限与互斥；装卸可逆且不重复生效 | resources/equipment/、resources/affixes/ |
+| 技能与攻击 | 攻击开始／生效／结束窗口、范围、伤害、击退、硬直、打断和破甲参数；技能消耗战斗真气 | resources/skills/；武器和敌人引用攻击配置 |
+| 事件 | 触发条件、至少两个选择、立即效果、奖励或代价、后续标记、保存规则 | resources/events/ |
+| 区域与房间 | 模板 ID、入口出口、碰撞、敌人和交互点、连接限制、关键节点 | resources/stages/ 与 scenes/rooms/ |
+
+伤害遵循主方案第 9.3 节：攻击基础伤害 × 境界倍率 × 技能倍率 × 暴击倍率 × 防御系数；防御系数为 100 / (100 + 目标防御值)。所有武器共用结算模块，不能各自改变防御算法。
+
+新数据字段在所属阶段先更新规格与测试，再实现；资源类型变化与存档版本变化分别管理。旧版测试档仅作为迁移夹具，不声称已存在用户历史存档。
+
+## 10. 当前目录一致性与未决问题
+
+当前只有 docs/ 文档、原始主角／怪物／NPC 参考图及 assets/ 下的未通过试验；没有 project.godot、scenes/、scripts/、resources/、tests/。这些是阶段 2 起按需建立的目标目录，不能将目录缺失当作已实现系统故障，也不能为阶段 0 建空壳来补齐。
+
+原始中文素材目录完整保留，不自动移动或重命名。文件名与主方案名称差异、主角服饰取舍、强化触发等问题统一记录在 [阶段 0 报告](PHASE_0_PLAN.md)，不由技术文档擅自裁定。
