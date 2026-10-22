@@ -1,0 +1,62 @@
+param(
+    [switch]$Windowed,
+    [string]$Godot = 'E:\Godot\bin\godot.bat'
+)
+
+$ErrorActionPreference = 'Stop'
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$logRoot = Join-Path $projectRoot 'builds\phase1'
+New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
+
+function Invoke-GodotCheck {
+    param([string]$Name, [string[]]$Arguments, [string]$Expected = '')
+    $logPath = Join-Path $logRoot ($Name + '.log')
+    & $Godot @Arguments *> $logPath
+    $exitCode = $LASTEXITCODE
+    $output = Get-Content -LiteralPath $logPath -Raw
+    if ($exitCode -ne 0 -or $output -match 'SCRIPT ERROR|Parse Error|ERROR:' -or
+        ($Expected -and $output -notmatch [regex]::Escape($Expected))) {
+        throw "$Name 失败：退出码 $exitCode`n$output"
+    }
+    Write-Host "通过：$Name"
+}
+
+$location = & $Godot --headless --path $projectRoot --script res://tests/test_settings_restart.gd 2>&1 | Out-String
+if ($LASTEXITCODE -ne 0 -or $location -match 'SCRIPT ERROR|Parse Error|ERROR:') { throw $location }
+$match = [regex]::Match($location, 'SETTINGS_FILE=([^\r\n]+)')
+if (-not $match.Success) { throw '无法定位用户设置文件。' }
+$preferencesPath = $match.Groups[1].Value.Trim()
+$preferencesExisted = Test-Path -LiteralPath $preferencesPath
+$originalBytes = if ($preferencesExisted) { [IO.File]::ReadAllBytes($preferencesPath) } else { $null }
+
+try {
+    Invoke-GodotCheck 'import-final' @('--headless', '--path', $projectRoot, '--import')
+    $scripts = @(Get-ChildItem -LiteralPath (Join-Path $projectRoot 'scripts'), $PSScriptRoot -Recurse -Filter '*.gd')
+    foreach ($script in $scripts) {
+        $relative = [IO.Path]::GetRelativePath($projectRoot, $script.FullName).Replace('\', '/')
+        Invoke-GodotCheck ('parse-' + $script.BaseName) @('--headless', '--path', $projectRoot, '--check-only', '--script', "res://$relative")
+    }
+    Invoke-GodotCheck 'startup-headless' @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '120')
+    $flow = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_framework.gd')
+    Invoke-GodotCheck 'framework-headless' $flow 'FRAMEWORK_CHECKS_PASSED=24'
+    Invoke-GodotCheck 'quit-from-pause' ($flow + @('--', '--quit-from-pause')) 'FRAMEWORK_CHECKS_PASSED=24'
+    $settingsArgs = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_settings.gd')
+    Invoke-GodotCheck 'settings-headless' $settingsArgs 'SETTINGS_CHECKS_PASSED=6'
+    $restart = @('--headless', '--path', $projectRoot, '--script', 'res://tests/test_settings_restart.gd')
+    Invoke-GodotCheck 'restart-write' ($restart + @('--', '--write')) 'RESTART_WRITE_OK'
+    Invoke-GodotCheck 'restart-read' ($restart + @('--', '--read')) 'RESTART_READ_OK'
+    if ($Windowed) {
+        $screenshots = Join-Path $logRoot 'screenshots'
+        $windowFlow = $flow | Where-Object { $_ -ne '--headless' }
+        Invoke-GodotCheck 'framework-window' ($windowFlow + @('--', "--screenshots=$screenshots")) 'FRAMEWORK_CHECKS_PASSED=24'
+        Invoke-GodotCheck 'settings-window' ($settingsArgs | Where-Object { $_ -ne '--headless' }) 'SETTINGS_CHECKS_PASSED=10'
+    }
+    Write-Host "全部框架检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
+}
+finally {
+    if ($preferencesExisted) {
+        [IO.File]::WriteAllBytes($preferencesPath, $originalBytes)
+    } elseif (Test-Path -LiteralPath $preferencesPath) {
+        Remove-Item -LiteralPath $preferencesPath
+    }
+}
