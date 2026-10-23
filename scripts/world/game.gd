@@ -55,7 +55,7 @@ func _ready() -> void:
 		button.focus_mode = Control.FOCUS_NONE
 	var space := Control.new()
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	Ui.label(layout, "临时几何战斗角色 · 概念图不是动画" + ("｜木桩无敌人 AI" if training_mode else "｜固定六房间测试路线"), 16)
+	Ui.label(layout, "主角静态侧视图 · 动作待完善" + ("｜木桩无敌人 AI" if training_mode else "｜敌人仍为临时几何 · 固定六房间路线"), 16)
 	Ui.label(layout, "移动／跳跃／攻击／闪避使用设置中的按键；暂停键打开菜单。", 16)
 	route_status = Ui.label(layout, "", 16)
 	route_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

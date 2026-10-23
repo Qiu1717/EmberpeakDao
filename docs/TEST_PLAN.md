@@ -143,3 +143,7 @@ test_art_room.gd已加入run_checks.ps1：24项专项在无窗口和实际窗口
 截图由实际视口生成，builds/art_room/含idle、run、telegraph、attack、recovery、platform、hurt、death及重开后生产100生命的playable图。测试实例生命10000只用于观察AI，不改配置。实际完整结果、资源检查与已知视觉问题见SHAN_XIAO_PLAYABLE_REPORT.md。
 
 ART-01仅完成该候选的技术播放／碰撞窗口和实际尺寸检查；用户对步态、饰物、镜像、边缘和持续手感的满意度尚未验收。其他角色、正式环境、长时性能与独立发布仍未验证，不能全表勾选通过。
+
+## 12. 主角静态美术接入
+
+test_player_art.gd加入现有回归：检查训练／主路线／山魈房实际纹理、56世界像素比例、24×56碰撞与100生命、左右根锚点、真实受击颜色、暂停、死亡状态颜色、重开恢复。专项结果及完整回归另记于PLAYER_ART_INTEGRATION.md；截图保存builds/player_art/。不把这些检查当成主角完整动画、最终服饰、独立发布或人工手感验收。

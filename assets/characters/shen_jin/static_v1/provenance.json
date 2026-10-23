@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in imagegen",
+  "reference": "主角形象/主角.png",
+  "reference_sha256": "a4f796ec2d2530ca5399e2cfadd4cb43dbb4c98bfe0e8c6587aaf16aedc9dd97",
+  "output": "side_idle.png",
+  "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-bb6b8a52-a196-4a83-bea4-d090f7e5c7d4.png",
+  "sha256": "452a9a10e1d4f276c6dbd59e93b9f24846f1f6d766befc1e0ccd860fcb3ff476",
+  "byte_identical_to_tool_output": true,
+  "imagegen_requests": 2,
+  "completed_selected_outputs": 1,
+  "cleanup_status": "长时间未返回，取消等待；未当成完成",
+  "prompt": "generation_prompt.txt",
+  "unfinished_cleanup_prompt": "cleanup_prompt.txt",
+  "status": "静态接入候选，无完整动作动画",
+  "source_canvas": [
+    1254,
+    1254
+  ],
+  "source_pivot": [
+    590,
+    1244
+  ],
+  "world_visible_height": 56,
+  "source_visible_height": 1229,
+  "note": "未修改原图或旧失败图集；Python仅检查alpha／哈希和复制文件，不修图。"
+}

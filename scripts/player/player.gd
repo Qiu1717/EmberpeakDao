@@ -24,6 +24,7 @@ func _ready() -> void:
 	stats = stats.duplicate(true)
 	health = stats.max_health
 	rng.seed = 20261023
+	$Artwork.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	health_changed.emit(health, stats.max_health)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -150,19 +151,19 @@ func receive_hit(amount: float, impulse: Vector2) -> bool:
 		died.emit()
 	return true
 
-func _draw() -> void:
-	var color := Color("d7e2e2")
+func _process(_delta: float) -> void:
+	# shortcut: 单张侧视工作图，仅翻转和状态着色；后续完整动作另行制作。
+	var color := Color.WHITE
 	if state == State.DODGE:
 		color = Color("83dce8")
 	elif state == State.HURT:
 		color = Color("9e302a")
 	elif state == State.DEAD:
 		color = Color("596a6f")
-	draw_colored_polygon(PackedVector2Array([Vector2(-12, -44), Vector2(12, -44), Vector2(20, -5), Vector2(-20, -5)]), color)
-	draw_circle(Vector2(0, -51), 9, Color("315461"))
-	draw_line(Vector2(0, -3), Vector2(-9, 0), color, 4)
-	draw_line(Vector2(0, -3), Vector2(9, 0), color, 4)
-	draw_line(Vector2(facing * 4, -30), Vector2(facing * 34, -20), Color("b89a60"), 3)
+	$Artwork.modulate = color
+	$Artwork.scale.x = -facing * absf($Artwork.scale.y)
+
+func _draw() -> void:
 	if state == State.ATTACK:
 		var active: bool = action_time >= stats.attack_windup and action_time < stats.attack_windup + stats.attack_active
 		if active:

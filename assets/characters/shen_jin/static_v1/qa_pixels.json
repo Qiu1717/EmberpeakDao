@@ -1,0 +1,18 @@
+{
+  "size": [
+    1254,
+    1254
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "visible_bounds_alpha_16": [
+    423,
+    15,
+    1038,
+    1244
+  ],
+  "sha256": "452a9a10e1d4f276c6dbd59e93b9f24846f1f6d766befc1e0ccd860fcb3ff476"
+}

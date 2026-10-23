@@ -165,3 +165,7 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 用户批准先做单房美术验证。App.start_art_room()切换独立场景，enter_playing()使F6直接运行也能暂停；主菜单增加独立入口。房间复用CombatRoom、Player、Enemy、原暂停菜单与重新加载流程。Enemy.show_placeholder_body默认true，仅该房实例关闭几何身体。
 
 ShanXiaoVisual作为Enemy子节点，根据真实state／clock／facing／地面检测选择SpriteFrames帧；不调用伤害、改速度或决定死亡。待机与跑动循环，前摇／扑击／收招按真实阶段时长同步，未着地时保留腾空姿势。左右翻转围绕根节点，Godot缩图后的纹理按源画布比例换算枢轴。素材与当前候选比例见SHAN_XIAO_PLAYABLE_REPORT.md；不把该样板视为其他角色正式动画完成。
+
+## 15. 主角静态美术真实接入
+
+共享Player场景新增Artwork（Sprite2D），静态侧视图经原生导入，画布／脚底按实际512纹理换算；Player._process仅按真实facing镜像、真实状态着色。原_draw保留有效窗口的攻击范围提示，移除几何身体和占位持剑线；其余输入、物理、生命、命中和闪避不变。三个已有入口自动共用素材，无新Autoload或动画空壳。当前是单姿势候选，不具备正式跑跳或攻击动画；详见PLAYER_ART_INTEGRATION.md。

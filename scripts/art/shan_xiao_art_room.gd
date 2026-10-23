@@ -1,5 +1,5 @@
 extends Node2D
-## 复用真实战斗的单房美术候选；主角与环境仍为临时表现。
+## 复用真实战斗的单房美术候选；主角静态侧视，环境仍临时。
 const Player := preload("res://scenes/player/player.tscn")
 const Room := preload("res://scripts/world/combat_room.gd")
 const Visual := preload("res://scripts/art/shan_xiao_visual.gd")
@@ -47,7 +47,7 @@ func _build_ui() -> void:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$UI.add_child(panel)
 	Ui.label(panel, "无名剑冢 · 山魈美术样板", 30).mouse_filter = Control.MOUSE_FILTER_IGNORE
-	Ui.label(panel, "手绘动作接入候选｜主角与环境仍为临时表现｜本房使用1.5倍镜头", 16).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Ui.label(panel, "山魈动作候选｜主角静态侧视图，动作待完善｜环境临时 · 1.5倍镜头", 16).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	status = Ui.label(panel, "", 18)
 	status.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var tools := HBoxContainer.new()
