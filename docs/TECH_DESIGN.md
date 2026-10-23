@@ -177,3 +177,9 @@ art_catalog.json仅登记26张原图的分类、运行路径、原始来源、�
 Enemy挂载唯一Visual：山魈复用ShanXiaoVisual，其他五种使用EnemyStaticVisual读取独立manifest，按原body_size高度缩放、实际native_facing镜像，HURT着色和父级死亡淡出仍读取真实状态。没有更改物理、伤害、冷却或奖励配置。单房样板移除旧的重复挂载，继续复用相同表现。
 
 Backdrop显示静态原图，保持纵横比覆盖视口；Game在room_changed时更新六房背景映射，CanvasLayer背景不改变世界坐标或碰撞。原几何地面和平台是本轮可通行区域的明确标识；建筑、分层、视差和新关卡均未实现。详见ALL_ART_INTEGRATION.md。
+
+## 17. 当前动作与地图重建
+
+前节是旧轮静态接入。本轮共享Player改挂ArtworkController，非山魈Enemy.Visual改用EnemyAnimationVisual，ActorFrameVisual读取assets/animations的manifest建立AtlasTexture；表现只读真实状态／时钟／位移，不改伤害、判定或AI。可变region、逐姿势native_facing、导入尺寸换算和统一比例详见ANIMATION_RUNTIME.md。
+
+CombatRoom在map_id有效时由PaintedMap建立1672×941原图世界：远景Sprite2D、同UV的可走Polygon2D和CollisionPolygon2D、底部前景，以及对应入口／出口／祭坛坐标。地形轮廓为明确可走面，不能把远景透视阶梯当悬空平台。SwordRoute换房按实际出生点重置主角，Camera限制在原图世界内，Game隐藏旧CanvasLayer背景；训练／山魈样板保留原平面路径。断阶有实际空隙，y>1080接现有死亡流程；敌人普通追踪在所在石台边缘停步，攻击／击退仍可坠落。新地图专项不代表任意斜坡或动态平台均已验证。

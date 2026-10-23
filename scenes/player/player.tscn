@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/characters/shen_jin/static_v1/side_idle.png" id="2"]
+[ext_resource type="Script" path="res://scripts/art/player_animation_visual.gd" id="2"]
 [sub_resource type="RectangleShape2D" id="Body"]
 size = Vector2(24, 56)
 
@@ -15,10 +15,10 @@ position = Vector2(0, -28)
 shape = SubResource("Body")
 
 [node name="Artwork" type="Sprite2D" parent="."]
-scale = Vector2(-0.1116, 0.1116)
-texture = ExtResource("2")
 centered = false
-offset = Vector2(-240.893, -507.917)
+
+[node name="ArtworkController" type="Node2D" parent="."]
+script = ExtResource("2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -200)

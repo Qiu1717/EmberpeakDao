@@ -1,5 +1,5 @@
 extends Node2D
-## 复用真实战斗的单房美术候选；主角静态侧视，背景为未拆层概念图。
+## 复用真实战斗的单房美术候选；共享主角动作，背景为未拆层概念图。
 const Player := preload("res://scenes/player/player.tscn")
 const Room := preload("res://scripts/world/combat_room.gd")
 const Stats := preload("res://resources/enemies/shan_xiao.tres")
@@ -42,7 +42,7 @@ func _build_ui() -> void:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$UI.add_child(panel)
 	Ui.label(panel, "无名剑冢 · 山魈美术样板", 30).mouse_filter = Control.MOUSE_FILTER_IGNORE
-	Ui.label(panel, "山魈动作候选｜主角静态侧视图｜背景概念图，建筑待匹配 · 1.5倍镜头", 16).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Ui.label(panel, "山魈与主角动作候选｜平面样板，原图关卡请进新游戏 · 1.5倍镜头", 16).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	status = Ui.label(panel, "", 18)
 	status.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var tools := HBoxContainer.new()

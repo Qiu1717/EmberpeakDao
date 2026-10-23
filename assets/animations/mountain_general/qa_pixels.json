@@ -1,0 +1,175 @@
+{
+  "canvas": [
+    1254,
+    1254
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "sha256": "6ac86c2a6ae1143cd86f92d2af4d8cd4f4fba9666a9b41fb738c1c4199197385",
+  "byte_identical_to_tool_output": true,
+  "poses": {
+    "idle": {
+      "alpha_bounds": [
+        48,
+        89,
+        291,
+        298
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "a3ac58c14fcae7d8e41e25b1c620bf152b1e6a15194c64d6711b8c298af31348"
+    },
+    "walk_a": {
+      "alpha_bounds": [
+        47,
+        85,
+        281,
+        299
+      ],
+      "minimum_padding": 15,
+      "pixels_sha256": "c352bd5e94035e2e3bc9fe2ad6b75985b1f718d18e822d181f59ff2f0a29af8d"
+    },
+    "walk_b": {
+      "alpha_bounds": [
+        77,
+        89,
+        281,
+        299
+      ],
+      "minimum_padding": 15,
+      "pixels_sha256": "9367eef656be23cc797cc73f53ce5570abf85f41a96e816d7fc3f20334aa870d"
+    },
+    "hurt": {
+      "alpha_bounds": [
+        73,
+        107,
+        268,
+        298
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "3cf3a4d7629c2462317569502119bfa1605059cd4bfb44eec9e68f864d07346a"
+    },
+    "slash_windup": {
+      "alpha_bounds": [
+        69,
+        57,
+        287,
+        275
+      ],
+      "minimum_padding": 27,
+      "pixels_sha256": "8067935b5b6e4f84513b2216834c2afa62a263dc789e101a78edae6553999089"
+    },
+    "slash": {
+      "alpha_bounds": [
+        13,
+        88,
+        307,
+        269
+      ],
+      "minimum_padding": 6,
+      "pixels_sha256": "920bcc8d650ed482bc33dd9194b559c91ab803d3cc6a9b2c91f45507a88bf08b"
+    },
+    "slash_recover": {
+      "alpha_bounds": [
+        58,
+        108,
+        322,
+        271
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "b547e3be79f5430aca9acea3ca06baeb7fd6f172571105f3e1302bf0b2c048e5"
+    },
+    "charge_windup": {
+      "alpha_bounds": [
+        46,
+        123,
+        238,
+        265
+      ],
+      "minimum_padding": 36,
+      "pixels_sha256": "4a2606ac8f974822c4dad82f8585a81f564cd2b5b61b1207d1dba3ba6f88a543"
+    },
+    "charge": {
+      "alpha_bounds": [
+        34,
+        117,
+        322,
+        264
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "dd5634c702c1a3d89c52d3922236f639c4f180410dfbee2d115ea573f033a91b"
+    },
+    "leap": {
+      "alpha_bounds": [
+        29,
+        20,
+        232,
+        251
+      ],
+      "minimum_padding": 20,
+      "pixels_sha256": "05eed7cf9a6875924b138dd0de2f6cbe3c43efdfd380684783bdf5f13b67855e"
+    },
+    "slam": {
+      "alpha_bounds": [
+        65,
+        107,
+        306,
+        268
+      ],
+      "minimum_padding": 7,
+      "pixels_sha256": "598c498ae0796db0616a4e1154ea0337afc0ef8576b59dd25569ac1a3f3f3263"
+    },
+    "wave_windup": {
+      "alpha_bounds": [
+        71,
+        16,
+        286,
+        260
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "cc81a431a7c8c346bff534bfad193e86e99eddfa3996791ff2b9dcca4c3f6ccb"
+    },
+    "wave": {
+      "alpha_bounds": [
+        45,
+        66,
+        364,
+        223
+      ],
+      "minimum_padding": 11,
+      "pixels_sha256": "3e92eca2d301c0e030b71815b9791703c1197a7454a0a7154db879985db678b8"
+    },
+    "phase": {
+      "alpha_bounds": [
+        29,
+        16,
+        260,
+        264
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "06743c21bcf7f8ca70d007d6092266ec2aaf87d04586e1eaabd1d873a87b3191"
+    },
+    "death_a": {
+      "alpha_bounds": [
+        8,
+        75,
+        246,
+        224
+      ],
+      "minimum_padding": 8,
+      "pixels_sha256": "b48bbf922b2b887f2d3f074a43220c9ae830566f367eb14980aa1dc437f12990"
+    },
+    "death_b": {
+      "alpha_bounds": [
+        36,
+        136,
+        283,
+        229
+      ],
+      "minimum_padding": 31,
+      "pixels_sha256": "d8661042b9227d9742865c16795bb9db146491ee81c7c31bce46e66740c49146"
+    }
+  }
+}

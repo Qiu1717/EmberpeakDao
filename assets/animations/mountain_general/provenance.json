@@ -1,0 +1,6 @@
+{
+  "tool": "built-in imagegen",
+  "selected_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-3d282d15-02da-415d-8199-d99157f6ca70.png",
+  "reference": "assets/enemies/static_v1/mountain_general.png",
+  "notes": "首图串帧未采用，重新布局16姿势；局部武器跨等分线，以实际透明间隙原生AtlasTexture切片。关键姿势候选，非完整逐帧动画。"
+}

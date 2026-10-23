@@ -1,7 +1,5 @@
 extends SceneTree
 var checks := 0
-const SourcePivot := Vector2(590, 1244)
-const SourceHeight := 1229.0
 func _initialize() -> void:
 	run.call_deferred()
 func check(ok: bool, text: String) -> bool:
@@ -38,38 +36,46 @@ func run() -> void:
 		await frames(5)
 		var player: Node = current_scene.player
 		var art: Sprite2D = player.get_node("Artwork")
-		if not check(art.texture != null and art.texture.get_width() == 512 and art.is_visible_in_tree(), entry + " 使用实际导入的侧视纹理"):
+		if not check(art.texture is AtlasTexture and art.is_visible_in_tree(), entry + " 使用实际导入的动作图集切片"):
 			return
 		if not check(player.health == 100 and player.get_node("CollisionShape2D").shape.size == Vector2(24, 56), entry + " 保留100生命和24×56碰撞"):
 			return
-		if not check(absf(art.scale.y * 512 * SourceHeight / 1254 - 56) < 0.01, entry + " 可见中立轮廓高度为56世界像素"):
+		var visual: Node = player.get_node("ArtworkController")
+		if not check(absf(visual.world_scale * float(visual.manifest.reference_height) - 56) < 0.01, entry + " 统一中立轮廓比例为56世界像素"):
 			return
 		for direction in [-1, 1]:
 			player.facing = direction
 			await frames()
-			var foot := art.to_global(art.offset + SourcePivot * (512.0 / 1254))
-			if not check(foot.distance_to(player.global_position) < 0.01 and signf(art.scale.x) == -direction, entry + " 翻转保留脚底锚点：" + str(direction)):
+			var pose: Dictionary = visual.manifest.poses[visual.pose_name]
+			var source_pivot := Vector2(pose.pivot[0], pose.pivot[1])
+			var foot := art.to_global(art.offset + source_pivot * visual.import_ratio)
+			if not check(foot.distance_to(player.global_position) < 0.01 and signf(art.scale.x) == direction * visual.native_facing, entry + " 翻转保留脚底锚点：" + str(direction)):
 				return
 		await capture(entry)
 	var player: Node = current_scene.player
 	var art: Sprite2D = player.get_node("Artwork")
 	player.receive_hit(1, Vector2.ZERO)
 	await frames(1)
-	if not check(player.state == player.State.HURT and art.modulate == Color("9e302a"), "静态角色随真实受击状态变色提示"):
+	var visual: Node = player.get_node("ArtworkController")
+	if not check(player.state == player.State.HURT and visual.animation_name == "hurt", "真实受击状态切换受击动作帧"):
 		return
 	app.set_paused(true)
-	var color := art.modulate
+	var texture: Texture2D = art.texture
+	var elapsed: float = visual.state_time
 	await create_timer(0.1).timeout
-	if not check(art.modulate == color, "暂停保持当前静态表现"):
+	if not check(art.texture == texture and visual.state_time == elapsed, "暂停冻结当前动作帧与表现时钟"):
 		return
 	app.set_paused(false)
 	player.receive_hit(1000, Vector2.ZERO)
 	await frames(1)
-	if not check(player.health == 0 and art.modulate == Color("596a6f"), "死亡只做明确状态着色，不冒充死亡动画"):
+	texture = art.texture
+	await create_timer(0.4).timeout
+	await frames(1)
+	if not check(player.health == 0 and visual.animation_name == "death" and art.texture != texture, "死亡随实际时间播放两个独立倒下姿势"):
 		return
 	await app.start_art_room()
 	await frames()
-	if not check(current_scene.player.health == 100 and current_scene.player.get_node("Artwork").modulate == Color.WHITE, "重开恢复生命与原始素材颜色"):
+	if not check(current_scene.player.health == 100 and current_scene.player.get_node("ArtworkController").animation_name == "idle", "重开恢复生命与中立动作"):
 		return
 	print("PLAYER_ART_CHECKS_PASSED=", checks)
 	quit()

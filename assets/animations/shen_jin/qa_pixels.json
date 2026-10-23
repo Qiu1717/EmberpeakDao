@@ -1,0 +1,136 @@
+{
+  "canvas": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "sha256": "3d06703540d60a0797c548760e462df73adea0a8586da18c749d58110357bacc",
+  "byte_identical_to_tool_output": true,
+  "poses": {
+    "idle": {
+      "alpha_bounds": [
+        59,
+        124,
+        299,
+        358
+      ],
+      "pixels_sha256": "8cb7544061493e0d2fab6df3f8e331b9b2dd1a68ecb36b770377b32b7dac1c25",
+      "minimum_padding": 4
+    },
+    "run_a": {
+      "alpha_bounds": [
+        74,
+        167,
+        326,
+        356
+      ],
+      "pixels_sha256": "728799d54ba25a49d24d9d52065793ea4cf1ece6ec46873ba8f9224dfa958721",
+      "minimum_padding": 6
+    },
+    "run_b": {
+      "alpha_bounds": [
+        109,
+        177,
+        325,
+        360
+      ],
+      "pixels_sha256": "f65577d1a9a0479012dc8f9babf49863e7ac263101e6aa4a07ec71a2c1459c55",
+      "minimum_padding": 2
+    },
+    "jump": {
+      "alpha_bounds": [
+        95,
+        114,
+        294,
+        358
+      ],
+      "pixels_sha256": "255ac238b74465e47f8389e7dbe271882f76bdf61e370cc3e74f784416afaa23",
+      "minimum_padding": 4
+    },
+    "attack_windup": {
+      "alpha_bounds": [
+        48,
+        110,
+        299,
+        342
+      ],
+      "pixels_sha256": "b7f50a8dc04dda80eea2ea315a920a8103cf4f4b5e659180c7860fe897560bae",
+      "minimum_padding": 20
+    },
+    "attack_1": {
+      "alpha_bounds": [
+        12,
+        158,
+        344,
+        341
+      ],
+      "pixels_sha256": "be17a6fea9401c6560441474946caa7c25e664ec8751d053a190b65c1e0fb4a1",
+      "minimum_padding": 12
+    },
+    "attack_2": {
+      "alpha_bounds": [
+        54,
+        92,
+        306,
+        344
+      ],
+      "pixels_sha256": "070da5d2fc7051e27f95fe99aed080f598dd5c6478da735471dd330f44a1fa1f",
+      "minimum_padding": 18
+    },
+    "attack_3": {
+      "alpha_bounds": [
+        6,
+        154,
+        338,
+        342
+      ],
+      "pixels_sha256": "2b81ad2c3cd9c5336492008b0be2c8c60c0cb24ffba5e060dba2f3c8582de854",
+      "minimum_padding": 6
+    },
+    "dodge": {
+      "alpha_bounds": [
+        91,
+        138,
+        329,
+        295
+      ],
+      "pixels_sha256": "2b7e685d496594505dad9d861b2247f851f9f81ca8f025705f17524ca55e38d3",
+      "minimum_padding": 33
+    },
+    "hurt": {
+      "alpha_bounds": [
+        39,
+        88,
+        326,
+        297
+      ],
+      "pixels_sha256": "4b524a435d2f34e5e30f4a19ddc297417d487f70de2d4dd6700b17987f236344",
+      "minimum_padding": 36
+    },
+    "death_a": {
+      "alpha_bounds": [
+        74,
+        138,
+        311,
+        303
+      ],
+      "pixels_sha256": "8233a36b74ae3fb1dd7d8330e335d61679730467266bd1558e0f7d6bcd8ee5b4",
+      "minimum_padding": 51
+    },
+    "death_b": {
+      "alpha_bounds": [
+        42,
+        223,
+        319,
+        304
+      ],
+      "pixels_sha256": "9be6de0263642a8da91c75af37af37e6cfb91e8c5c89bfdb799ec9244317c347",
+      "minimum_padding": 42
+    }
+  },
+  "status": "基础关键姿势；中间帧与正式美术待评审"
+}

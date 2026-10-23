@@ -27,7 +27,11 @@ func enter_room(index: int) -> void:
 	room_index = index
 	room = Rooms[index].instantiate()
 	add_child(room)
-	player.reset_motion_at(Vector2(2060 if backwards else 140, 640))
+	var camera: Camera2D = player.get_node("Camera2D")
+	camera.limit_right = 1672
+	camera.limit_bottom = 941
+	camera.zoom = Vector2(1.35, 1.35)
+	player.reset_motion_at(room.exit_point if backwards else room.entry_point)
 	room.cleared.connect(func(id: String): cleared_rooms[id] = true)
 	room.reward_requested.connect(_on_reward)
 	room.enter(player, cleared_rooms.has(room.room_id))
@@ -48,14 +52,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func interact() -> void:
-	if transitioning or player.health <= 0 or not room.is_cleared or absf(player.position.y - 640) > 90:
+	if transitioning or player.health <= 0 or not room.is_cleared :
 		return
-	if room.room_id == "altar" and absf(player.position.x - 1000) < 120:
+	if room.room_id == "altar" and player.position.distance_to(room.altar_point) < 120:
 		player.health = player.stats.max_health
 		player.health_changed.emit(player.health, player.stats.max_health)
-	elif player.position.x > 1950 and room_index < Rooms.size() - 1:
+	elif player.position.distance_to(room.exit_point) < 110 and room_index < Rooms.size() - 1:
 		enter_room(room_index + 1)
-	elif player.position.x < 240 and room_index > 0:
+	elif player.position.distance_to(room.entry_point) < 110 and room_index > 0:
 		enter_room(room_index - 1)
 
 func status_text() -> String:

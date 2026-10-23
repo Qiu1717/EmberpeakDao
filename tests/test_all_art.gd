@@ -48,9 +48,10 @@ func run() -> void:
 		game.world.enter_room(index)
 		await frames(4)
 		var background: Node = game.get_node("BackgroundLayer/Backdrop")
-		if not check(background.art_id == expected[index] and background.artwork != null, "真实背景随房间切换：" + expected[index]):
+		if not check(not background.visible and game.world.room.map.map_id == expected[index] and game.world.room.map.get_node("Background_Far").texture != null, "原图世界关卡随房间切换：" + expected[index]):
 			return
-		if not check(game.world.room.get_node("Ground/CollisionShape2D").shape.size == Vector2(2200, 120), "背景不改变原物理地面：" + expected[index]):
+		var terrain: Node = game.world.room.map.get_node("Gameplay0")
+		if not check(game.world.room.get_node_or_null("Ground") == null and terrain.polygon == game.world.room.map.get_node("Ground0/CollisionPolygon2D").polygon, "原图可走表面与实体轮廓对齐：" + expected[index]):
 			return
 		for enemy: Node in game.world.room.enemies:
 			if not check(enemy.has_node("Visual") and not enemy.show_placeholder_body, "真实敌人有美术表现：" + enemy.data.display_name):
@@ -58,13 +59,13 @@ func run() -> void:
 			if enemy.data.enemy_id != "shan_xiao":
 				var visual: Node = enemy.get_node("Visual")
 				var sprite: Sprite2D = visual.sprite
-				if not check(sprite.texture.get_image().get_format() == Image.FORMAT_RGBA8 and sprite.texture.get_image().is_invisible() == false, "敌人使用真实透明静态精灵：" + enemy.data.display_name):
+				if not check(sprite.texture is AtlasTexture and sprite.texture.get_image().get_format() == Image.FORMAT_RGBA8 and sprite.texture.get_image().is_invisible() == false, "敌人使用真实透明动作切片：" + enemy.data.display_name):
 					return
 				for direction in [-1, 1]:
 					enemy.facing = direction
 					visual.sync_pose()
 					var pivot: Vector2 = visual.pivot
-					if not check(sprite.to_global(sprite.offset + pivot).distance_to(enemy.global_position) < 0.01 and signf(visual.scale.x) == direction * visual.native_facing, "敌人镜像保持脚底：" + enemy.data.enemy_id + str(direction)):
+					if not check(sprite.to_global(sprite.offset + pivot).distance_to(enemy.global_position) < 0.01 and signf(sprite.scale.x) == direction * visual.native_facing, "敌人镜像保持脚底：" + enemy.data.enemy_id + str(direction)):
 						return
 		if index in [1, 3, 5]:
 			capture(expected[index])

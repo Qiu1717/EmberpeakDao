@@ -1,0 +1,135 @@
+{
+  "canvas": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "sha256": "8bfac31142fe1fdb3bba654217c99383017c8412cfc4621f765711b5057d1e9a",
+  "byte_identical_to_tool_output": true,
+  "poses": {
+    "idle": {
+      "alpha_bounds": [
+        131,
+        111,
+        295,
+        342
+      ],
+      "minimum_padding": 20,
+      "pixels_sha256": "f06ae71e0e765d3598f4f316cf3d0052893a4895eb76f5aca948be9008fbe241"
+    },
+    "move_a": {
+      "alpha_bounds": [
+        115,
+        111,
+        295,
+        342
+      ],
+      "minimum_padding": 20,
+      "pixels_sha256": "1a413a0e1d6b941312df499e0c94edbe0c73e53441416627f97fd1a77149d993"
+    },
+    "move_b": {
+      "alpha_bounds": [
+        103,
+        112,
+        286,
+        344
+      ],
+      "minimum_padding": 18,
+      "pixels_sha256": "beb0b2b01508159366b321cb443902d6757b655be8489aab86d58ca5fa14387b"
+    },
+    "windup": {
+      "alpha_bounds": [
+        58,
+        122,
+        282,
+        342
+      ],
+      "minimum_padding": 20,
+      "pixels_sha256": "b33c019211d197229794abc45fc1305e992c4394d704b89f8cca5d48b8d3627e"
+    },
+    "attack": {
+      "alpha_bounds": [
+        69,
+        90,
+        346,
+        308
+      ],
+      "minimum_padding": 16,
+      "pixels_sha256": "6af1885905fe8b48c937f0c3dcaf148dc329562ed2ec5e3431a394db8946008c"
+    },
+    "recover": {
+      "alpha_bounds": [
+        112,
+        83,
+        305,
+        309
+      ],
+      "minimum_padding": 53,
+      "pixels_sha256": "16416e42bed9f4fa5ab7db7dae88bc4442450415187268b59684842c5c2a52b6"
+    },
+    "hurt": {
+      "alpha_bounds": [
+        95,
+        88,
+        328,
+        309
+      ],
+      "minimum_padding": 34,
+      "pixels_sha256": "340fe1907cdce3f0b6f01fece56197ccfe3045a9d574cc1e1236a463dae23d8e"
+    },
+    "death_a": {
+      "alpha_bounds": [
+        98,
+        128,
+        273,
+        309
+      ],
+      "minimum_padding": 53,
+      "pixels_sha256": "11bc6b607ebaa8376b18c032284e8cbadcd7c39dd8b958a9aa873f77e1d26480"
+    },
+    "death_b": {
+      "alpha_bounds": [
+        86,
+        196,
+        338,
+        277
+      ],
+      "minimum_padding": 24,
+      "pixels_sha256": "f6d84cc6928bc32f215ea6b77654086d28f170fa346dcf804de7b52ae73bd12b"
+    },
+    "alt_windup": {
+      "alpha_bounds": [
+        104,
+        58,
+        293,
+        276
+      ],
+      "minimum_padding": 58,
+      "pixels_sha256": "78fa541630e672774e9307cefb38a1ebf41cf1a360f928b320ec0b6c9018c1aa"
+    },
+    "alt_attack": {
+      "alpha_bounds": [
+        36,
+        83,
+        318,
+        277
+      ],
+      "minimum_padding": 36,
+      "pixels_sha256": "fcf49b0d517b4aec66c9bcf04c926d7189d12277339f1143a0fb34df9b99221e"
+    },
+    "alt_recover": {
+      "alpha_bounds": [
+        94,
+        56,
+        277,
+        277
+      ],
+      "minimum_padding": 56,
+      "pixels_sha256": "85da4eef481d25ae5cc29f756796436645d16f319eb313993c8748462f933862"
+    }
+  }
+}

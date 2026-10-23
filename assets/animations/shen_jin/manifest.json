@@ -1,0 +1,244 @@
+{
+  "texture": "sheet.png",
+  "canvas": [
+    1448,
+    1086
+  ],
+  "native_facing": -1,
+  "reference_height": 234,
+  "stride_distance": 92.4,
+  "poses": {
+    "idle": {
+      "region": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        358
+      ],
+      "native_facing": -1
+    },
+    "run_a": {
+      "region": [
+        362,
+        0,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        356
+      ],
+      "native_facing": -1
+    },
+    "run_b": {
+      "region": [
+        724,
+        0,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        360
+      ],
+      "native_facing": -1
+    },
+    "jump": {
+      "region": [
+        1086,
+        0,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        358
+      ],
+      "native_facing": -1
+    },
+    "attack_windup": {
+      "region": [
+        0,
+        362,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        342
+      ],
+      "native_facing": -1
+    },
+    "attack_1": {
+      "region": [
+        362,
+        362,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        341
+      ],
+      "native_facing": -1
+    },
+    "attack_2": {
+      "region": [
+        724,
+        362,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        344
+      ],
+      "native_facing": -1
+    },
+    "attack_3": {
+      "region": [
+        1086,
+        362,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        342
+      ],
+      "native_facing": -1
+    },
+    "dodge": {
+      "region": [
+        0,
+        724,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        295
+      ],
+      "native_facing": -1
+    },
+    "hurt": {
+      "region": [
+        362,
+        724,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        297
+      ],
+      "native_facing": -1
+    },
+    "death_a": {
+      "region": [
+        724,
+        724,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        303
+      ],
+      "native_facing": -1
+    },
+    "death_b": {
+      "region": [
+        1086,
+        724,
+        362,
+        362
+      ],
+      "pivot": [
+        181.0,
+        304
+      ],
+      "native_facing": -1
+    }
+  },
+  "clips": {
+    "idle": [
+      {
+        "pose": "idle",
+        "duration": 0.8
+      }
+    ],
+    "jump": [
+      {
+        "pose": "jump",
+        "duration": 0.2
+      }
+    ],
+    "attack_windup": [
+      {
+        "pose": "attack_windup",
+        "duration": 0.1
+      }
+    ],
+    "attack_1": [
+      {
+        "pose": "attack_1",
+        "duration": 0.1
+      }
+    ],
+    "attack_2": [
+      {
+        "pose": "attack_2",
+        "duration": 0.1
+      }
+    ],
+    "attack_3": [
+      {
+        "pose": "attack_3",
+        "duration": 0.1
+      }
+    ],
+    "attack_recover": [
+      {
+        "pose": "idle",
+        "duration": 0.22
+      }
+    ],
+    "dodge": [
+      {
+        "pose": "dodge",
+        "duration": 0.2
+      }
+    ],
+    "hurt": [
+      {
+        "pose": "hurt",
+        "duration": 0.2
+      }
+    ],
+    "run": [
+      {
+        "pose": "run_a",
+        "duration": 0.13
+      },
+      {
+        "pose": "run_b",
+        "duration": 0.13
+      }
+    ],
+    "death": [
+      {
+        "pose": "death_a",
+        "duration": 0.18
+      },
+      {
+        "pose": "death_b",
+        "duration": 0.42
+      }
+    ]
+  }
+}

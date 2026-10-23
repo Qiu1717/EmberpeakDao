@@ -1,0 +1,338 @@
+{
+  "texture": "sheet.png",
+  "canvas": [
+    1254,
+    1254
+  ],
+  "native_facing": -1,
+  "reference_height": 209,
+  "stride_distance": 130,
+  "poses": {
+    "idle": {
+      "region": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "pivot": [
+        157,
+        298
+      ],
+      "native_facing": -1
+    },
+    "walk_a": {
+      "region": [
+        314,
+        0,
+        313,
+        314
+      ],
+      "pivot": [
+        156,
+        299
+      ],
+      "native_facing": -1
+    },
+    "walk_b": {
+      "region": [
+        627,
+        0,
+        313,
+        314
+      ],
+      "pivot": [
+        157,
+        299
+      ],
+      "native_facing": -1
+    },
+    "hurt": {
+      "region": [
+        940,
+        0,
+        314,
+        314
+      ],
+      "pivot": [
+        157,
+        298
+      ],
+      "native_facing": -1
+    },
+    "slash_windup": {
+      "region": [
+        0,
+        314,
+        314,
+        313
+      ],
+      "pivot": [
+        157,
+        275
+      ],
+      "native_facing": -1
+    },
+    "slash": {
+      "region": [
+        314,
+        314,
+        313,
+        313
+      ],
+      "pivot": [
+        156,
+        269
+      ],
+      "native_facing": -1
+    },
+    "slash_recover": {
+      "region": [
+        627,
+        314,
+        338,
+        313
+      ],
+      "pivot": [
+        157,
+        271
+      ],
+      "native_facing": -1
+    },
+    "charge_windup": {
+      "region": [
+        980,
+        314,
+        274,
+        313
+      ],
+      "pivot": [
+        117,
+        265
+      ],
+      "native_facing": -1
+    },
+    "charge": {
+      "region": [
+        0,
+        627,
+        360,
+        280
+      ],
+      "pivot": [
+        157,
+        264
+      ],
+      "native_facing": -1
+    },
+    "leap": {
+      "region": [
+        385,
+        627,
+        280,
+        278
+      ],
+      "pivot": [
+        85,
+        251
+      ],
+      "native_facing": -1
+    },
+    "slam": {
+      "region": [
+        627,
+        627,
+        313,
+        313
+      ],
+      "pivot": [
+        157,
+        268
+      ],
+      "native_facing": -1
+    },
+    "wave_windup": {
+      "region": [
+        940,
+        627,
+        314,
+        313
+      ],
+      "pivot": [
+        157,
+        260
+      ],
+      "native_facing": -1
+    },
+    "wave": {
+      "region": [
+        0,
+        940,
+        375,
+        314
+      ],
+      "pivot": [
+        157,
+        223
+      ],
+      "native_facing": -1
+    },
+    "phase": {
+      "region": [
+        375,
+        900,
+        282,
+        354
+      ],
+      "pivot": [
+        95,
+        264
+      ],
+      "native_facing": -1
+    },
+    "death_a": {
+      "region": [
+        675,
+        940,
+        265,
+        314
+      ],
+      "pivot": [
+        109,
+        224
+      ],
+      "native_facing": -1
+    },
+    "death_b": {
+      "region": [
+        940,
+        940,
+        314,
+        314
+      ],
+      "pivot": [
+        157,
+        229
+      ],
+      "native_facing": -1
+    }
+  },
+  "clips": {
+    "idle": [
+      {
+        "pose": "idle",
+        "duration": 0.15
+      }
+    ],
+    "run": [
+      {
+        "pose": "walk_a",
+        "duration": 0.15
+      },
+      {
+        "pose": "walk_b",
+        "duration": 0.15
+      }
+    ],
+    "hurt": [
+      {
+        "pose": "hurt",
+        "duration": 0.15
+      }
+    ],
+    "death": [
+      {
+        "pose": "death_a",
+        "duration": 0.15
+      },
+      {
+        "pose": "death_b",
+        "duration": 0.15
+      }
+    ],
+    "phase": [
+      {
+        "pose": "phase",
+        "duration": 0.15
+      }
+    ],
+    "slash_telegraph": [
+      {
+        "pose": "slash_windup",
+        "duration": 0.15
+      }
+    ],
+    "slash_attack": [
+      {
+        "pose": "slash",
+        "duration": 0.15
+      }
+    ],
+    "slash_recovery": [
+      {
+        "pose": "slash_recover",
+        "duration": 0.15
+      }
+    ],
+    "charge_telegraph": [
+      {
+        "pose": "charge_windup",
+        "duration": 0.15
+      }
+    ],
+    "charge_attack": [
+      {
+        "pose": "charge",
+        "duration": 0.15
+      }
+    ],
+    "charge_recovery": [
+      {
+        "pose": "slash_recover",
+        "duration": 0.15
+      }
+    ],
+    "leap_telegraph": [
+      {
+        "pose": "slash_windup",
+        "duration": 0.15
+      }
+    ],
+    "leap_attack": [
+      {
+        "pose": "leap",
+        "duration": 0.15
+      }
+    ],
+    "leap_recovery": [
+      {
+        "pose": "slam",
+        "duration": 0.15
+      }
+    ],
+    "slam_recovery": [
+      {
+        "pose": "slam",
+        "duration": 0.15
+      }
+    ],
+    "wave_telegraph": [
+      {
+        "pose": "wave_windup",
+        "duration": 0.15
+      }
+    ],
+    "wave_attack": [
+      {
+        "pose": "wave",
+        "duration": 0.15
+      }
+    ],
+    "wave_recovery": [
+      {
+        "pose": "slash_recover",
+        "duration": 0.15
+      }
+    ]
+  }
+}

@@ -4,8 +4,9 @@
 [ext_resource type="Resource" path="res://resources/enemies/corpse.tres" id="3"]
 [node name="CombatRoom" type="Node2D"]
 script = ExtResource("1")
+map_id = "broken_swords"
 room_id = "wasteland"
 display_name = "残剑荒地"
 platforms = Array[Rect2]([Rect2(420, 540, 180, 24), Rect2(1400, 510, 220, 24)])
 enemy_data = Array[Resource]([ExtResource("2"), ExtResource("3")])
-enemy_positions = PackedVector2Array(650, 640, 1150, 640)
+enemy_positions = PackedVector2Array(650, 683, 1150, 697)

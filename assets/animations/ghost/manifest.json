@@ -1,0 +1,238 @@
+{
+  "texture": "sheet.png",
+  "canvas": [
+    1448,
+    1086
+  ],
+  "native_facing": -1,
+  "reference_height": 274,
+  "stride_distance": 100,
+  "poses": {
+    "idle": {
+      "region": [
+        50,
+        70,
+        320,
+        365
+      ],
+      "pivot": [
+        131,
+        328
+      ],
+      "native_facing": 1
+    },
+    "move_a": {
+      "region": [
+        400,
+        70,
+        330,
+        365
+      ],
+      "pivot": [
+        143,
+        318
+      ],
+      "native_facing": 1
+    },
+    "move_b": {
+      "region": [
+        750,
+        70,
+        335,
+        365
+      ],
+      "pivot": [
+        155,
+        334
+      ],
+      "native_facing": 1
+    },
+    "windup": {
+      "region": [
+        1100,
+        70,
+        348,
+        365
+      ],
+      "pivot": [
+        167,
+        321
+      ],
+      "native_facing": -1
+    },
+    "attack": {
+      "region": [
+        0,
+        440,
+        432,
+        310
+      ],
+      "pivot": [
+        181,
+        279
+      ],
+      "native_facing": -1
+    },
+    "recover": {
+      "region": [
+        432,
+        440,
+        315,
+        310
+      ],
+      "pivot": [
+        111,
+        273
+      ],
+      "native_facing": -1
+    },
+    "hurt": {
+      "region": [
+        760,
+        430,
+        325,
+        320
+      ],
+      "pivot": [
+        145,
+        289
+      ],
+      "native_facing": 1
+    },
+    "death_a": {
+      "region": [
+        1100,
+        440,
+        348,
+        310
+      ],
+      "pivot": [
+        167,
+        272
+      ],
+      "native_facing": -1
+    },
+    "death_b": {
+      "region": [
+        40,
+        770,
+        380,
+        290
+      ],
+      "pivot": [
+        141,
+        223
+      ],
+      "native_facing": -1
+    },
+    "alt_windup": {
+      "region": [
+        425,
+        760,
+        290,
+        300
+      ],
+      "pivot": [
+        118,
+        233
+      ],
+      "native_facing": 1
+    },
+    "alt_attack": {
+      "region": [
+        710,
+        770,
+        445,
+        290
+      ],
+      "pivot": [
+        195,
+        225
+      ],
+      "native_facing": 1
+    },
+    "alt_recover": {
+      "region": [
+        1155,
+        760,
+        293,
+        300
+      ],
+      "pivot": [
+        112,
+        235
+      ],
+      "native_facing": -1
+    }
+  },
+  "clips": {
+    "idle": [
+      {
+        "pose": "idle",
+        "duration": 0.15
+      }
+    ],
+    "run": [
+      {
+        "pose": "move_a",
+        "duration": 0.15
+      },
+      {
+        "pose": "move_b",
+        "duration": 0.15
+      }
+    ],
+    "telegraph": [
+      {
+        "pose": "windup",
+        "duration": 0.15
+      }
+    ],
+    "attack": [
+      {
+        "pose": "attack",
+        "duration": 0.15
+      }
+    ],
+    "recovery": [
+      {
+        "pose": "recover",
+        "duration": 0.15
+      }
+    ],
+    "hurt": [
+      {
+        "pose": "hurt",
+        "duration": 0.15
+      }
+    ],
+    "death": [
+      {
+        "pose": "death_a",
+        "duration": 0.15
+      },
+      {
+        "pose": "death_b",
+        "duration": 0.15
+      }
+    ],
+    "alt_telegraph": [
+      {
+        "pose": "alt_windup",
+        "duration": 0.15
+      }
+    ],
+    "alt_attack": [
+      {
+        "pose": "alt_attack",
+        "duration": 0.15
+      }
+    ],
+    "alt_recovery": [
+      {
+        "pose": "alt_recover",
+        "duration": 0.15
+      }
+    ]
+  }
+}

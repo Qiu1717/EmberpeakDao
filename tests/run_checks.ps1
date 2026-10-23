@@ -46,6 +46,10 @@ try {
     Invoke-GodotCheck 'art-room-headless' $artRoom 'ART_ROOM_CHECKS_PASSED=24'
     $playerArt = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1200', '--script', 'res://tests/test_player_art.gd')
     Invoke-GodotCheck 'player-art-headless' $playerArt 'PLAYER_ART_CHECKS_PASSED=20'
+    $actorAnimation = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_actor_animation.gd')
+    Invoke-GodotCheck 'actor-animation-headless' $actorAnimation 'ACTOR_ANIMATION_CHECKS_PASSED=68'
+    $paintedMap = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_painted_map.gd')
+    Invoke-GodotCheck 'painted-map-headless' $paintedMap 'PAINTED_MAP_CHECKS_PASSED=27'
     $allArt = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_all_art.gd')
     Invoke-GodotCheck 'all-art-headless' $allArt 'ALL_ART_CHECKS_PASSED=96'
     # 6000帧上限下窗口检查曾完成47项断言但未获结束标记，保留有界退出并留出余量。
@@ -67,6 +71,8 @@ try {
         Invoke-GodotCheck 'combat-window' ($combat | Where-Object { $_ -ne '--headless' }) 'COMBAT_CHECKS_PASSED=28'
         Invoke-GodotCheck 'art-room-window' ($artRoom | Where-Object { $_ -ne '--headless' }) 'ART_ROOM_CHECKS_PASSED=24'
         Invoke-GodotCheck 'player-art-window' ($playerArt | Where-Object { $_ -ne '--headless' }) 'PLAYER_ART_CHECKS_PASSED=20'
+        Invoke-GodotCheck 'actor-animation-window' ($actorAnimation | Where-Object { $_ -ne '--headless' }) 'ACTOR_ANIMATION_CHECKS_PASSED=68'
+        Invoke-GodotCheck 'painted-map-window' ($paintedMap | Where-Object { $_ -ne '--headless' }) 'PAINTED_MAP_CHECKS_PASSED=27'
         Invoke-GodotCheck 'all-art-window' ($allArt | Where-Object { $_ -ne '--headless' }) 'ALL_ART_CHECKS_PASSED=96'
         Invoke-GodotCheck 'enemies-window' ($enemies | Where-Object { $_ -ne '--headless' }) 'ENEMY_CHECKS_PASSED=47'
         Invoke-GodotCheck 'route-window' ($route | Where-Object { $_ -ne '--headless' }) 'ROUTE_CHECKS_PASSED=41'

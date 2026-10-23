@@ -151,18 +151,6 @@ func receive_hit(amount: float, impulse: Vector2) -> bool:
 		died.emit()
 	return true
 
-func _process(_delta: float) -> void:
-	# shortcut: 单张侧视工作图，仅翻转和状态着色；后续完整动作另行制作。
-	var color := Color.WHITE
-	if state == State.DODGE:
-		color = Color("83dce8")
-	elif state == State.HURT:
-		color = Color("9e302a")
-	elif state == State.DEAD:
-		color = Color("596a6f")
-	$Artwork.modulate = color
-	$Artwork.scale.x = -facing * absf($Artwork.scale.y)
-
 func _draw() -> void:
 	if state == State.ATTACK:
 		var active: bool = action_time >= stats.attack_windup and action_time < stats.attack_windup + stats.attack_active

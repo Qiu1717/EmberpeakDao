@@ -1,6 +1,13 @@
 extends Node2D
 signal cleared(room_id: String)
 signal reward_requested(payload: Dictionary)
+const PaintedMap := preload("res://scripts/world/painted_map.gd")
+@export var map_id := ""
+var map: Node2D
+var active_player: CharacterBody2D
+var entry_point := Vector2.ZERO
+var exit_point := Vector2.ZERO
+var altar_point := Vector2.ZERO
 const Enemy := preload("res://scenes/enemies/enemy.tscn")
 @export var room_id := ""
 @export var display_name := ""
@@ -13,6 +20,22 @@ var is_cleared := false
 var settled: Dictionary = {}
 
 func _ready() -> void:
+	if not map_id.is_empty():
+		map = Node2D.new()
+		map.name = "PaintedMap"
+		map.set_script(PaintedMap)
+		add_child(map)
+		map.build(map_id)
+		entry_point = map.layout.spawn
+		exit_point = map.layout["return"]
+		altar_point = map.layout.altar
+		# 只保留原图有明确上沿的断阶岛与祭坛；不增加悬空矩形。
+		platforms.assign([map.layout.platform] if map.layout.has("platform") else [])
+		_build_body(Rect2(-20, -200, 20, 1400), "LeftWall")
+		_build_body(Rect2(1672, -200, 20, 1400), "RightWall")
+		_build_body(Rect2(exit_point.x - 45, exit_point.y - 240, 24, 240), "ExitGate")
+		_build_body(Rect2(45, entry_point.y - 240, 24, 240), "EntryGate")
+		return
 	_build_body(Rect2(0, 640, 2200, 120), "Ground")
 	_build_body(Rect2(-20, -200, 20, 1000), "LeftWall")
 	_build_body(Rect2(2200, -200, 20, 1000), "RightWall")
@@ -35,6 +58,7 @@ func _build_body(rect: Rect2, id: String, one_way: bool = false) -> void:
 	add_child(body)
 
 func enter(player: CharacterBody2D, was_cleared: bool) -> void:
+	active_player = player
 	if not was_cleared:
 		for index in enemy_data.size():
 			var enemy: Node = Enemy.instantiate()
@@ -68,6 +92,15 @@ func _unlock() -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	if not map_id.is_empty():
+		var color := Color("b89a60") if is_cleared else Color("9e302a")
+		for id in ["EntryGate", "ExitGate"]:
+			var gate: Node2D = get_node(id)
+			draw_rect(Rect2(gate.position - Vector2(12, 120), Vector2(24, 240)), color, false, 2)
+			if not is_cleared:
+				for offset in [-6, 0, 6]:
+					draw_line(gate.position + Vector2(offset, -120), gate.position + Vector2(offset, 120), color, 2)
+		return
 	draw_rect(Rect2(0, 640, 2200, 120), Color("102b35"))
 	draw_line(Vector2(0, 640), Vector2(2200, 640), Color("83dce8"), 2)
 	for platform in platforms:
@@ -81,3 +114,20 @@ func _draw() -> void:
 	if room_id == "altar":
 		draw_rect(Rect2(950, 616, 100, 24), Color("b89a60"))
 		draw_circle(Vector2(1000, 584), 18, Color("83dce8"))
+
+func _physics_process(_delta: float) -> void:
+	if map == null:
+		return
+	if is_instance_valid(active_player) and active_player.position.y > 1080 and active_player.health > 0:
+		# 坠落沿用已有死亡事件；无敌闪避结束后仍会结算。
+		active_player.receive_hit(100000, Vector2.ZERO)
+	for enemy in enemies:
+		if is_instance_valid(enemy) and enemy.health > 0 and enemy.state in [enemy.State.IDLE, enemy.State.PATROL, enemy.State.DETECT, enemy.State.APPROACH, enemy.State.RETURN, enemy.State.TELEGRAPH]:
+			for surface in map.layout.surfaces:
+				var left: Vector2 = surface[0]
+				var right: Vector2 = surface[-1]
+				if enemy.position.x >= left.x - 10 and enemy.position.x <= right.x + 10 and absf(enemy.position.y - map.floor_at(clampf(enemy.position.x, left.x, right.x))) < 10:
+					# 普通追击留在脚下石台；攻击跃击和受击仍可离台。
+					enemy.position.x = clampf(enemy.position.x, left.x + 28, right.x - 28)
+		if is_instance_valid(enemy) and enemy.health > 0 and enemy.position.y > 1080:
+			enemy.receive_hit(100000, Vector2.ZERO)

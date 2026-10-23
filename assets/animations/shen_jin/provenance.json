@@ -1,0 +1,7 @@
+{
+  "tool": "built-in imagegen",
+  "selected_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-a2fef80b-c8cf-4986-94b9-a704073932fe.png",
+  "reference": "assets/characters/shen_jin/static_v1/side_idle.png",
+  "completed_calls": 3,
+  "notes": "首轮串帧未采用；重排后去掉制作辅助边框；当前为12个基础关键姿势候选。"
+}

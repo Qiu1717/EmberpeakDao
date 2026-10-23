@@ -15,9 +15,16 @@ func frames(count: int) -> void:
 		await physics_frame
 	await process_frame
 func _run() -> void:
-	change_scene_to_file("res://scenes/rooms/general_hall.tscn")
+	# 固定平台回归使用独立物理夹具；正式Boss房现为1672宽原图，不能再用旧1700坐标。
+	var room: Node = Node2D.new()
+	room.set_script(load("res://scripts/world/combat_room.gd"))
+	room.room_id = "platform_regression"
+	room.platforms.assign([Rect2(400, 540, 200, 24), Rect2(1600, 540, 200, 24)])
+	room.enemy_data.assign([load("res://resources/enemies/mountain_general.tres")])
+	room.enemy_positions = PackedVector2Array([Vector2(1150, 640)])
+	root.add_child(room)
+	current_scene = room
 	await frames(2)
-	var room: Node = current_scene
 	var player: Node = load("res://scenes/player/player.tscn").instantiate()
 	player.position = Vector2(1700, 640)
 	room.add_child(player)

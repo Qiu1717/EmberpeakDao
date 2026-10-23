@@ -2,6 +2,7 @@
 [ext_resource type="Script" path="res://scripts/world/combat_room.gd" id="1"]
 [node name="CombatRoom" type="Node2D"]
 script = ExtResource("1")
+map_id = "sword_entry"
 room_id = "entry"
 display_name = "剑冢入口"
 platforms = Array[Rect2]([Rect2(600, 540, 220, 24), Rect2(920, 440, 220, 24)])

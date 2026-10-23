@@ -1,0 +1,6 @@
+{
+  "tool": "built-in imagegen",
+  "selected_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-72de6383-b6e0-42c0-a555-f49ddc2377c4.png",
+  "reference": "assets/enemies/static_v1/corpse.png",
+  "notes": "首图串帧未采用；按格重排后清理辅助边框。12关键姿势候选，不是完整逐帧动画；源姿势左右不同，native_facing逐姿势校准。"
+}

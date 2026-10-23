@@ -1,0 +1,6 @@
+{
+  "tool": "built-in imagegen",
+  "selected_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-f1964121-ea75-4493-9d2c-94d84bb6be9a.png",
+  "reference": "assets/enemies/static_v1/armored_xiao.png",
+  "notes": "首图串帧未采用，重新布局12姿势。按实际透明间隙原生AtlasTexture切片；游魂局部辉光截边、离散光点仍待精修。关键姿势候选，非完整逐帧动画。"
+}
