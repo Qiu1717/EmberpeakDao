@@ -1,0 +1,67 @@
+{
+  "corpse": {
+    "file": "corpse.png",
+    "canvas": [
+      1024,
+      1536
+    ],
+    "pivot": [
+      540,
+      1528
+    ],
+    "visible_height": 1505,
+    "native_facing": 1
+  },
+  "ghost": {
+    "file": "ghost.png",
+    "canvas": [
+      1024,
+      1536
+    ],
+    "pivot": [
+      480,
+      1473
+    ],
+    "visible_height": 1399,
+    "native_facing": 1
+  },
+  "crossbow": {
+    "file": "crossbow.png",
+    "canvas": [
+      1108,
+      1420
+    ],
+    "pivot": [
+      600,
+      1419
+    ],
+    "visible_height": 1416,
+    "native_facing": -1
+  },
+  "armored_xiao": {
+    "file": "armored_xiao.png",
+    "canvas": [
+      1024,
+      1536
+    ],
+    "pivot": [
+      540,
+      1474
+    ],
+    "visible_height": 1404,
+    "native_facing": -1
+  },
+  "mountain_general": {
+    "file": "mountain_general.png",
+    "canvas": [
+      1024,
+      1536
+    ],
+    "pivot": [
+      550,
+      1501
+    ],
+    "visible_height": 1481,
+    "native_facing": 1
+  }
+}

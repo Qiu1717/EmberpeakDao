@@ -52,6 +52,11 @@ func _ready() -> void:
 	label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", 14)
 	add_child(label)
+	var visual := Node2D.new()
+	visual.name = "Visual"
+	visual.set_script(load("res://scripts/art/shan_xiao_visual.gd" if data.enemy_id == "shan_xiao" else "res://scripts/art/enemy_static_visual.gd"))
+	add_child(visual)
+	show_placeholder_body = false
 	queue_redraw()
 
 func activate(player: CharacterBody2D) -> void:

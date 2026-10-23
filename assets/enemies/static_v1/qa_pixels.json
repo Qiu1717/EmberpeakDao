@@ -1,0 +1,107 @@
+{
+  "corpse": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "visible_bounds_alpha_16": [
+      85,
+      23,
+      931,
+      1528
+    ],
+    "sha256": "a9cba52c757736e8c60f3d9975068ec0a3e20477252719e05bac0bc10a4224b2",
+    "byte_identical_to_tool_output": true,
+    "reference_sha256": "ef224ab06abb7ce1b3339e1a468c31e142b5ee80ba826e12a9410a4c9fbc65fa",
+    "status": "单姿势静态候选；非完整动画"
+  },
+  "ghost": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "visible_bounds_alpha_16": [
+      96,
+      74,
+      983,
+      1473
+    ],
+    "sha256": "66647b4d98550264e1cac31c0c0cb7236fd00fe75b088bc50f44b3784f7a9c7b",
+    "byte_identical_to_tool_output": true,
+    "reference_sha256": "2cef3c04688da91ba2e5f00f10b908a8ecaf005eca34c55f379e3fed869d007b",
+    "status": "单姿势静态候选；非完整动画"
+  },
+  "crossbow": {
+    "size": [
+      1108,
+      1420
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      136,
+      3,
+      1046,
+      1419
+    ],
+    "sha256": "2c89a81a65b627417c103baf3a8a36b4b222061e7c64fc9b33d760c811ac6c53",
+    "byte_identical_to_tool_output": true,
+    "reference_sha256": "3504a833ca246bc078763122275baa8e3dbb86b3b3c7e2d1c01f6dd19a8ea40c",
+    "status": "单姿势静态候选；非完整动画"
+  },
+  "armored_xiao": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "visible_bounds_alpha_16": [
+      161,
+      70,
+      982,
+      1474
+    ],
+    "sha256": "b47a5b3c927bf6f3709c59ac12d36995edbddeac4975a22c8e71b07ceb6053db",
+    "byte_identical_to_tool_output": true,
+    "reference_sha256": "3ca79161eeb546fd9a9c524486d0ffa5e5b474f57833b50136f69e708e4a9da1",
+    "status": "单姿势静态候选；非完整动画"
+  },
+  "mountain_general": {
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "visible_bounds_alpha_16": [
+      17,
+      20,
+      1021,
+      1501
+    ],
+    "sha256": "beac22c3a30f7a36e6598288a544688ad3489f9fba2dc6e4eb9abee583a65050",
+    "byte_identical_to_tool_output": true,
+    "reference_sha256": "98b30e8595c87e6d1bf0193a9a0ab196c1c0ad603013b5deea41f2d900ea6c80",
+    "status": "单姿势静态候选；非完整动画"
+  }
+}

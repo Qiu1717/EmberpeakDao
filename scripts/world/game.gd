@@ -21,6 +21,9 @@ func _ready() -> void:
 	arena.set_script(Arena if training_mode else Route)
 	$World.add_child(arena)
 	world = arena
+	if not training_mode:
+		world.room_changed.connect(_update_room_art)
+		_update_room_art()
 	player = arena.get_node("Player") if training_mode else arena.player
 	var overlay := $UI/Overlay
 	overlay.theme = Ui.theme()
@@ -55,7 +58,7 @@ func _ready() -> void:
 		button.focus_mode = Control.FOCUS_NONE
 	var space := Control.new()
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	Ui.label(layout, "主角静态侧视图 · 动作待完善" + ("｜木桩无敌人 AI" if training_mode else "｜敌人仍为临时几何 · 固定六房间路线"), 16)
+	Ui.label(layout, "角色美术已接入 · 完整动作待完善" + ("｜木桩无敌人 AI" if training_mode else "｜六房静态背景 · 建筑碰撞以平台标线为准"), 16)
 	Ui.label(layout, "移动／跳跃／攻击／闪避使用设置中的按键；暂停键打开菜单。", 16)
 	route_status = Ui.label(layout, "", 16)
 	route_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -79,6 +82,10 @@ func _ready() -> void:
 	for control in [margin, layout, top, tools, space, health_bar]:
 		control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	app.log_event("训练场" if training_mode else "固定路线", "主角与碰撞环境已就绪")
+
+func _update_room_art() -> void:
+	var ids := ["sword_entry", "broken_swords", "stepped_corridor", "elite_den", "spirit_altar", "general_hall"]
+	$BackgroundLayer/Backdrop.set_art(ids[world.room_index])
 
 func _process(_delta: float) -> void:
 	health_bar.value = player.health

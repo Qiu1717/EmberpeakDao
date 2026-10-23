@@ -37,6 +37,9 @@ func start_art_room() -> void:
 	if await _switch_scene("res://scenes/art/shan_xiao_art_room.tscn", State.PLAYING):
 		session_started.emit()
 
+func start_gallery() -> void:
+	await _switch_scene("res://scenes/art/art_gallery.tscn", State.MENU)
+
 func return_to_menu() -> void:
 	await _switch_scene(MENU_SCENE, State.MENU)
 

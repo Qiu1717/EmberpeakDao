@@ -46,6 +46,8 @@ try {
     Invoke-GodotCheck 'art-room-headless' $artRoom 'ART_ROOM_CHECKS_PASSED=24'
     $playerArt = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1200', '--script', 'res://tests/test_player_art.gd')
     Invoke-GodotCheck 'player-art-headless' $playerArt 'PLAYER_ART_CHECKS_PASSED=20'
+    $allArt = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_all_art.gd')
+    Invoke-GodotCheck 'all-art-headless' $allArt 'ALL_ART_CHECKS_PASSED=96'
     # 6000帧上限下窗口检查曾完成47项断言但未获结束标记，保留有界退出并留出余量。
     $enemies = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '9000', '--script', 'res://tests/test_enemies.gd')
     $route = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '3600', '--script', 'res://tests/test_route.gd')
@@ -65,6 +67,7 @@ try {
         Invoke-GodotCheck 'combat-window' ($combat | Where-Object { $_ -ne '--headless' }) 'COMBAT_CHECKS_PASSED=28'
         Invoke-GodotCheck 'art-room-window' ($artRoom | Where-Object { $_ -ne '--headless' }) 'ART_ROOM_CHECKS_PASSED=24'
         Invoke-GodotCheck 'player-art-window' ($playerArt | Where-Object { $_ -ne '--headless' }) 'PLAYER_ART_CHECKS_PASSED=20'
+        Invoke-GodotCheck 'all-art-window' ($allArt | Where-Object { $_ -ne '--headless' }) 'ALL_ART_CHECKS_PASSED=96'
         Invoke-GodotCheck 'enemies-window' ($enemies | Where-Object { $_ -ne '--headless' }) 'ENEMY_CHECKS_PASSED=47'
         Invoke-GodotCheck 'route-window' ($route | Where-Object { $_ -ne '--headless' }) 'ROUTE_CHECKS_PASSED=41'
         Invoke-GodotCheck 'enemy-regressions-window' ($regressions | Where-Object { $_ -ne '--headless' }) 'ENEMY_REGRESSIONS_PASSED=6'

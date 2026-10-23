@@ -169,3 +169,11 @@ ShanXiaoVisual作为Enemy子节点，根据真实state／clock／facing／地面
 ## 15. 主角静态美术真实接入
 
 共享Player场景新增Artwork（Sprite2D），静态侧视图经原生导入，画布／脚底按实际512纹理换算；Player._process仅按真实facing镜像、真实状态着色。原_draw保留有效窗口的攻击范围提示，移除几何身体和占位持剑线；其余输入、物理、生命、命中和闪避不变。三个已有入口自动共用素材，无新Autoload或动画空壳。当前是单姿势候选，不具备正式跑跳或攻击动画；详见PLAYER_ART_INTEGRATION.md。
+
+## 16. 现有美术接入
+
+art_catalog.json仅登记26张原图的分类、运行路径、原始来源、哈希与展示说明；ArtCatalog为简单只读查找，不是NPC或装备管理器。ArtGallery提供分类、原图预览和菜单返回，App以MENU状态切换，不发送探索开始事件或创建存档。
+
+Enemy挂载唯一Visual：山魈复用ShanXiaoVisual，其他五种使用EnemyStaticVisual读取独立manifest，按原body_size高度缩放、实际native_facing镜像，HURT着色和父级死亡淡出仍读取真实状态。没有更改物理、伤害、冷却或奖励配置。单房样板移除旧的重复挂载，继续复用相同表现。
+
+Backdrop显示静态原图，保持纵横比覆盖视口；Game在room_changed时更新六房背景映射，CanvasLayer背景不改变世界坐标或碰撞。原几何地面和平台是本轮可通行区域的明确标识；建筑、分层、视差和新关卡均未实现。详见ALL_ART_INTEGRATION.md。

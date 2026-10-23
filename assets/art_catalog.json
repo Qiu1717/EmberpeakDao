@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "shen_jin",
+      "title": "沈烬",
+      "category": "主角",
+      "path": "res://assets/characters/shen_jin/concepts/reference.png",
+      "source": "主角形象/主角.png",
+      "sha256": "a4f796ec2d2530ca5399e2cfadd4cb43dbb4c98bfe0e8c6587aaf16aedc9dd97",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "原始三视图；游戏内已接入静态侧视形象，完整动作待制作。"
+    },
+    {
+      "id": "shan_xiao",
+      "title": "山魈幼体",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/shan_xiao.png",
+      "source": "第一地图/第一地图怪物形象/第一地图小怪形象/山魑幼体.png",
+      "sha256": "12e01e5aabc6ac6174f72272e907524f232084bd44a27932bfdf2557f5cafc4c",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "corpse",
+      "title": "腐甲尸兵",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/corpse.png",
+      "source": "第一地图/第一地图怪物形象/第一地图小怪形象/腐甲尸兵.png",
+      "sha256": "ef224ab06abb7ce1b3339e1a468c31e142b5ee80ba826e12a9410a4c9fbc65fa",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "ghost",
+      "title": "断刃游魂",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/ghost.png",
+      "source": "第一地图/第一地图怪物形象/第一地图小怪形象/断刃游魂.png",
+      "sha256": "2cef3c04688da91ba2e5f00f10b908a8ecaf005eca34c55f379e3fed869d007b",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "crossbow",
+      "title": "灵弩傀儡",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/crossbow.png",
+      "source": "第一地图/第一地图怪物形象/第一地图小怪形象/灵弩傀儡.png",
+      "sha256": "3504a833ca246bc078763122275baa8e3dbb86b3b3c7e2d1c01f6dd19a8ea40c",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "armored_xiao",
+      "title": "裂甲山魈",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/armored_xiao.png",
+      "source": "第一地图/第一地图怪物形象/第一地图精英怪形象/裂甲山魈.png",
+      "sha256": "3ca79161eeb546fd9a9c524486d0ffa5e5b474f57833b50136f69e708e4a9da1",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "mountain_general",
+      "title": "镇山妖将",
+      "category": "敌人",
+      "path": "res://assets/enemies/concepts/mountain_general.png",
+      "source": "第一地图/第一地图怪物形象/第一地图boss形象/镇山妖将.png",
+      "sha256": "98b30e8595c87e6d1bf0193a9a0ab196c1c0ad603013b5deea41f2d900ea6c80",
+      "canvas": [
+        1448,
+        1086
+      ],
+      "mode": "RGB",
+      "description": "敌人原始设定图；战斗中采用独立美术表现，图中动作示意不等于完整动画。"
+    },
+    {
+      "id": "shen_yan_zhou",
+      "title": "沈砚舟",
+      "category": "NPC",
+      "path": "res://assets/npcs/concepts/shen_yan_zhou.png",
+      "source": "第一地图/第一地图NPC形象/沈砚舟.png",
+      "sha256": "1c239efb47b56f5cc32362e07d64af9714ea2ea7d6bfe413151bc4a32288ded8",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "残存剑师。本轮仅接入美术展示，对话、任务、交易与动作尚未实现。"
+    },
+    {
+      "id": "gu_chang_geng",
+      "title": "顾长庚",
+      "category": "NPC",
+      "path": "res://assets/npcs/concepts/gu_chang_geng.png",
+      "source": "第一地图/第一地图NPC形象/顾长庚.png",
+      "sha256": "a8ddd72b1e51a32fc63f3668ade503198fc606e5b5070d48619b7fc7855b1165",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "流亡铁匠。本轮仅接入美术展示，对话、任务、交易与动作尚未实现。"
+    },
+    {
+      "id": "a_heng",
+      "title": "阿蘅",
+      "category": "NPC",
+      "path": "res://assets/npcs/concepts/a_heng.png",
+      "source": "第一地图/第一地图NPC形象/阿蘅.png",
+      "sha256": "a96f568bb7a3a24895fdf7a33e9d39f6bafc4fad16d0e45e34fe44c2be08a474",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "采药人。本轮仅接入美术展示，对话、任务、交易与动作尚未实现。"
+    },
+    {
+      "id": "can_deng",
+      "title": "残灯婆婆",
+      "category": "NPC",
+      "path": "res://assets/npcs/concepts/can_deng.png",
+      "source": "第一地图/第一地图NPC形象/残灯婆婆.png",
+      "sha256": "079593ca15540136ba418aa120a0099df61b538a4b04ab9421ef41e358740f7b",
+      "canvas": [
+        1086,
+        1448
+      ],
+      "mode": "RGB",
+      "description": "守灯人。本轮仅接入美术展示，对话、任务、交易与动作尚未实现。"
+    },
+    {
+      "id": "faceless",
+      "title": "无面商人",
+      "category": "NPC",
+      "path": "res://assets/npcs/concepts/faceless.png",
+      "source": "第一地图/第一地图NPC形象/无面商人4.png",
+      "sha256": "f02a137a3c686b85ffc14db84f36184bdb75939a4c85aa18838e7c02a9c1543e",
+      "canvas": [
+        1086,
+        1448
+      ],
+      "mode": "RGB",
+      "description": "秘境行商。本轮仅接入美术展示，对话、任务、交易与动作尚未实现。"
+    },
+    {
+      "id": "qing_feng",
+      "title": "青锋旧剑",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/qing_feng.png",
+      "source": "第一地图/第一地图低阶武器装备形象/青锋旧剑.png",
+      "sha256": "98f04439850f6ce1f2c8e22d828f08731c6e5d5d8e7c044a8a8c2c4201fc3a00",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "po_shan",
+      "title": "破山长枪",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/po_shan.png",
+      "source": "第一地图/第一地图低阶武器装备形象/破山长枪.png",
+      "sha256": "f109a0ab6f973bbed835d3716b252d66aea8374ccd99f89b6d3df2c60230be76",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "qing_bu",
+      "title": "青布道袍",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/qing_bu.png",
+      "source": "第一地图/第一地图低阶武器装备形象/青布道袍.png",
+      "sha256": "657145540fd4ef55a919baca9b2102857b243e4e4f8e7d9fbc24bd181a451543",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "hui_ling",
+      "title": "回灵玉佩",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/hui_ling.png",
+      "source": "第一地图/第一地图低阶武器装备形象/回灵玉佩.png",
+      "sha256": "0fcbe87e153b798377e907aac73c270911f1b2f0b368f722d7c94f0c2cbec987",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "can_jian",
+      "title": "残剑坠",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/can_jian.png",
+      "source": "第一地图/第一地图低阶武器装备形象/残剑坠.png",
+      "sha256": "b55e1c8f1a25b2df305d9027139b575112bdf6fce003c51e4c73ca7ae2a1b26c",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "ti_jie",
+      "title": "替劫符",
+      "category": "武器装备",
+      "path": "res://assets/equipment/concepts/ti_jie.png",
+      "source": "第一地图/第一地图低阶武器装备形象/替劫符.png",
+      "sha256": "d0a056c2fcea3ad38a7982e2be9b7ea03825731ceb95601b5465404f799a68bc",
+      "canvas": [
+        1122,
+        1402
+      ],
+      "mode": "RGB",
+      "description": "原始造型、图标和特效设定参考。当前仅青锋旧剑基础攻击已实现；图中说明不替代设计数值，不表示可以换装或使用其他装备。"
+    },
+    {
+      "id": "atmosphere",
+      "title": "无名剑冢·总氛围",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/atmosphere.png",
+      "source": "第一地图/第一地图关卡素材/无名剑冢_总氛围图.png",
+      "sha256": "f9024c453d1eb0c0833367ae283996fed8dfa635e0ce8ffe39112e060dec4be6",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "sword_entry",
+      "title": "剑冢入口",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/sword_entry.png",
+      "source": "第一地图/第一地图关卡素材/剑冢入口_横版场景/ChatGPT 图像 2026年10月23日 17_00_15.png",
+      "sha256": "5f640874ebbf0bc903231282d3ee94b71a8458574d7c69c490cb3939f8c581db",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "broken_swords",
+      "title": "残剑荒地",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/broken_swords.png",
+      "source": "第一地图/第一地图关卡素材/残剑荒地_战斗房/ChatGPT 图像 2026年10月23日 17_00_52.png",
+      "sha256": "c7558376315496440d3cdbed230b61a13507ab532b1b2ffce38d7cd40f9fb1f3",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "stepped_corridor",
+      "title": "断阶回廊",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/stepped_corridor.png",
+      "source": "第一地图/第一地图关卡素材/断阶回廊_平台战斗房/ChatGPT 图像 2026年10月23日 16_59_51.png",
+      "sha256": "3042403a910138e747ab73ff5ada48e2b3e12161ed3961d8dd9887d35937fcb1",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "elite_den",
+      "title": "裂甲山魈巢穴",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/elite_den.png",
+      "source": "第一地图/第一地图关卡素材/裂甲山魈巢穴_精英房/ChatGPT 图像 2026年10月23日 16_59_31.png",
+      "sha256": "abeda4afd6c4fe64ee77931b81d32c6734d584ee78568370035248ebdc531891",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "spirit_altar",
+      "title": "灵脉祭坛",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/spirit_altar.png",
+      "source": "第一地图/第一地图关卡素材/灵脉祭坛_存档突破点/ChatGPT 图像 2026年10月23日 16_59_18.png",
+      "sha256": "79cf1f478477e132ecdbdef61d7fefa4b8154d90742a5f2443902a3e0a438f88",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "general_hall",
+      "title": "镇山妖将大殿",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/general_hall.png",
+      "source": "第一地图/第一地图关卡素材/镇山妖将大殿_Boss房/.png",
+      "sha256": "707ce14063989f069327b8e131202ee595d2a3501b8ff2efdf40b2155cdc5ed6",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。"
+    },
+    {
+      "id": "old_monument",
+      "title": "旧碑奇遇房",
+      "category": "场景",
+      "path": "res://assets/backgrounds/nameless_tomb/old_monument.png",
+      "source": "第一地图/第一地图关卡素材/旧碑奇遇房_事件房/ChatGPT 图像 2026年10月23日 16_59_41.png",
+      "sha256": "639086df4596f973a82165f58893d0a63d99673724b80bce157a106a843aaeef",
+      "canvas": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "description": "静态场景画面。建筑、石阶与装饰尚未拆层；可站立区域以关卡现有平台标线为准。本轮仅图鉴展示，不新增事件房。"
+    }
+  ]
+}

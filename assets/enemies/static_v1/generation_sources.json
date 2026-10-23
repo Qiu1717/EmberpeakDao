@@ -1,0 +1,27 @@
+{
+  "corpse": {
+    "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-9c8cde0c-cb3e-43e8-bac1-70c575a88e48.png",
+    "prompt": "corpse_prompt.txt",
+    "reference": "E:\\烬山问道\\第一地图\\第一地图怪物形象\\第一地图小怪形象\\腐甲尸兵.png"
+  },
+  "ghost": {
+    "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-e119024f-7204-4263-9a91-0ee81d538964.png",
+    "prompt": "ghost_prompt.txt",
+    "reference": "E:\\烬山问道\\第一地图\\第一地图怪物形象\\第一地图小怪形象\\断刃游魂.png"
+  },
+  "crossbow": {
+    "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-d74c03db-7f1f-4608-8578-e68584dfbd7a.png",
+    "prompt": "crossbow_prompt.txt",
+    "reference": "E:\\烬山问道\\第一地图\\第一地图怪物形象\\第一地图小怪形象\\灵弩傀儡.png"
+  },
+  "armored_xiao": {
+    "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-aa83bf54-e773-44a1-9acb-8e181914655f.png",
+    "prompt": "armored_xiao_prompt.txt",
+    "reference": "E:\\烬山问道\\第一地图\\第一地图怪物形象\\第一地图精英怪形象\\裂甲山魈.png"
+  },
+  "mountain_general": {
+    "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-52eaa646-3bb8-4cd1-bf14-9bc486a4886a.png",
+    "prompt": "mountain_general_prompt.txt",
+    "reference": "E:\\烬山问道\\第一地图\\第一地图怪物形象\\第一地图boss形象\\镇山妖将.png"
+  }
+}

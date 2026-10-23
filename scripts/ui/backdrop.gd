@@ -1,11 +1,25 @@
 extends Control
-## 纯绘制的菜单背景，不构成可探索地图。
+## 场景原图只作静态背景，不从画面推导建筑碰撞。
+const Catalog := preload("res://scripts/art/art_catalog.gd")
+var art_id := ""
+var artwork: Texture2D
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	resized.connect(queue_redraw)
+	set_art("sword_entry")
+
+func set_art(id: String) -> void:
+	art_id = id
+	artwork = Catalog.texture(id)
+	queue_redraw()
 
 func _draw() -> void:
+	if artwork != null:
+		var factor := maxf(size.x / artwork.get_width(), size.y / artwork.get_height())
+		var extent := artwork.get_size() * factor
+		draw_texture_rect(artwork, Rect2((size - extent) / 2, extent), false, Color(0.62, 0.68, 0.72))
+		return
 	draw_rect(Rect2(Vector2.ZERO, size), Color("07141b"))
 	for layer in 3:
 		var points := PackedVector2Array([Vector2(0, size.y)])
