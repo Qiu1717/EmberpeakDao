@@ -1,0 +1,76 @@
+{
+  "asset_id": "shan_xiao_pounce_v1",
+  "status": "validation_sample_not_production_approved",
+  "source_reference": "第一地图/第一地图怪物形象/第一地图小怪形象/山魑幼体.png",
+  "canvas": [
+    1254,
+    1254
+  ],
+  "pivot": [
+    800,
+    1205
+  ],
+  "canonical_facing": "left",
+  "generation_tool": "built-in imagegen",
+  "unique_drawn_poses": 7,
+  "timing_source": "resources/enemies/shan_xiao.tres Attack_0; phase3 test timings, unchanged",
+  "frames": [
+    {
+      "file": "raw/frame_01.png",
+      "pose": "起势",
+      "phase": "前摇",
+      "duration": 0.18
+    },
+    {
+      "file": "raw/frame_02.png",
+      "pose": "蓄力",
+      "phase": "前摇",
+      "duration": 0.17
+    },
+    {
+      "file": "raw/frame_03.png",
+      "pose": "压低蓄力",
+      "phase": "前摇",
+      "duration": 0.15
+    },
+    {
+      "file": "raw/frame_04.png",
+      "pose": "腾空扑出",
+      "phase": "攻击",
+      "duration": 0.1
+    },
+    {
+      "file": "raw/frame_05.png",
+      "pose": "挥爪",
+      "phase": "攻击",
+      "duration": 0.1
+    },
+    {
+      "file": "raw/frame_06.png",
+      "pose": "落地接触",
+      "phase": "攻击",
+      "duration": 0.1
+    },
+    {
+      "file": "raw/frame_07.png",
+      "pose": "收势",
+      "phase": "收招",
+      "duration": 0.3
+    },
+    {
+      "file": "raw/frame_01.png",
+      "pose": "回到起势（复用01）",
+      "phase": "收招",
+      "duration": 0.35
+    }
+  ],
+  "duration": 1.45,
+  "windup": 0.5,
+  "active": 0.3,
+  "recovery": 0.65,
+  "approved_for_live_enemy": false,
+  "pixel_qa": "qa_pixels.json",
+  "alpha_visible_threshold": 16,
+  "native_display_height_for_comparison": 56,
+  "preview_only_note": "仅模拟根位移，不修改实战碰撞。当前正式角色尺寸未冻结，主观连贯性与脚位仍需审阅。"
+}

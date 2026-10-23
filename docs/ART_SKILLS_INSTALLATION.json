@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-23",
+  "installed": [
+    {
+      "name": "create-game-assets",
+      "repository": "https://github.com/minhhoit/gamedev-agent-skills",
+      "commit": "b105e1cf617adf0b68ed98790a716bbb60993179",
+      "subdirectory": "skills/disciplines/create-game-assets",
+      "license": "Apache-2.0",
+      "installed_at": "C:\\Users\\Q\\.codex\\skills\\create-game-assets",
+      "skill_sha256": "c178cde20316f7d326f2a853a76522b375b325346b5b8797ef52aa98740aff18",
+      "file_count": 11
+    },
+    {
+      "name": "assets-pipeline",
+      "repository": "https://github.com/jame581/GodotPrompter",
+      "commit": "6da498d17031e7c1d8d518e27a148ea440d90341",
+      "subdirectory": "skills/assets-pipeline",
+      "license": "MIT",
+      "installed_at": "C:\\Users\\Q\\.codex\\skills\\assets-pipeline",
+      "skill_sha256": "24da553c08f80bd5294078843fa8c73c544c523df8e5d9814466fe5f8110f890",
+      "file_count": 2
+    },
+    {
+      "name": "game-ui-specification",
+      "repository": "https://github.com/guiguiyan930-source/game-ui-design-workflow",
+      "commit": "1ec604638dd1a27198576206eb3e47632725a078",
+      "subdirectory": "skills/game-ui-specification",
+      "license": "MIT",
+      "installed_at": "C:\\Users\\Q\\.codex\\skills\\game-ui-specification",
+      "skill_sha256": "7800dec38e3434798c887f0acb79ff00705e92e54c19b7a1167c8f0831a7985c",
+      "file_count": 2
+    }
+  ],
+  "software_or_runtime_dependencies_installed": false
+}

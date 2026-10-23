@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in imagegen",
+  "reference": "第一地图/第一地图怪物形象/第一地图小怪形象/山魑幼体.png",
+  "reference_sha256": "12e01e5aabc6ac6174f72272e907524f232084bd44a27932bfdf2557f5cafc4c",
+  "reference_role": "造型参照；原图不改动",
+  "generation_requests": "generation_requests.json",
+  "output_directory_hint": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f",
+  "imagegen_requests": 8,
+  "selected_outputs": 7,
+  "note": "03/05并行批次的05长时间未返回，取消等待；已写出的03保留并检查。05另行单独生成成功。没有把未完成请求算作成功帧。工具原始PNG逐字节复制，未用Python编辑图像。",
+  "rights_note": "用户提供原始参照；生成图像权利不由技能仓库的开源许可自动推定。未引入第三方成品素材。",
+  "files": [
+    {
+      "file": "raw/frame_01.png",
+      "generated_output": "exec-0182488e-8de1-4415-a8df-35f3d9c9ceb0.png",
+      "sha256": "2df48668536c407dd389279001120a7b3a8a3d3d531761c84c884365d733db46",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_02.png",
+      "generated_output": "exec-21b4e53d-a2a0-4148-b2ac-580d2361038b.png",
+      "sha256": "da5781a34503150d5aee48a432350dd816a54743d42bb91b1aa3895cc95624af",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_03.png",
+      "generated_output": "exec-3f9d981e-d5bd-447f-9a66-2af07923fba8.png",
+      "sha256": "a0bde81af9937728974ea5419084fffb86be4ab4808b7d448b3926d8c0942daa",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_04.png",
+      "generated_output": "exec-dfe6b0e0-a0b9-43ad-a4e1-c71e28c21e9e.png",
+      "sha256": "1bac98b0ccb775f978ceef3a978174f5dad33e2f3f078baf7dcc4baf8645c86f",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_05.png",
+      "generated_output": "exec-779c142f-0d69-44d4-a8ec-0084563487b2.png",
+      "sha256": "f059d01abe7e972cd43b521c7cdaf5f75b837f8abf9b44a26e0c013c84c411fc",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_06.png",
+      "generated_output": "exec-a99fa2ab-111d-4a0b-95e9-664dc92b3600.png",
+      "sha256": "d6b06c18c91bb629887599e1a556abc1522dd40b791246a42d07d3911735c660",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "file": "raw/frame_07.png",
+      "generated_output": "exec-e40ed11d-2fd2-403f-82d2-8931ff6aa3b6.png",
+      "sha256": "3cf8900271f93e76c3268f761570cc49ae26c297e6e823ae314c62064d165d73",
+      "byte_identical_to_tool_output": true
+    }
+  ]
+}

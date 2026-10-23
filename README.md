@@ -110,3 +110,13 @@ pwsh -File tests/run_checks.ps1 -Windowed
 当前敌人测试47项、路线41项、问题回归6项，以及原主角战斗28项，均在无窗口和真实窗口各执行一次；框架与设置回归一并运行。窗口路线截图为 builds/phase3/room_0.png 至 room_5.png；本次资料卡实查截图为 boss_live.png。
 
 本轮未验证正式角色动画、人工手感评价、Windows 独立导出、物理手柄、音频听感与后续游戏系统。没有使用空函数或假存档模拟这些功能。
+
+## 动作素材样片（2026-10-23）
+
+第一地图现有山魈概念图已用于制作扑击样片：7张不同透明姿势、8个播放帧槽；它尚未通过正式美术验收，未替换游戏中的临时敌人。正常／半速、逐帧及56像素高度对照预览：
+
+```powershell
+& 'E:\Godot\bin\godot.bat' --path . res://scenes/art/shan_xiao_pounce_preview.tscn
+```
+
+见[素材与提示词](assets/enemies/shan_xiao/validation/pounce_v1/README.md)、[实际检查报告](docs/ART_SAMPLE_REPORT.md)、[十项GitHub技能筛选结果](docs/ART_SKILLS_REVIEW.md)。本次仅美术样片制作，不启动阶段4。

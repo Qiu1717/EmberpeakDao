@@ -1,0 +1,142 @@
+[
+  {
+    "file": "frame_01.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      273,
+      80,
+      1088,
+      1205
+    ],
+    "minimum_visible_margin": 49,
+    "sha256": "2df48668536c407dd389279001120a7b3a8a3d3d531761c84c884365d733db46"
+  },
+  {
+    "file": "frame_02.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      199,
+      232,
+      1176,
+      1198
+    ],
+    "minimum_visible_margin": 56,
+    "sha256": "da5781a34503150d5aee48a432350dd816a54743d42bb91b1aa3895cc95624af"
+  },
+  {
+    "file": "frame_03.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      49,
+      318,
+      1214,
+      1184
+    ],
+    "minimum_visible_margin": 40,
+    "sha256": "a0bde81af9937728974ea5419084fffb86be4ab4808b7d448b3926d8c0942daa"
+  },
+  {
+    "file": "frame_04.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      18,
+      181,
+      1243,
+      1154
+    ],
+    "minimum_visible_margin": 11,
+    "sha256": "1bac98b0ccb775f978ceef3a978174f5dad33e2f3f078baf7dcc4baf8645c86f"
+  },
+  {
+    "file": "frame_05.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      42,
+      179,
+      1245,
+      1132
+    ],
+    "minimum_visible_margin": 9,
+    "sha256": "f059d01abe7e972cd43b521c7cdaf5f75b837f8abf9b44a26e0c013c84c411fc"
+  },
+  {
+    "file": "frame_06.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      42,
+      243,
+      1245,
+      1212
+    ],
+    "minimum_visible_margin": 9,
+    "sha256": "d6b06c18c91bb629887599e1a556abc1522dd40b791246a42d07d3911735c660"
+  },
+  {
+    "file": "frame_07.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      272,
+      94,
+      1101,
+      1213
+    ],
+    "minimum_visible_margin": 41,
+    "sha256": "3cf8900271f93e76c3268f761570cc49ae26c297e6e823ae314c62064d165d73"
+  }
+]
