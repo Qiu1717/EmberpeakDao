@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/attack_profile.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/concepts/corpse.png" id="3"]
+
+[sub_resource type="Resource" id="Attack_0"]
+script = ExtResource("2")
+attack_id = "cleave"
+display_name = "蓄力重劈"
+kind = "melee"
+damage = 10
+reach = 92
+windup = 0.85
+active_time = 0.2
+recovery = 0.9
+hit_size = Vector2(110, 72)
+
+[resource]
+script = ExtResource("1")
+enemy_id = "corpse"
+display_name = "腐甲尸兵"
+max_health = 75
+move_speed = 65.0
+behavior = "melee"
+concept_texture = ExtResource("3")
+attacks = Array[Resource]([SubResource("Attack_0")])
+body_size = Vector2(36, 64)

@@ -1,0 +1,58 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/attack_profile.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/concepts/armored_xiao.png" id="3"]
+
+[sub_resource type="Resource" id="Attack_0"]
+script = ExtResource("2")
+attack_id = "swipe"
+display_name = "近身挥击"
+kind = "melee"
+damage = 18
+reach = 110
+windup = 0.65
+active_time = 0.22
+recovery = 0.85
+hit_size = Vector2(140, 80)
+
+[sub_resource type="Resource" id="Attack_1"]
+script = ExtResource("2")
+attack_id = "rush"
+display_name = "短距冲撞"
+kind = "lunge"
+damage = 18
+reach = 310
+windup = 0.75
+active_time = 0.4
+recovery = 1.0
+move_speed = 400
+leap_velocity = 0
+hit_size = Vector2(110, 80)
+
+[sub_resource type="Resource" id="Attack_2"]
+script = ExtResource("2")
+attack_id = "ground_slam"
+display_name = "蓄力砸地"
+kind = "slam"
+damage = 18
+reach = 170
+windup = 0.9
+active_time = 0.2
+recovery = 1.1
+hit_size = Vector2(310, 48)
+minimum_phase = 2
+
+[resource]
+script = ExtResource("1")
+enemy_id = "armored_xiao"
+display_name = "裂甲山魈"
+max_health = 420
+move_speed = 85.0
+behavior = "elite"
+concept_texture = ExtResource("3")
+attacks = Array[Resource]([SubResource("Attack_0"), SubResource("Attack_1"), SubResource("Attack_2")])
+body_size = Vector2(64, 84)
+armor_points = 100.0
+armor_reduction = 0.25
+phase_health = 0.6

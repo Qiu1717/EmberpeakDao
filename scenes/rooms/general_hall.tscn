@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/world/combat_room.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/enemies/mountain_general.tres" id="2"]
+[node name="CombatRoom" type="Node2D"]
+script = ExtResource("1")
+room_id = "boss"
+display_name = "镇山妖将 Boss 房"
+platforms = Array[Rect2]([Rect2(400, 540, 200, 24), Rect2(1600, 540, 200, 24)])
+enemy_data = Array[Resource]([ExtResource("2")])
+enemy_positions = PackedVector2Array(1150, 640)

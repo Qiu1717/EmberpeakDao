@@ -1,0 +1,83 @@
+[gd_resource type="Resource" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/attack_profile.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/concepts/mountain_general.png" id="3"]
+
+[sub_resource type="Resource" id="Attack_0"]
+script = ExtResource("2")
+attack_id = "slash"
+display_name = "横向重斩"
+kind = "melee"
+damage = 22
+reach = 150
+windup = 0.7
+active_time = 0.22
+recovery = 0.95
+hit_size = Vector2(180, 90)
+
+[sub_resource type="Resource" id="Attack_1"]
+script = ExtResource("2")
+attack_id = "charge"
+display_name = "短距冲锋"
+kind = "lunge"
+damage = 24
+reach = 360
+windup = 0.85
+active_time = 0.45
+recovery = 1.1
+move_speed = 440
+leap_velocity = 0
+hit_size = Vector2(110, 90)
+
+[sub_resource type="Resource" id="Attack_2"]
+script = ExtResource("2")
+attack_id = "leap"
+display_name = "跳跃砸地"
+kind = "leap"
+damage = 28
+reach = 450
+windup = 0.9
+active_time = 1.05
+recovery = 1.1
+hit_size = Vector2(300, 48)
+
+[sub_resource type="Resource" id="Attack_3"]
+script = ExtResource("2")
+attack_id = "double_slash"
+display_name = "连续重斩"
+kind = "melee"
+damage = 22
+reach = 160
+windup = 0.6
+active_time = 0.48
+recovery = 1.05
+burst = 2
+hit_size = Vector2(190, 90)
+minimum_phase = 2
+
+[sub_resource type="Resource" id="Attack_4"]
+script = ExtResource("2")
+attack_id = "wave"
+display_name = "地面冲击波"
+kind = "wave"
+damage = 28
+reach = 650
+windup = 0.95
+active_time = 0.15
+recovery = 1.25
+projectile_speed = 390
+minimum_phase = 2
+
+[resource]
+script = ExtResource("1")
+enemy_id = "mountain_general"
+display_name = "镇山妖将"
+max_health = 1100
+move_speed = 95.0
+behavior = "boss"
+concept_texture = ExtResource("3")
+attacks = Array[Resource]([SubResource("Attack_0"), SubResource("Attack_1"), SubResource("Attack_2"), SubResource("Attack_3"), SubResource("Attack_4")])
+body_size = Vector2(76, 112)
+phase_health = 0.55
+intro_duration = 1.0

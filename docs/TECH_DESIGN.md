@@ -1,6 +1,6 @@
 # 《烬山问道》技术设计
 
-版本：0.3。日期：2026-10-23。状态：框架及阶段 2 角色基础战斗已实现；成长、完整武器系统、敌人 AI、地图与游戏存档仍为设计。实际接口见第 11–12 节；第 3 节的完整模块表是预定契约。核心规则取自主方案，待决项不作为实现授权。
+版本：0.4。日期：2026-10-23。状态：框架、角色基础战斗、第一地图六敌与固定六房路线已实现；成长、完整武器系统、随机地图与游戏存档仍为设计。实际接口见第 11–13 节；第 3 节的完整模块表是预定契约。核心规则取自主方案，待决项不作为实现授权。
 
 唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
@@ -130,7 +130,7 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 
 - App Autoload：State 为 BOOT／MENU／PLAYING／PAUSED；start_new_game()、return_to_menu()、set_paused(bool)、quit_game() 管理实际生命周期。state_changed(state)、session_started、scene_changed(path) 均在真实操作后发出；新局信号在场景就绪后发送，后续局内模块可订阅，不在这里写成长数据。
 - Settings Autoload：values 是音量、显示和 bindings 字典；apply_options(Dictionary) 校验后应用，save_options()/load_options() 操作独立 user://settings.cfg，changed 信号通知界面。Master／Music／SFX 总线有效。它不读取或创建游戏存档。
-- Game 场景根是 Control，提供 World、Actors 两个 Node2D 接入节点和 UI/Overlay 控件层；当前 World 下挂 TrainingArena，内含 Player、木桩及平台；Actors 保留框架接点，当前没有消费者；HUD 挂 UI/Overlay（CanvasLayer 10），PauseLayer（20）承载暂停菜单，背景层为 -10。后续正式地图与角色在所属阶段迁接，各模块不直接修改 App 内部状态。
+- Game 场景根是 Control，提供 World、Actors 两个 Node2D 接入节点和 UI/Overlay 控件层；阶段2时 World 下挂 TrainingArena，内含 Player、木桩及平台；当时 Actors 保留框架接点，未使用。阶段3的默认路线和 Actors 接入见第13节；HUD 挂 UI/Overlay（CanvasLayer 10），PauseLayer（20）承载暂停菜单，背景层为 -10。后续正式地图与角色在所属阶段迁接，各模块不直接修改 App 内部状态。
 - 当前 UI 使用缓存的 /root/App 与 /root/Settings 引用，支持单脚本 --check-only；未来按所属阶段接入真实服务，不预生成 SaveManager、InventorySystem 等空函数。
 - 角色通过 InputMap 的 move_left、move_right、jump、attack、heavy_attack、dodge、skill、heal、interact、pause 读输入。鼠标及手柄替代映射保留；暂停键优先于 GUI 导航，但设置层先消费关闭／改键输入。
 - 存档模块实现并验证后再启用“继续游戏”，能力检测应来自有效档案，不能仅以文件存在或常量 true 冒充。当前按钮无可用操作。
@@ -144,5 +144,18 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 - 移动／跳跃读取统一 InputMap；攻击／闪避通过 _unhandled_input 请求进入物理帧，避免点击 GUI 按钮时同时挥剑。HUD 非交互容器穿透鼠标，按钮消费点击。离地容错在各动作分支之前更新，不因攻击、受击或闪避冻结。
 - 一次基础攻击包含前摇、有效、收招，总时长兼作再次攻击冷却。仅有效窗口用实际矩形物理查询，按目标实例去重；三段伤害14/18/24，超过连段窗口重新第一段。无输入缓冲连段；闪避可取消攻击，受击中断攻击，死亡停止动作输入。
 - scripts/combat/damage.gd 统一防御公式、倍率与整数舍入。主角施加境界与暴击倍率，目标接收时调用同一模块结算防御；不另写武器防御算法。当前固定 seed 仅用于训练与回归，正式探索 RNG 归属仍按第 7 节实施。
-- TrainingArena 创建静态平台和边墙；TrainingTarget 仅受击、击退及血条，无 AI、接触伤害、掉落或奖励。受击／致死按钮是调试伤害源。Game HUD 显示生命、状态、冷却；重新训练调用 App.start_new_game() 真实重载场景，不是存档恢复。
+- TrainingArena 创建静态平台和边墙；TrainingTarget 仅受击、击退及血条，无 AI、接触伤害、掉落或奖励。受击／致死按钮是调试伤害源。Game HUD 显示生命、状态、冷却；重新训练调用 App.start_training()（阶段3将训练与正式路线入口分开） 真实重载场景，不是存档恢复。
 - 正式动画尚缺，_draw() 仅表示功能状态，挥剑显示的矩形与实际有效窗口／范围一致；保留原始图和失败图集。没有接入真气、药品、重击、技能、永久死亡事务或境界系统，不提供空接口假装完成。
+
+## 13. 阶段3真实接口与固定路线
+
+- EnemyData 与 AttackProfile 是 Resource 脚本，六份 resources/enemies/*.tres 集中生命、速度、攻击模式、前摇／有效／收招／额外冷却、阶段、概念图引用。已定与未定值见 ENEMY_BALANCE.md，禁止把测试默认值当正式表。
+- Enemy（CharacterBody2D）共享 DORMANT／INTRO／IDLE／PATROL／DETECT／APPROACH／TELEGRAPH／ATTACK／RECOVERY／RETURN／HURT／PHASE／DEAD。activate(player) 实际激活感知；receive_hit(amount, impulse, armor_damage=0) 统一伤害、护甲、击退与硬直。普通剑攻击未新增破甲能力，第三参数只提供给以后真实重击或特定破甲来源。
+- died(source_id)、reward_requested(payload)、phase_changed(phase)、attack_started(attack_id)、state_changed(state) 均在真实动作发出。死亡先关闭碰撞并停止攻击，再发送唯一来源结算及死亡通知，保留0.60秒淡出。载荷含 source_id／enemy_id／guaranteed_material／drop_rates_defined=false／amounts_defined=false；路线按来源去重。Boss确定材料名是筑基灵髓，其他奖励种类仍待后续配置；当前无背包、成长、存档消费者。
+- 山魈扑击、尸兵慢重劈、游魂双击、灵弩后撤与射击、精英甲壳／冲撞／60%砸地、Boss固定轮换重斩／冲锋／跳砸／二阶段连斩与双向地波在共享状态机中走实际不同攻击分支。收招结束后才启动额外冷却。预警锁方向／落点，普通攻击可受击打断，精英有甲和Boss预警／攻击抗打断，破甲可中断；入场／转阶段不受伤是本轮测试决定，仍待手感评审。
+- 弩箭和地面波用实际射线扫帧位移，环境层1阻挡、玩家层2受伤；单弹只命中一次，无敌内不扣血。源敌死亡、玩家死亡或离房时释放弹体；暂停实际冻结物理帧。地面波可跳过。
+- 固定房间为矩形碰撞；Boss起跳前按物理步长和脚底左中右射线预测首个可落平台，预警与首次落点对应，落地同帧结算并停止水平速度。敌人目标在下方时可穿过当前单向平台下降，离开该平台横向范围后恢复碰撞；预测也排除本体正在忽略的平台。移动平台／斜坡／任意地形尚未验证，扩展此类地图需替换或扩大预测验证。
+- CombatRoom 的 enter(player, was_cleared)、cleared(room_id)、reward_requested(payload) 管理本房激活、剩余敌人和实体门；普通平台单向碰撞，地面、墙及锁门是实体碰撞。最后敌人死亡仅清场一次，延迟禁用门碰撞。
+- SwordRoute 实例化六份 scenes/rooms/*.tscn；World/SwordRoute/CombatRoom 是房间，Actors/Player 是持续主角，换房调用 Player.reset_motion_at(spawn)，保留生命与闪避冷却，清旧攻击和连段，重置镜头平滑。enter_room(index) 是实际房间切换；interact() 仅在清场、活着、近地面且靠门时响应。清场集合只在本次路线内有效，重访不再生成敌人和奖励，Boss后可回同一祭坛。
+- 祭坛交互只恢复训练生命，无存档、资源记录和境界突破；界面明确说明。App.start_new_game() 进入默认固定路线；start_training() 进入继承 game.tscn 的 training_game.tscn，保留旧训练。菜单新增训练入口，旧暂停设置统一复用。
+- EnemyData.concept_texture 只绑定原图字节副本，资料卡显示整张概念板；战斗身体为临时几何，资料卡不代表动画。正式 SpriteFrames 或 AnimationPlayer 接入前必须有透明帧、脚底锚点、帧时长及命中窗口验收，不先生成空动画资源。

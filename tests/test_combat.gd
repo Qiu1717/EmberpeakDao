@@ -27,7 +27,7 @@ func key(action: String, pressed: bool) -> void:
 func _run() -> void:
 	if not check(ResourceLoader.exists("res://scenes/player/player.tscn"), "主角场景存在"):
 		return
-	change_scene_to_file("res://scenes/world/game.tscn")
+	change_scene_to_file("res://scenes/world/training_game.tscn")
 	await frames(12)
 	var arena: Node = current_scene.get_node("World/TrainingArena")
 	var player: Node = arena.get_node("Player")

@@ -2,9 +2,9 @@
 
 Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godot 4.7.2 stable，GDScript，gl_compatibility。
 
-当前交付为阶段 2 主角控制与基础战斗：开始新游戏进入剑术训练场，可移动、跳跃、闪避及使用青锋旧剑三段普攻，验证木桩命中、生命受击和死亡重开。角色是明确标记的临时几何图形，尚无正式动画。敌人 AI、随机地图、装备、成长与游戏存档尚未实现；继续游戏保持禁用。
+当前交付为阶段3：第一地图六种敌人与六房间固定战斗路线。“开始新游戏”进入剑冢入口，“剑术训练场”保留阶段2木桩训练。四种小怪、裂甲山魈和镇山妖将具有不同AI／攻击模式，支持清场解锁、近门交互切换及Boss后回访祭坛。角色仍为明确标记的临时几何体，概念图通过资料卡查看；尚无正式动画。随机地图、装备、成长与游戏存档尚未实现，继续游戏禁用。
 
-唯一设计基准：[完整开发方案](docs/GAME_DEVELOPMENT_PLAN.md)。[开发约定](AGENTS.md)、[阶段 1 报告](docs/PHASE_1_REPORT.md)、[阶段 2 验收报告](docs/PHASE_2_REPORT.md)。当前编号依用户最新指令，完成后等待阶段 3。
+唯一设计基准：[完整开发方案](docs/GAME_DEVELOPMENT_PLAN.md)。[开发约定](AGENTS.md)、[阶段 1 报告](docs/PHASE_1_REPORT.md)、[阶段 2 报告](docs/PHASE_2_REPORT.md)、[阶段 3 验收报告](docs/PHASE_3_REPORT.md)。当前编号依用户最新指令，完成后等待阶段4。
 
 ## 运行
 
@@ -38,6 +38,16 @@ Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godo
 
 设置独立保存在 `user://settings.cfg`，本项目 Windows 默认位置为 `%APPDATA%\EmberpeakDao\settings.cfg`。它只保存用户偏好，不是角色档案或探索存档。Music、SFX 总线已配置，目前没有音乐与音效素材。
 
+## 无名剑冢固定路线
+
+剑冢入口 → 残剑荒地（山魈幼体／腐甲尸兵）→ 断阶回廊（断刃游魂／灵弩傀儡）→ 裂甲山魈精英战房 → 灵脉祭坛 → 镇山妖将Boss房。普通攻击、移动、跳跃与闪避用下表按键。敌人上方及HUD显示生命、预警、收招和阶段；金色区域是预警，红色是攻击，收招期间可反击。
+
+战斗房清场后红色实体门解除封锁，靠近右侧门按F前进，靠近左侧门按F返回；交互键可重绑。Boss被击败后从左门返回原祭坛，已清场房不重新刷怪或发奖励。中央祭坛附近按F可做测试休整恢复生命，当前没有资源记录、存档或突破。死亡后点击“重新开始路线”会重置本次路线，不读取永久档案。
+
+“敌人资料卡”可查看附近存活敌人的完整概念板，图片不参与动作播放。山魈扑击、尸兵蓄力重劈、游魂快速双击、灵弩后撤射击；精英有甲减伤、60%增加砸地，Boss55%转阶段并新增连击及可跳过的地面冲击波。基础攻击不消耗真气；重击和真气仍未接入，精英破甲目前只有真实伤害接口，尚无玩家重击教学。
+
+死亡奖励只发出带唯一来源的事件；Boss含“筑基灵髓”材料名，但没有背包到账、随机装备抽取或存档。所有既定生命／伤害、测试参数及缺失的奖励概率见[敌人数值表](docs/ENEMY_BALANCE.md)。六房是固定测试子集，不是完整八模板或随机地图。
+
 ## 训练场操作
 
 A/D 加速移动，Space 跳跃；Shift 按朝向闪避150像素，0.20秒无敌，0.70秒冷却。J／世界空白左键普攻，完成一次动作后及时再次按下可衔接14／18／24三段伤害；没有自动连打或连段输入缓冲。攻击期间可闪避取消。靠近木桩攻击，青色矩形只在实际命中窗口显示；范围外挥击不扣木桩生命。
@@ -58,7 +68,7 @@ A/D 加速移动，Space 跳跃；Shift 按朝向闪避150像素，0.20秒无敌
 | interact | F | 右摇杆按下 |
 | pause | Esc | Start |
 
-当前移动、跳跃、普通攻击、闪避、暂停已接入；重击、技能、药品、交互仅保留映射，尚无对应功能。物理手柄尚未实测；不同品牌的按钮图案可能不同。
+当前移动、跳跃、普通攻击、闪避、交互和暂停已接入；交互用于房门与测试祭坛，重击、技能、药品尚无对应功能。物理手柄尚未实测；不同品牌的按钮图案可能不同。
 
 ## 代码与模块接入
 
@@ -68,7 +78,10 @@ A/D 加速移动，Space 跳跃；Shift 按朝向闪避150像素，0.20秒无敌
 | scripts/managers/app.gd | 生命周期、场景切换、状态、暂停和日志 |
 | scripts/managers/settings.gd | 设置校验、应用与独立持久化 |
 | scenes/main/、scenes/ui/ | 主菜单、暂停、设置的场景入口与界面脚本 |
-| scenes/world/game.tscn / scripts/world/game.gd | 训练游戏场景；World/TrainingArena 内含主角、平台与木桩，CanvasLayer 固定 HUD 和暂停层 |
+| scenes/world/game.tscn / scripts/world/game.gd | 默认六房路线及HUD、资料卡、暂停层；training_game.tscn继承场景保留训练模式 |
+| scenes/rooms/、scripts/world/combat_room.gd、sword_route.gd | 六房碰撞、实体锁门、激活清场和回访；World/SwordRoute为房间，Actors/Player为持续角色 |
+| scenes/enemies/、scripts/enemies/、resources/enemies/ | 共享敌人状态、六种行为、攻击参数、投射物、唯一死亡奖励事件 |
+| assets/enemies/concepts/ | 原图字节副本与导入设置，仅供资料卡参考 |
 | scenes/player/player.tscn / scripts/player/ | 角色碰撞、镜头、七状态、输入与参数类型 |
 | resources/player/training_stats.tres | 主角参数；既定数值与临时调试参数来源见阶段 2 计划 |
 | scripts/combat/damage.gd | 统一倍率、防御及整数伤害结算 |
@@ -92,8 +105,8 @@ pwsh -File tests/run_checks.ps1 -Windowed
 
 使用其他引擎路径时加 `-Godot '完整入口路径'`。窗口测试会短暂打开窗口、切换分辨率和全屏；结束后恢复用户设置。请勿与手动修改设置同时运行。
 
-测试会检查完整日志中的 SCRIPT ERROR、Parse Error、ERROR:，并检查结果标记，防止达到帧数上限却误报通过。当前日志及截图保存于 `builds/phase2/`（阶段 1 旧记录保留）；Godot 缓存在 `.godot/`，均不提交。
+测试会检查完整日志中的 SCRIPT ERROR、Parse Error、ERROR:，并检查结果标记，防止达到帧数上限却误报通过。当前日志及截图保存于 `builds/phase3/`（阶段1、2旧记录保留）；Godot 缓存在 `.godot/`，均不提交。
 
-当前战斗入口 tests/test_combat.gd 覆盖 28 项断言，在无窗口和真实窗口各执行一次；框架与设置回归一并运行。窗口截图为 builds/phase2/training.png。
+当前敌人测试47项、路线41项、问题回归6项，以及原主角战斗28项，均在无窗口和真实窗口各执行一次；框架与设置回归一并运行。窗口路线截图为 builds/phase3/room_0.png 至 room_5.png；本次资料卡实查截图为 boss_live.png。
 
 本轮未验证正式角色动画、人工手感评价、Windows 独立导出、物理手柄、音频听感与后续游戏系统。没有使用空函数或假存档模拟这些功能。

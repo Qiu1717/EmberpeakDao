@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/attack_profile.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/concepts/crossbow.png" id="3"]
+
+[sub_resource type="Resource" id="Attack_0"]
+script = ExtResource("2")
+attack_id = "bolt"
+display_name = "灵弩射击"
+kind = "shot"
+damage = 11
+reach = 480
+windup = 0.75
+active_time = 0.12
+recovery = 0.8
+cooldown = 0.8
+
+[resource]
+script = ExtResource("1")
+enemy_id = "crossbow"
+display_name = "灵弩傀儡"
+max_health = 65
+move_speed = 100.0
+behavior = "ranged"
+concept_texture = ExtResource("3")
+attacks = Array[Resource]([SubResource("Attack_0")])
+body_size = Vector2(36, 64)

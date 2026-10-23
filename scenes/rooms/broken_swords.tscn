@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/world/combat_room.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/enemies/shan_xiao.tres" id="2"]
+[ext_resource type="Resource" path="res://resources/enemies/corpse.tres" id="3"]
+[node name="CombatRoom" type="Node2D"]
+script = ExtResource("1")
+room_id = "wasteland"
+display_name = "残剑荒地"
+platforms = Array[Rect2]([Rect2(420, 540, 180, 24), Rect2(1400, 510, 220, 24)])
+enemy_data = Array[Resource]([ExtResource("2"), ExtResource("3")])
+enemy_positions = PackedVector2Array(650, 640, 1150, 640)

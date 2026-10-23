@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/world/combat_room.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/enemies/ghost.tres" id="2"]
+[ext_resource type="Resource" path="res://resources/enemies/crossbow.tres" id="3"]
+[node name="CombatRoom" type="Node2D"]
+script = ExtResource("1")
+room_id = "corridor"
+display_name = "断阶回廊"
+platforms = Array[Rect2]([Rect2(480, 540, 180, 24), Rect2(820, 440, 180, 24), Rect2(1230, 520, 220, 24)])
+enemy_data = Array[Resource]([ExtResource("2"), ExtResource("3")])
+enemy_positions = PackedVector2Array(850, 640, 1500, 640)

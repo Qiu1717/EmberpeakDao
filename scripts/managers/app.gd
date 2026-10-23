@@ -26,6 +26,10 @@ func start_new_game() -> void:
 	if await _switch_scene(GAME_SCENE, State.PLAYING):
 		session_started.emit()
 
+func start_training() -> void:
+	if await _switch_scene("res://scenes/world/training_game.tscn", State.PLAYING):
+		session_started.emit()
+
 func return_to_menu() -> void:
 	await _switch_scene(MENU_SCENE, State.MENU)
 

@@ -168,3 +168,18 @@ func _draw() -> void:
 		if active:
 			draw_rect(Rect2(Vector2(facing * stats.attack_offset.x, stats.attack_offset.y) - stats.attack_size / 2, stats.attack_size), Color(0.51, 0.86, 0.91, 0.25))
 			draw_line(Vector2(0, -30), Vector2(facing * 105, -30), Color("83dce8"), 4)
+
+func reset_motion_at(spawn: Vector2) -> void:
+	# 换房仅清动作；生命与角色配置保持本次路线的实际值。
+	global_position = spawn
+	velocity = Vector2.ZERO
+	attack_requested = false
+	dodge_requested = false
+	action_time = 0
+	combo = -1
+	combo_remaining = 0
+	jump_remaining = 0
+	coyote_remaining = 0
+	hit_targets.clear()
+	_set_state(State.IDLE if health > 0 else State.DEAD)
+	$Camera2D.reset_smoothing()
