@@ -1,6 +1,6 @@
 # 《烬山问道》技术设计
 
-版本：0.2。日期：2026-10-22。状态：阶段 1 工程框架已实现 App 与 Settings；下文角色、战斗、成长、地图和存档模块仍为设计，尚未实现。核心规则取自主方案，待决项不作为实现授权。
+版本：0.3。日期：2026-10-23。状态：框架及阶段 2 角色基础战斗已实现；成长、完整武器系统、敌人 AI、地图与游戏存档仍为设计。实际接口见第 11–12 节；第 3 节的完整模块表是预定契约。核心规则取自主方案，待决项不作为实现授权。
 
 唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
@@ -122,7 +122,7 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 
 ## 10. 当前目录一致性与未决问题
 
-阶段 0 的目录快照只有文档和参考素材；当前已新增 project.godot、scenes/、scripts/ 与 tests/。resources/ 内容尚无消费者，按后续功能需求建立，不生成未使用的空资源类。游戏服务的实际边界见第 11 节。
+阶段 0 的目录快照只有文档和参考素材；当前已新增 project.godot、scenes/、scripts/ 与 tests/。resources/player/ 已由训练主角读取；其余资源类型按后续功能需求建立，不生成未使用的空资源类。游戏服务的实际边界见第 11 节。
 
 原始中文素材目录完整保留，不自动移动或重命名。文件名与主方案名称差异、主角服饰取舍、强化触发等问题统一记录在 [阶段 0 报告](PHASE_0_PLAN.md)，不由技术文档擅自裁定。
 
@@ -130,8 +130,19 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 
 - App Autoload：State 为 BOOT／MENU／PLAYING／PAUSED；start_new_game()、return_to_menu()、set_paused(bool)、quit_game() 管理实际生命周期。state_changed(state)、session_started、scene_changed(path) 均在真实操作后发出；新局信号在场景就绪后发送，后续局内模块可订阅，不在这里写成长数据。
 - Settings Autoload：values 是音量、显示和 bindings 字典；apply_options(Dictionary) 校验后应用，save_options()/load_options() 操作独立 user://settings.cfg，changed 信号通知界面。Master／Music／SFX 总线有效。它不读取或创建游戏存档。
-- Game 场景根是 Control，提供 World、Actors 两个 Node2D 接入节点和 UI/Overlay 控件层；当前仅绘制背景与导航界面。后续地图挂 World、角色挂 Actors、HUD 挂 UI/Overlay，各模块不直接修改 App 内部状态。
+- Game 场景根是 Control，提供 World、Actors 两个 Node2D 接入节点和 UI/Overlay 控件层；当前 World 下挂 TrainingArena，内含 Player、木桩及平台；Actors 保留框架接点，当前没有消费者；HUD 挂 UI/Overlay（CanvasLayer 10），PauseLayer（20）承载暂停菜单，背景层为 -10。后续正式地图与角色在所属阶段迁接，各模块不直接修改 App 内部状态。
 - 当前 UI 使用缓存的 /root/App 与 /root/Settings 引用，支持单脚本 --check-only；未来按所属阶段接入真实服务，不预生成 SaveManager、InventorySystem 等空函数。
-- 接入角色前通过 InputMap 的 move_left、move_right、jump、attack、heavy_attack、dodge、skill、heal、interact、pause 读输入。鼠标及手柄替代映射保留；暂停键优先于 GUI 导航，但设置层先消费关闭／改键输入。
+- 角色通过 InputMap 的 move_left、move_right、jump、attack、heavy_attack、dodge、skill、heal、interact、pause 读输入。鼠标及手柄替代映射保留；暂停键优先于 GUI 导航，但设置层先消费关闭／改键输入。
 - 存档模块实现并验证后再启用“继续游戏”，能力检测应来自有效档案，不能仅以文件存在或常量 true 冒充。当前按钮无可用操作。
 - 原始参考图目录和 validation/ 用 .gdignore 排除引擎导入，不作为可运行资源；将来验收合格后另存正式资产目录。
+
+## 12. 阶段 2 实际角色与战斗接口
+
+- scenes/player/player.tscn 是 CharacterBody2D，脚底原点 (0,0)，碰撞 24×56、中心 (0,-28)；Camera2D 水平跟随，范围 0..2200 与训练场实体边界一致。碰撞层 1=环境、2=主角、4=训练目标；主角／木桩只与环境产生实体碰撞，攻击查询层 4。
+- scripts/player/player_stats.gd + resources/player/training_stats.tres 提供实例独立的 Resource 参数。生命100、速度280、闪避150／无敌0.20／冷却0.70、硬直0.20、剑14/18/24、暴击5%及1.5倍率沿用方案。其余调试参数与来源见 PHASE_2_PLAN.md，不作为最终平衡。
+- Player 状态为 IDLE／MOVE／JUMP／ATTACK／DODGE／HURT／DEAD；health_changed(current, maximum)、state_changed(state)、died 为真实事件。try_attack()、try_dodge() 返回是否进入动作；receive_hit(amount, impulse) 接收攻击方倍率处理后的伤害并统一应用本方防御，拒绝死亡状态或闪避无敌内的命中。
+- 移动／跳跃读取统一 InputMap；攻击／闪避通过 _unhandled_input 请求进入物理帧，避免点击 GUI 按钮时同时挥剑。HUD 非交互容器穿透鼠标，按钮消费点击。离地容错在各动作分支之前更新，不因攻击、受击或闪避冻结。
+- 一次基础攻击包含前摇、有效、收招，总时长兼作再次攻击冷却。仅有效窗口用实际矩形物理查询，按目标实例去重；三段伤害14/18/24，超过连段窗口重新第一段。无输入缓冲连段；闪避可取消攻击，受击中断攻击，死亡停止动作输入。
+- scripts/combat/damage.gd 统一防御公式、倍率与整数舍入。主角施加境界与暴击倍率，目标接收时调用同一模块结算防御；不另写武器防御算法。当前固定 seed 仅用于训练与回归，正式探索 RNG 归属仍按第 7 节实施。
+- TrainingArena 创建静态平台和边墙；TrainingTarget 仅受击、击退及血条，无 AI、接触伤害、掉落或奖励。受击／致死按钮是调试伤害源。Game HUD 显示生命、状态、冷却；重新训练调用 App.start_new_game() 真实重载场景，不是存档恢复。
+- 正式动画尚缺，_draw() 仅表示功能状态，挥剑显示的矩形与实际有效窗口／范围一致；保留原始图和失败图集。没有接入真气、药品、重击、技能、永久死亡事务或境界系统，不提供空接口假装完成。

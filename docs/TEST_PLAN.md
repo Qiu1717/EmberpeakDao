@@ -102,3 +102,18 @@ BASE-06：用原提交比较迁移前后完整方案，允许位置说明、目�
 - RELEASE-01／02 中的 Windows 独立导出、干净环境通关与性能指标仍未执行；编辑器内窗口运行不能代替导出。
 
 用例逐项证据与修复记录见 [阶段 1 验收报告](PHASE_1_REPORT.md)，原表保留作为待完成的完整玩法门禁，不整体勾选通过。
+
+## 9. 阶段 2 主角与基础战斗实际验证（2026-10-23）
+
+最新用户阶段 2 的范围以 PHASE_2_REPORT.md 为准。执行 pwsh -File tests/run_checks.ps1 -Windowed，Godot 4.7.2 stable，未安装测试框架。下列为本轮实际结果，不把原表的完整后续玩法用例整体勾选。
+
+| 验证组 | 实际内容与结果 | 证据 |
+|---|---|---|
+| 战斗无窗口／窗口 | 各28项断言通过：移动朝向、跳跃落地、平台、闪避距离／无敌／冷却、生命／HUD／硬直／击退、三段伤害14/18/24、前摇／命中去重／收招／未命中、鼠标世界攻击、统一防御与暴击、离地容错过期、边界、镜头和HUD、死亡禁输入、真实重开、GUI点击隔离 | builds/phase2/combat-headless.log、combat-window.log；成功标记 COMBAT_CHECKS_PASSED=28 |
+| 工程 | 导入、17个脚本分别 --check-only、主场景120帧、图形编辑器有限帧打开均通过；最终日志无 SCRIPT ERROR／Parse Error／ERROR: | import-final.log、parse-*.log、startup-headless.log、editor-open.log |
+| 框架回归 | 无窗口24项、暂停退出路径重复24项、窗口24项均通过；是同套断言的不同执行路径 | framework-headless.log、quit-from-pause.log、framework-window.log |
+| 设置回归 | 无窗口6项、窗口10项，及独立进程设置写入／读取均通过；测试备份并恢复原偏好 | settings-headless.log、settings-window.log、restart-write.log、restart-read.log |
+| 画面检查 | 实际1280×720视口截图已目视检查，临时角色、木桩、平台、生命与测试控件可见，HUD不随镜头移动 | builds/phase2/training.png |
+| 审查修复 | HUD吞鼠标、离地计时冻结、摄像机边界不一致已修复；鼠标与离地问题已有先失败再通过的回归，独立只读复审未发现新增阻断项 | review-red.log、coyote-red.log 为预期失败历史，不计入最终通过日志 |
+
+尚未执行／未验证：人工长期手感评价、正式逐帧动画及判定同步、物理手柄、独立 Windows 导出、性能压测，以及敌人、重击／技能／真气、装备、境界、奖励、正式死亡资源结算、游戏存档和地图测试。训练重开只验证场景生命周期，不代表存档恢复或永久规则通过。

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+max_health = 100
+move_speed = 280.0
+dodge_distance = 150.0
+dodge_iframes = 0.2
+dodge_cooldown = 0.7
+hit_stun = 0.2
+sword_damage = PackedFloat32Array(14, 18, 24)

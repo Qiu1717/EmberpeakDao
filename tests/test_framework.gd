@@ -128,27 +128,27 @@ func _run() -> void:
 	await create_timer(0.06).timeout
 	await _capture("game")
 	await _escape()
-	if not _check(paused and game.get_node("PauseMenu").visible, "Esc 暂停并显示菜单"):
+	if not _check(paused and game.get_node("PauseLayer/PauseMenu").visible, "Esc 暂停并显示菜单"):
 		return
 	var before: int = ticks[0]
 	await create_timer(0.08).timeout
 	if not _check(ticks[0] == before, "暂停实际冻结游戏子节点"):
 		return
 	await _capture("pause")
-	await _click(game.get_node("PauseMenu/%Settings"))
-	if not _check(paused and game.get_node("PauseMenu/SettingsMenu").visible, "暂停中可操作设置"):
+	await _click(game.get_node("PauseLayer/PauseMenu/%Settings"))
+	if not _check(paused and game.get_node("PauseLayer/PauseMenu/SettingsMenu").visible, "暂停中可操作设置"):
 		return
 	await _escape()
-	if not _check(paused and not game.get_node("PauseMenu/SettingsMenu").visible, "设置层 Esc 只关闭设置"):
+	if not _check(paused and not game.get_node("PauseLayer/PauseMenu/SettingsMenu").visible, "设置层 Esc 只关闭设置"):
 		return
-	await _click(game.get_node("PauseMenu/%Resume"))
-	if not _check(not paused and not game.get_node("PauseMenu").visible, "继续按钮恢复游戏"):
+	await _click(game.get_node("PauseLayer/PauseMenu/%Resume"))
+	if not _check(not paused and not game.get_node("PauseLayer/PauseMenu").visible, "继续按钮恢复游戏"):
 		return
 	await create_timer(0.06).timeout
 	if not _check(ticks[0] > before, "恢复后游戏节点继续运行"):
 		return
 	await _click(game.get_node("%Pause"))
-	await _click(game.get_node("PauseMenu/%MainMenu"))
+	await _click(game.get_node("PauseLayer/PauseMenu/%MainMenu"))
 	if not _check(not paused and current_scene.scene_file_path == "res://scenes/main/main_menu.tscn", "暂停中返回主菜单并清除暂停"):
 		return
 	await _click(current_scene.get_node("%NewGame"))
@@ -167,11 +167,11 @@ func _run() -> void:
 		return
 	settings.apply_options(original)
 	await _escape()
-	await _click(current_scene.get_node("PauseMenu/%MainMenu"))
+	await _click(current_scene.get_node("PauseLayer/PauseMenu/%MainMenu"))
 	print("FRAMEWORK_CHECKS_PASSED=", checks)
 	if "--quit-from-pause" in OS.get_cmdline_user_args():
 		await _click(current_scene.get_node("%NewGame"))
 		await _escape()
-		current_scene.get_node("PauseMenu/%Quit").pressed.emit()
+		current_scene.get_node("PauseLayer/PauseMenu/%Quit").pressed.emit()
 	else:
 		current_scene.get_node("%Quit").pressed.emit()

@@ -2,9 +2,9 @@
 
 Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godot 4.7.2 stable，GDScript，gl_compatibility。
 
-当前交付是阶段 1 工程框架：主菜单、游戏场景、暂停、设置与切换已实现；角色移动、战斗、敌人、随机地图、装备和游戏存档尚未实现。开始新游戏进入问道残庭框架场景，不代表首个可玩版本完成。继续游戏按钮保持禁用。
+当前交付为阶段 2 主角控制与基础战斗：开始新游戏进入剑术训练场，可移动、跳跃、闪避及使用青锋旧剑三段普攻，验证木桩命中、生命受击和死亡重开。角色是明确标记的临时几何图形，尚无正式动画。敌人 AI、随机地图、装备、成长与游戏存档尚未实现；继续游戏保持禁用。
 
-唯一设计基准：[完整开发方案](docs/GAME_DEVELOPMENT_PLAN.md)。[开发约定](AGENTS.md)、[阶段验收报告](docs/PHASE_1_REPORT.md)。用户本轮阶段 1 对应原路线图的工程框架阶段；下一阶段等待新指令。
+唯一设计基准：[完整开发方案](docs/GAME_DEVELOPMENT_PLAN.md)。[开发约定](AGENTS.md)、[阶段 1 报告](docs/PHASE_1_REPORT.md)、[阶段 2 验收报告](docs/PHASE_2_REPORT.md)。当前编号依用户最新指令，完成后等待阶段 3。
 
 ## 运行
 
@@ -38,6 +38,12 @@ Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godo
 
 设置独立保存在 `user://settings.cfg`，本项目 Windows 默认位置为 `%APPDATA%\EmberpeakDao\settings.cfg`。它只保存用户偏好，不是角色档案或探索存档。Music、SFX 总线已配置，目前没有音乐与音效素材。
 
+## 训练场操作
+
+A/D 加速移动，Space 跳跃；Shift 按朝向闪避150像素，0.20秒无敌，0.70秒冷却。J／世界空白左键普攻，完成一次动作后及时再次按下可衔接14／18／24三段伤害；没有自动连打或连段输入缓冲。攻击期间可闪避取消。靠近木桩攻击，青色矩形只在实际命中窗口显示；范围外挥击不扣木桩生命。
+
+左上角“受击测试 −10”施加伤害和击退，“致死测试”进入死亡，“重新训练”真实重载整个训练场并恢复生命、位置、冷却和木桩。闪避无敌时测试伤害也会被拒绝。测试按钮是调试入口，无敌人 AI；此重开不处理资源保留或读档。移动加速、跳跃缓冲与离地容错是待手感评审的调试参数，详见 [阶段 2 计划](docs/PHASE_2_PLAN.md)。
+
 ## 输入映射
 
 | 动作 ID | 默认键鼠 | 默认手柄 |
@@ -52,7 +58,7 @@ Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godo
 | interact | F | 右摇杆按下 |
 | pause | Esc | Start |
 
-当前仅暂停接入游戏行为，其余动作供后续角色与战斗统一读取。物理手柄尚未实测；不同品牌的按钮图案可能不同。
+当前移动、跳跃、普通攻击、闪避、暂停已接入；重击、技能、药品、交互仅保留映射，尚无对应功能。物理手柄尚未实测；不同品牌的按钮图案可能不同。
 
 ## 代码与模块接入
 
@@ -62,9 +68,13 @@ Windows PC 单人离线、手绘国风 2D 横版修仙动作肉鸽。引擎 Godo
 | scripts/managers/app.gd | 生命周期、场景切换、状态、暂停和日志 |
 | scripts/managers/settings.gd | 设置校验、应用与独立持久化 |
 | scenes/main/、scenes/ui/ | 主菜单、暂停、设置的场景入口与界面脚本 |
-| scenes/world/game.tscn | 游戏框架场景；World 接地图、Actors 接角色、UI/Overlay 接 HUD |
+| scenes/world/game.tscn / scripts/world/game.gd | 训练游戏场景；World/TrainingArena 内含主角、平台与木桩，CanvasLayer 固定 HUD 和暂停层 |
+| scenes/player/player.tscn / scripts/player/ | 角色碰撞、镜头、七状态、输入与参数类型 |
+| resources/player/training_stats.tres | 主角参数；既定数值与临时调试参数来源见阶段 2 计划 |
+| scripts/combat/damage.gd | 统一倍率、防御及整数伤害结算 |
+| scripts/world/training_arena.gd、training_target.gd | 手工训练平台、边界与静止可击退木桩，无敌人 AI |
 | scripts/ui/ui_style.gd、backdrop.gd | SystemFont 中文主题及程序绘制背景，无外部素材依赖 |
-| tests/ | 真实输入、设置文件和进程重启回归 |
+| tests/ | 实际物理战斗、真实菜单输入、设置文件和进程重启回归 |
 
 后续新局模块订阅 App.session_started（场景就绪后触发）；暂停状态订阅 App.state_changed；切换完成订阅 App.scene_changed。App 不保存境界或装备数据，Settings 不承担游戏存档。未来资源与存档边界见 [技术设计](docs/TECH_DESIGN.md)，未提前创建空壳服务。
 
@@ -82,6 +92,8 @@ pwsh -File tests/run_checks.ps1 -Windowed
 
 使用其他引擎路径时加 `-Godot '完整入口路径'`。窗口测试会短暂打开窗口、切换分辨率和全屏；结束后恢复用户设置。请勿与手动修改设置同时运行。
 
-测试会检查完整日志中的 SCRIPT ERROR、Parse Error、ERROR:，并检查结果标记，防止达到帧数上限却误报通过。日志及截图保存于 `builds/phase1/`；Godot 缓存在 `.godot/`，均不提交。
+测试会检查完整日志中的 SCRIPT ERROR、Parse Error、ERROR:，并检查结果标记，防止达到帧数上限却误报通过。当前日志及截图保存于 `builds/phase2/`（阶段 1 旧记录保留）；Godot 缓存在 `.godot/`，均不提交。
 
-本轮未验证 Windows 独立导出、物理手柄、音频听感与后续游戏系统。没有使用空函数或假存档模拟这些功能。
+当前战斗入口 tests/test_combat.gd 覆盖 28 项断言，在无窗口和真实窗口各执行一次；框架与设置回归一并运行。窗口截图为 builds/phase2/training.png。
+
+本轮未验证正式角色动画、人工手感评价、Windows 独立导出、物理手柄、音频听感与后续游戏系统。没有使用空函数或假存档模拟这些功能。

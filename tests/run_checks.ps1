@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$logRoot = Join-Path $projectRoot 'builds\phase1'
+$logRoot = Join-Path $projectRoot 'builds\phase2'
 New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
 
 function Invoke-GodotCheck {
@@ -40,6 +40,8 @@ try {
     $flow = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_framework.gd')
     Invoke-GodotCheck 'framework-headless' $flow 'FRAMEWORK_CHECKS_PASSED=24'
     Invoke-GodotCheck 'quit-from-pause' ($flow + @('--', '--quit-from-pause')) 'FRAMEWORK_CHECKS_PASSED=24'
+    $combat = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_combat.gd')
+    Invoke-GodotCheck 'combat-headless' $combat 'COMBAT_CHECKS_PASSED=28'
     $settingsArgs = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_settings.gd')
     Invoke-GodotCheck 'settings-headless' $settingsArgs 'SETTINGS_CHECKS_PASSED=6'
     $restart = @('--headless', '--path', $projectRoot, '--script', 'res://tests/test_settings_restart.gd')
@@ -49,9 +51,10 @@ try {
         $screenshots = Join-Path $logRoot 'screenshots'
         $windowFlow = $flow | Where-Object { $_ -ne '--headless' }
         Invoke-GodotCheck 'framework-window' ($windowFlow + @('--', "--screenshots=$screenshots")) 'FRAMEWORK_CHECKS_PASSED=24'
+        Invoke-GodotCheck 'combat-window' ($combat | Where-Object { $_ -ne '--headless' }) 'COMBAT_CHECKS_PASSED=28'
         Invoke-GodotCheck 'settings-window' ($settingsArgs | Where-Object { $_ -ne '--headless' }) 'SETTINGS_CHECKS_PASSED=10'
     }
-    Write-Host "全部框架检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
+    Write-Host "全部框架与基础战斗检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
 }
 finally {
     if ($preferencesExisted) {
