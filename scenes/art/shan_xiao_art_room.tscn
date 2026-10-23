@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/art/shan_xiao_art_room.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/backdrop.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="3"]
+[node name="ShanXiaoArtRoom" type="Node2D"]
+script = ExtResource("1")
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -10
+[node name="Backdrop" type="Control" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+layer = 20
+[node name="PauseMenu" parent="PauseLayer" instance=ExtResource("3")]

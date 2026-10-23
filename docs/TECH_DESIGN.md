@@ -159,3 +159,9 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 - SwordRoute 实例化六份 scenes/rooms/*.tscn；World/SwordRoute/CombatRoom 是房间，Actors/Player 是持续主角，换房调用 Player.reset_motion_at(spawn)，保留生命与闪避冷却，清旧攻击和连段，重置镜头平滑。enter_room(index) 是实际房间切换；interact() 仅在清场、活着、近地面且靠门时响应。清场集合只在本次路线内有效，重访不再生成敌人和奖励，Boss后可回同一祭坛。
 - 祭坛交互只恢复训练生命，无存档、资源记录和境界突破；界面明确说明。App.start_new_game() 进入默认固定路线；start_training() 进入继承 game.tscn 的 training_game.tscn，保留旧训练。菜单新增训练入口，旧暂停设置统一复用。
 - EnemyData.concept_texture 只绑定原图字节副本，资料卡显示整张概念板；战斗身体为临时几何，资料卡不代表动画。正式 SpriteFrames 或 AnimationPlayer 接入前必须有透明帧、脚底锚点、帧时长及命中窗口验收，不先生成空动画资源。
+
+## 14. 山魈单房美术候选真实接入
+
+用户批准先做单房美术验证。App.start_art_room()切换独立场景，enter_playing()使F6直接运行也能暂停；主菜单增加独立入口。房间复用CombatRoom、Player、Enemy、原暂停菜单与重新加载流程。Enemy.show_placeholder_body默认true，仅该房实例关闭几何身体。
+
+ShanXiaoVisual作为Enemy子节点，根据真实state／clock／facing／地面检测选择SpriteFrames帧；不调用伤害、改速度或决定死亡。待机与跑动循环，前摇／扑击／收招按真实阶段时长同步，未着地时保留腾空姿势。左右翻转围绕根节点，Godot缩图后的纹理按源画布比例换算枢轴。素材与当前候选比例见SHAN_XIAO_PLAYABLE_REPORT.md；不把该样板视为其他角色正式动画完成。

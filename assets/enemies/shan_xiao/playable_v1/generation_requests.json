@@ -1,0 +1,69 @@
+{
+  "tool": "built-in imagegen",
+  "requests": [
+    {
+      "id": "run_01",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. RUN CYCLE CONTACT A: low agile leftward stride; near leg reaches forward-left heel touching the ground at y=1205, far leg extends back-right with toe just pushing off. Near long arm swings backward, far long arm swings forward low but does not touch ground. Hunched head slightly ahead, mane streams right. Keep natural ape-like two-foot running gait, NO four-legged crawling.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "run_02",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. RUN CYCLE PASS A: forward foot is now planted beneath pelvis at y=1205, other knee passes in front lifted toward left; pelvis slightly higher by about25px, arms pass beneath shoulders in opposite swing. This is the clear mid-stride passing pose between two contacts. Same silhouette size as neutral.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "run_03",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. RUN CYCLE CONTACT B: swap near/far leg positions compared to contact A. Far leg reaches forward-left to the ground y=1205, near leg extends back-right toe pushing off. Near long arm swings forward left, far arm back; opposing arm/leg swing. LEFT facing, same anatomy, visible separation between limbs.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "run_04",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. RUN CYCLE PASS B: near knee passes forward-left raised, far supporting foot directly under pelvis at y=1205, opposite passing pose from pass A. Arms passing below shoulders in opposite order from pass A. Hunched head and white mane remain same volume. Do not jump or attack.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "idle_02",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. IDLE BREATHING SECOND KEY: same relaxed hunched neutral stance and same foot contacts as supplied frame, chest slightly expanded on inhalation, shoulders and mane rise only about15px, elbows flex slightly, eyelids half-lowered. Keep the head, pelvis, both feet and skull ornaments in almost exactly the same positions. This must alternate gently with the supplied neutral frame, not a new stance.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "hurt_01",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. HIT REACTION KEY: non-graphic recoil from a strike coming from LEFT. Torso recoils about15 degrees back-right, chin lifted slightly, mouth opens in a grimace, knees bend, long forearms pull inward defensively, fingers splayed. Feet remain grounded at y=1205, pelvis x800. Same head size and costume. No new blood, no wound effects, no attacker.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "death_01",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. DEFEAT COLLAPSE FIRST KEY: legs buckle, both knees deeply bent beneath pelvis, torso drops downward about300px, left-facing head bows down, one long arm braces on the ground at y=1205 and the other arm hangs limp. White mane drops with gravity. Preserve original head and hand sizes, do not zoom to fill empty top space. A slumping living creature falling, no gore.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "death_02",
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. DEFEAT FINAL KEY: creature has fallen onto its side on the ground, curled compactly with knees folded, head resting LEFT and pelvis toward RIGHT. Eyes closed, mouth relaxed, both long arms limp in front, mane and teal cloth resting on ground line y=1205. Preserve exact original head, skull-ornament and hand sizes, no camera zoom; leave upper half of canvas EMPTY transparent. Curled body should fit x=100..1170, top about y=650. No skeleton transformation, no gore, no shadow.",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png"
+      ]
+    },
+    {
+      "id": "takeoff_01",
+      "refs": [
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_01.png",
+        "assets/enemies/shan_xiao/validation/pounce_v1/raw/frame_04.png"
+      ],
+      "prompt": "Edit the supplied LEFT-facing Shan Xiao juvenile demon into ONE new hand-painted 2D game animation pose. Image is the identity anchor, not a sheet to copy. Keep the same gaunt grey-black ape demon, extremely long arms and claws, white mane and swept black hair, red cords, same small skull ornaments and dark teal ragged waist cloth. Preserve head size, limb lengths, body volume, painterly ink-dark Chinese fantasy materials, muted palette, and fixed side-view camera. Same square canvas and scale as reference, truly transparent background. Neutral head top about y=80, feet ground line y=1205, pelvis around x=800, all on a 1254-square reference coordinate system. Keep ALL limbs and cloth inside canvas with at least 24px transparent margin. No floor, shadow, scenery, smoke, grid, text or extra figures. This is a different drawn pose, not a translation or rigid rotation of the reference. Keep red cloth and skull number/placement consistent. POUNCE TAKEOFF IN-BETWEEN: Image1 is identity and scale reference; Image2 is the later airborne key. Draw the transition just after deep crouch and before Image2. Torso extends diagonally forward-left, both long arms lift forward with bent elbows and claws not yet fully extended, near foot just pushing off the ground at y1205, far knee folds up. Head lower than neutral but not lying horizontal; pelvis remains around (800,850). Keep the SAME head/mane/skull/cord shapes as image1. Entire body inside 24px margins. This is a new in-between pose for an actual pounce, not a copy of either reference."
+    }
+  ]
+}

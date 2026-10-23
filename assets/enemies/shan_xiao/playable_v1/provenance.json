@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in imagegen",
+  "new_generated_images": 9,
+  "reused_v1_images": 7,
+  "original_pixels_edited": false,
+  "source_reference": "第一地图/第一地图怪物形象/第一地图小怪形象/山魑幼体.png",
+  "requests": "generation_requests.json",
+  "pixel_qa": "qa_pixels.json",
+  "new_files": [
+    {
+      "pose": "run_01",
+      "file": "raw/run_01.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-0490804c-1e2c-42a9-907e-012c20c4fadf.png",
+      "sha256": "77c278af0bce3a99ddf510ec4e7cda5b7eca4df3ace2405a511a2b4be9a0a2fe",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "run_02",
+      "file": "raw/run_02.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-b587b1a8-3c18-4409-ada6-46ac7c43ee43.png",
+      "sha256": "821339c2ae47ca0293a31fd53a542b8ac537889426c332b6660a4d2c7e8eeb9a",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "run_03",
+      "file": "raw/run_03.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-1bc33c2a-369a-40dd-83ea-f4dc85402a19.png",
+      "sha256": "1b48fed9dc58732a74db29444f8c35ee63fe73278fef99dde01d558f0827ec12",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "run_04",
+      "file": "raw/run_04.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-44e2872e-d325-44f1-ab93-7858eec60f10.png",
+      "sha256": "79345a0ab063b7fe966c0c79ff592cede505f03d58843993931986dcb91fbe73",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "idle_02",
+      "file": "raw/idle_02.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-c5999bea-6dd9-48ef-8aaf-c4c798d84659.png",
+      "sha256": "8fcc2108564eac3db42a9531c1a1e016c678e54cb79b8b2794008647b25267ff",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "hurt_01",
+      "file": "raw/hurt_01.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-076c30c0-2334-48cf-83f1-eb96d451c511.png",
+      "sha256": "1bf1be8152bee7102175415eca8ab05b3e1c6e24c0f025e0cbf1da30cddacbfe",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "death_01",
+      "file": "raw/death_01.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-bd9c87a3-f0f3-4d89-8bf3-7f65dd9ea081.png",
+      "sha256": "dd2f1a836987c0d77dc1828c183daec6f2e234a2f7abe36565918dcc32f49296",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "death_02",
+      "file": "raw/death_02.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-bc81fdb8-cd77-4a56-be3b-3bad9816aa26.png",
+      "sha256": "ba64cb25255d75e757fdb9bcabcdada49f9c84639e52b2b2f82e58df52d6cacd",
+      "byte_identical_to_tool_output": true
+    },
+    {
+      "pose": "takeoff_01",
+      "file": "raw/takeoff_01.png",
+      "generated_output": "C:\\Users\\Q\\.codex\\generated_images\\01a163b0-cd7a-7cc3-854d-ef9cec13332f\\exec-c1df2ef3-83f1-4090-b89d-e4b689c450f9.png",
+      "sha256": "7398881dd2fd4acf3fa00f55cca44d43003000fd48d7e90cbc76319307456df4",
+      "byte_identical_to_tool_output": true
+    }
+  ],
+  "existing_files_note": "pounce_01..07原样复制validation/pounce_v1/raw/frame_01..07；其提示词与工具输出来源沿用原目录generation_requests.json/provenance.json。",
+  "license_note": "用户提供参考形象，内置imagegen补绘。没有下载第三方成品画面；技能开源许可不作为生成图像的授权结论。",
+  "status": "可试玩候选，用户审美和手感尚未验收",
+  "source_reference_sha256": "12e01e5aabc6ac6174f72272e907524f232084bd44a27932bfdf2557f5cafc4c"
+}

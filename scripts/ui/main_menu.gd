@@ -16,6 +16,7 @@ func _ready() -> void:
 	Ui.label(box, "", 12)
 	Ui.button(box, "开始新游戏", "NewGame", app.start_new_game, self)
 	Ui.button(box, "剑术训练场", "Training", app.start_training, self)
+	Ui.button(box, "山魈美术样板", "ArtRoom", app.start_art_room, self)
 	var resume := Ui.button(box, "继续游戏", "Continue", Callable(), self)
 	resume.disabled = true
 	resume.tooltip_text = "游戏存档尚未接入，当前没有可继续的探索。"

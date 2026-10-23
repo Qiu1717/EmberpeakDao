@@ -120,3 +120,15 @@ pwsh -File tests/run_checks.ps1 -Windowed
 ```
 
 见[素材与提示词](assets/enemies/shan_xiao/validation/pounce_v1/README.md)、[实际检查报告](docs/ART_SAMPLE_REPORT.md)、[十项GitHub技能筛选结果](docs/ART_SKILLS_REVIEW.md)。本次仅美术样片制作，不启动阶段4。
+
+## 山魈单房可试玩样板
+
+主菜单点击“山魈美术样板”，可与已接入手绘动作的山魈实际战斗。A/D移动、Space跳跃、J或左键攻击、Shift闪避、Esc暂停（按键可重绑）；界面支持重新挑战、返回菜单和显示身体碰撞。
+
+也可在Godot打开scenes/art/shan_xiao_art_room.tscn按F6，或执行：
+
+```powershell
+& 'E:\Godot\bin\godot.bat' --path . res://scenes/art/shan_xiao_art_room.tscn
+```
+
+该房使用1.5倍镜头验证山魈的待机、四姿势跑动、扑击、受击与倒下；保留原战斗数值与碰撞，主角／环境仍临时，原六房路线没有全局替换。源图、完整提示词与导入规则见[动作素材说明](assets/enemies/shan_xiao/playable_v1/README.md)，实际测试和已知视觉问题见[单房报告](docs/SHAN_XIAO_PLAYABLE_REPORT.md)。这是供您试玩审阅的候选，不代表所有角色正式动画完成。

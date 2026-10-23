@@ -22,12 +22,19 @@ func log_event(category: String, message: String) -> void:
 func enter_menu() -> void:
 	_set_state(State.MENU)
 
+func enter_playing() -> void:
+	_set_state(State.PLAYING)
+
 func start_new_game() -> void:
 	if await _switch_scene(GAME_SCENE, State.PLAYING):
 		session_started.emit()
 
 func start_training() -> void:
 	if await _switch_scene("res://scenes/world/training_game.tscn", State.PLAYING):
+		session_started.emit()
+
+func start_art_room() -> void:
+	if await _switch_scene("res://scenes/art/shan_xiao_art_room.tscn", State.PLAYING):
 		session_started.emit()
 
 func return_to_menu() -> void:

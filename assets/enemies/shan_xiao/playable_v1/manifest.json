@@ -1,0 +1,277 @@
+{
+  "status": "playable_art_candidate_user_review_pending",
+  "source_reference": "第一地图/第一地图怪物形象/第一地图小怪形象/山魑幼体.png",
+  "world_scale": 0.049777777777777775,
+  "camera_zoom_candidate": 1.5,
+  "stride_distance": 92.4,
+  "canonical_facing": "left",
+  "unique_pngs": 16,
+  "poses": {
+    "death_01": {
+      "file": "raw/death_01.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1207
+      ]
+    },
+    "death_02": {
+      "file": "raw/death_02.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1200
+      ]
+    },
+    "hurt_01": {
+      "file": "raw/hurt_01.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1212
+      ]
+    },
+    "idle_02": {
+      "file": "raw/idle_02.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1208
+      ]
+    },
+    "pounce_01": {
+      "file": "raw/pounce_01.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1205
+      ]
+    },
+    "pounce_02": {
+      "file": "raw/pounce_02.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1198
+      ]
+    },
+    "pounce_03": {
+      "file": "raw/pounce_03.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1184
+      ]
+    },
+    "pounce_04": {
+      "file": "raw/pounce_04.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1205
+      ]
+    },
+    "pounce_05": {
+      "file": "raw/pounce_05.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1205
+      ]
+    },
+    "pounce_06": {
+      "file": "raw/pounce_06.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1212
+      ]
+    },
+    "pounce_07": {
+      "file": "raw/pounce_07.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1213
+      ]
+    },
+    "run_01": {
+      "file": "raw/run_01.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1189
+      ]
+    },
+    "run_02": {
+      "file": "raw/run_02.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1238
+      ]
+    },
+    "run_03": {
+      "file": "raw/run_03.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1188
+      ]
+    },
+    "run_04": {
+      "file": "raw/run_04.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1227
+      ]
+    },
+    "takeoff_01": {
+      "file": "raw/takeoff_01.png",
+      "canvas": [
+        1254,
+        1254
+      ],
+      "pivot": [
+        800,
+        1205
+      ]
+    }
+  },
+  "clips": {
+    "idle": [
+      {
+        "pose": "pounce_01",
+        "duration": 0.8
+      },
+      {
+        "pose": "idle_02",
+        "duration": 0.8
+      }
+    ],
+    "run": [
+      {
+        "pose": "run_01",
+        "duration": 0.14
+      },
+      {
+        "pose": "run_02",
+        "duration": 0.14
+      },
+      {
+        "pose": "run_03",
+        "duration": 0.14
+      },
+      {
+        "pose": "run_04",
+        "duration": 0.14
+      }
+    ],
+    "telegraph": [
+      {
+        "pose": "pounce_01",
+        "duration": 0.18
+      },
+      {
+        "pose": "pounce_02",
+        "duration": 0.17
+      },
+      {
+        "pose": "pounce_03",
+        "duration": 0.15
+      }
+    ],
+    "airborne": [
+      {
+        "pose": "takeoff_01",
+        "duration": 0.05
+      },
+      {
+        "pose": "pounce_04",
+        "duration": 0.12
+      },
+      {
+        "pose": "pounce_05",
+        "duration": 0.13
+      }
+    ],
+    "recovery": [
+      {
+        "pose": "pounce_06",
+        "duration": 0.15
+      },
+      {
+        "pose": "pounce_07",
+        "duration": 0.25
+      },
+      {
+        "pose": "pounce_01",
+        "duration": 0.25
+      }
+    ],
+    "hurt": [
+      {
+        "pose": "hurt_01",
+        "duration": 0.2
+      }
+    ],
+    "death": [
+      {
+        "pose": "death_01",
+        "duration": 0.24
+      },
+      {
+        "pose": "death_02",
+        "duration": 0.36
+      }
+    ]
+  },
+  "timing_note": "扑击时间取当前Enemy攻击配置；着地画面由真实地面检测决定，非固定时刻落地。待机／步幅是表现候选，不重定战斗数值。",
+  "import_note": "原始PNG保持字节一致；Godot无损导入，size_limit512、mipmaps、fix_alpha_border。表现根据实际纹理尺寸换算源画布枢轴。"
+}

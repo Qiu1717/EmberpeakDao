@@ -1,0 +1,322 @@
+[
+  {
+    "file": "death_01.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      213,
+      253,
+      1241,
+      1207
+    ],
+    "minimum_visible_margin": 13,
+    "sha256": "dd2f1a836987c0d77dc1828c183daec6f2e234a2f7abe36565918dcc32f49296"
+  },
+  {
+    "file": "death_02.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      24,
+      639,
+      1238,
+      1200
+    ],
+    "minimum_visible_margin": 16,
+    "sha256": "ba64cb25255d75e757fdb9bcabcdada49f9c84639e52b2b2f82e58df52d6cacd"
+  },
+  {
+    "file": "hurt_01.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      262,
+      72,
+      1214,
+      1212
+    ],
+    "minimum_visible_margin": 40,
+    "sha256": "1bf1be8152bee7102175415eca8ab05b3e1c6e24c0f025e0cbf1da30cddacbfe"
+  },
+  {
+    "file": "idle_02.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      272,
+      76,
+      1133,
+      1208
+    ],
+    "minimum_visible_margin": 46,
+    "sha256": "8fcc2108564eac3db42a9531c1a1e016c678e54cb79b8b2794008647b25267ff"
+  },
+  {
+    "file": "pounce_01.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      273,
+      80,
+      1088,
+      1205
+    ],
+    "minimum_visible_margin": 49,
+    "sha256": "2df48668536c407dd389279001120a7b3a8a3d3d531761c84c884365d733db46"
+  },
+  {
+    "file": "pounce_02.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      199,
+      232,
+      1176,
+      1198
+    ],
+    "minimum_visible_margin": 56,
+    "sha256": "da5781a34503150d5aee48a432350dd816a54743d42bb91b1aa3895cc95624af"
+  },
+  {
+    "file": "pounce_03.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      49,
+      318,
+      1214,
+      1184
+    ],
+    "minimum_visible_margin": 40,
+    "sha256": "a0bde81af9937728974ea5419084fffb86be4ab4808b7d448b3926d8c0942daa"
+  },
+  {
+    "file": "pounce_04.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      18,
+      181,
+      1243,
+      1154
+    ],
+    "minimum_visible_margin": 11,
+    "sha256": "1bac98b0ccb775f978ceef3a978174f5dad33e2f3f078baf7dcc4baf8645c86f"
+  },
+  {
+    "file": "pounce_05.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      42,
+      179,
+      1245,
+      1132
+    ],
+    "minimum_visible_margin": 9,
+    "sha256": "f059d01abe7e972cd43b521c7cdaf5f75b837f8abf9b44a26e0c013c84c411fc"
+  },
+  {
+    "file": "pounce_06.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      42,
+      243,
+      1245,
+      1212
+    ],
+    "minimum_visible_margin": 9,
+    "sha256": "d6b06c18c91bb629887599e1a556abc1522dd40b791246a42d07d3911735c660"
+  },
+  {
+    "file": "pounce_07.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      272,
+      94,
+      1101,
+      1213
+    ],
+    "minimum_visible_margin": 41,
+    "sha256": "3cf8900271f93e76c3268f761570cc49ae26c297e6e823ae314c62064d165d73"
+  },
+  {
+    "file": "run_01.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      42,
+      77,
+      1226,
+      1189
+    ],
+    "minimum_visible_margin": 28,
+    "sha256": "77c278af0bce3a99ddf510ec4e7cda5b7eca4df3ace2405a511a2b4be9a0a2fe"
+  },
+  {
+    "file": "run_02.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      95,
+      43,
+      1213,
+      1238
+    ],
+    "minimum_visible_margin": 16,
+    "sha256": "821339c2ae47ca0293a31fd53a542b8ac537889426c332b6660a4d2c7e8eeb9a"
+  },
+  {
+    "file": "run_03.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      73,
+      82,
+      1206,
+      1188
+    ],
+    "minimum_visible_margin": 48,
+    "sha256": "1b48fed9dc58732a74db29444f8c35ee63fe73278fef99dde01d558f0827ec12"
+  },
+  {
+    "file": "run_04.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      66,
+      47,
+      1202,
+      1227
+    ],
+    "minimum_visible_margin": 27,
+    "sha256": "79345a0ab063b7fe966c0c79ff592cede505f03d58843993931986dcb91fbe73"
+  },
+  {
+    "file": "takeoff_01.png",
+    "mode": "RGBA",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "visible_bounds_alpha_16": [
+      37,
+      138,
+      1235,
+      1205
+    ],
+    "minimum_visible_margin": 19,
+    "sha256": "7398881dd2fd4acf3fa00f55cca44d43003000fd48d7e90cbc76319307456df4"
+  }
+]

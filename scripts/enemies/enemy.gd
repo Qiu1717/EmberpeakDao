@@ -9,6 +9,7 @@ const Damage := preload("res://scripts/combat/damage.gd")
 const Projectile := preload("res://scripts/enemies/projectile.gd")
 enum State { DORMANT, INTRO, IDLE, PATROL, DETECT, APPROACH, TELEGRAPH, ATTACK, RECOVERY, RETURN, HURT, PHASE, DEAD }
 @export var data: Resource
+@export var show_placeholder_body := true
 var source_id := ""
 var health := 0
 var armor := 0.0
@@ -290,8 +291,9 @@ func _draw() -> void:
 		color = Color("b89a60")
 	if state == State.HURT:
 		color = Color("9e302a")
-	draw_rect(Rect2(Vector2(-data.body_size.x / 2, -data.body_size.y), data.body_size), color)
-	draw_line(Vector2(0, -35), Vector2(facing * 32, -30), Color.WHITE, 3)
+	if show_placeholder_body:
+		draw_rect(Rect2(Vector2(-data.body_size.x / 2, -data.body_size.y), data.body_size), color)
+		draw_line(Vector2(0, -35), Vector2(facing * 32, -30), Color.WHITE, 3)
 	draw_rect(Rect2(-40, -data.body_size.y - 12, 80, 5), Color("315461"))
 	draw_rect(Rect2(-40, -data.body_size.y - 12, 80.0 * health / data.max_health, 5), Color("83dce8"))
 	if state in [State.TELEGRAPH, State.ATTACK]:
