@@ -16,6 +16,7 @@ func _ready() -> void:
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	Ui.label(box, "", 12)
 	Ui.button(box, "开始新游戏", "NewGame", app.start_new_game, self)
+	Ui.button(box, "问道残庭", "Home", app.return_to_home, self)
 	Ui.button(box, "剑术训练场", "Training", app.start_training, self)
 	Ui.button(box, "固定路线测试", "FixedRoute", app.start_fixed_route, self)
 	Ui.button(box, "山魈美术样板", "ArtRoom", app.start_art_room, self)

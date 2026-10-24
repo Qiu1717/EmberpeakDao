@@ -24,7 +24,7 @@ func _ready() -> void:
 	var title := Ui.label(header, "无名剑冢 · 美术图鉴", 28)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	Ui.button(header, "返回主菜单", "Back", get_node("/root/App").return_to_menu, self)
-	var note := Ui.label(column, "26张现有原图｜静态美术展示，NPC与装备玩法、完整动作和场景建筑待后续制作。", 16)
+	var note := Ui.label(column, "26张现有原图｜首图已接NPC服务、装备和可走地图；本页为静态参考，正式动作与建筑拆件待制作。", 16)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var body := HBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL

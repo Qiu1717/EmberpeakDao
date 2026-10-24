@@ -57,6 +57,12 @@ func return_to_menu() -> void:
 		return
 	await _switch_scene(MENU_SCENE, State.MENU)
 
+func return_to_home() -> void:
+	if get_node("/root/Session").pending_death:
+		get_node("/root/Session").notify("请先重试死亡结算保存，再返回驻地。")
+		return
+	await _switch_scene("res://scenes/world/home.tscn", State.PLAYING)
+
 func _switch_scene(path: String, next_state: State) -> bool:
 	if transitioning:
 		return false

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/npcs/npc_services.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+characters = {
+"shen_yan_zhou": {"name": "沈砚舟", "role": "残存剑师", "portrait": "res://assets/npcs/concepts/shen_yan_zhou.png", "text": "先辨前摇，再找收招。普通攻击不消耗真气；三段旧剑基础伤害14／18／24。重击能削甲，长枪更远但收势更慢。闪避无敌0.20秒、冷却0.70秒；不可一直硬扛。\n练习木桩不会发放灵气或奖励。主动技能、进阶剑术与个人任务尚未开放。"},
+"gu_chang_geng": {"name": "顾长庚", "role": "流亡铁匠", "portrait": "res://assets/npcs/concepts/gu_chang_geng.png", "text": "把这次拾得的兵器拿来，我替你记下蓝图。登记武器会永久解锁后续探索的基础款；掉落实物仍属于本局。境界不足时只能收藏和登记，不能穿戴。\n当前开放装备整理和持有蓝图登记；制作、升级、重铸尚未开放。"},
+"a_heng": {"name": "阿蘅", "role": "采药人", "portrait": "res://assets/npcs/concepts/a_heng.png", "text": "随身药品最多带2次，每次恢复35生命。受伤后按设置中的药品键使用；满血不会消耗。补齐药品会同时保存当前探索，药品不算永久资源。\n当前开放基础药品补给；丹药兑换和药园任务尚未开放。"},
+"can_deng": {"name": "残灯婆婆", "role": "守灯人", "portrait": "res://assets/npcs/concepts/can_deng.png", "text": "灯在，归路便在。小境界满灵气自动突破；炼气圆满需足够灵气与镇山妖将掉落的筑基灵髓，才能在此手动筑基。\n记录会保留尚未消耗的资源；仅保存探索快照不等于记录。击败妖将后仍回这座祭坛。"},
+"faceless": {"name": "无面商人", "role": "秘境行商", "portrait": "res://assets/npcs/concepts/faceless.png", "text": "一手灵石，一手货。药散立即恢复生命，砺剑石仅强化本局，替劫符挡下一次致死伤害后消耗。库存仅限本次探索，不能重复买已售罄的商品。"}
+}
+medicine_capacity = 2
+medicine_heal = 35

@@ -1,5 +1,6 @@
 extends Control
 const Ui := preload("res://scripts/ui/ui_style.gd")
+const NpcDialogue := preload("res://scripts/ui/npc_dialogue.gd")
 var route: Node
 var kind := ""
 var payload: Dictionary = {}
@@ -72,7 +73,7 @@ func _refresh_hud() -> void:
 
 func _process(_delta: float) -> void:
 	if route != null and not modal.visible:
-		qi_label.text = "真气 %.1f / %.0f　恢复 %.1f/秒　%s　局内强化 %d 项" % [route.player.qi, route.player.stats.qi_max, route.player.stats.qi_regen, route.inventory.catalog.items[route.inventory.weapon_id()].name if not route.inventory.weapon_id().is_empty() else "未装备武器", route.run.upgrades.size()]
+		qi_label.text = "真气 %.1f / %.0f　恢复 %.1f/秒　%s　强化 %d 项　药品 %d / 2" % [route.player.qi, route.player.stats.qi_max, route.player.stats.qi_regen, route.inventory.catalog.items[route.inventory.weapon_id()].name if not route.inventory.weapon_id().is_empty() else "未装备武器", route.run.upgrades.size(), route.medicine]
 
 func open(next_kind: String, data: Dictionary) -> void:
 	if app.state == app.State.PAUSED or (route.run.ended and next_kind != "death"):
@@ -94,6 +95,8 @@ func _clear_body() -> void:
 func _build() -> void:
 	_clear_body()
 	match kind:
+		"npc":
+			NpcDialogue.build(self, payload.npc_id)
 		"route":
 			Ui.label(body, "剑冢岔路", 32)
 			Ui.label(body, "选择下一处房间；已清理的房间不会重复发奖。", 16)
@@ -158,6 +161,14 @@ func _build() -> void:
 			var record: Dictionary = records[0]
 			var item: Dictionary = route.inventory.catalog.items[record.item_id]
 			Ui.label(body, item.name, 32)
+			if not item.icon_path.is_empty():
+				var reference := TextureRect.new()
+				reference.texture = load(item.icon_path)
+				reference.custom_minimum_size = Vector2(0, 110)
+				reference.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				reference.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				body.add_child(reference)
+				Ui.label(body, "现有装备设定参考 · 独立图标与持物外观待制作", 14)
 			_paragraph("品阶：%s　稀有度：普通\n要求：%s境；当前：%s" % [["凡品", "灵器", "法器", "宝器", "灵宝"][item.tier], ["炼气", "筑基", "金丹", "元婴", "化神"][item.required_realm], route.session.profile.stats().name])
 			if item.has("damage"):
 				_paragraph("基础攻击：" + str(item.damage))
@@ -173,13 +184,17 @@ func _build() -> void:
 				register.disabled = route.session.profile.blueprints.has(record.item_id)
 			Ui.button(body, "返回行囊", "BackInventory", open.bind("inventory", {}), self)
 		"altar":
-			Ui.label(body, "灵脉祭坛 · " + route.session.profile.stats().name, 32)
+			Ui.label(body, "残灯婆婆 · 灵脉祭坛 · " + route.session.profile.stats().name, 28)
+			NpcDialogue.portrait(body, route.services.characters.can_deng)
 			_paragraph("记录将新增灵气、灵石和材料转入永久余额；单独保存快照不会记录资源。小境界满灵气自动突破，大境界须圆满并具对应材料。")
 			_paragraph("已记录：灵气%d、灵石%d\n未记录：灵气%d、灵石%d\n筑基灵髓：已记录%d＋新增%d" % [route.session.profile.banked_spirit, route.session.profile.banked_stones, route.run.spirit, route.run.stones, route.session.profile.banked_materials.get("foundation_marrow", 0), route.run.materials.get("foundation_marrow", 0)])
 			Ui.button(body, "记录资源并保存", "AltarRecord", _altar.bind("record", ""), self)
 			Ui.button(body, "突破大境界", "AltarBreakthrough", _altar.bind("breakthrough", ""), self)
 			Ui.button(body, "只保存探索快照", "AltarSave", _altar.bind("save", ""), self)
 			Ui.button(body, "整理装备与登记蓝图", "AltarInventory", open.bind("inventory", {}), self)
+			if route.cleared_rooms.has("boss"):
+				_paragraph("妖将已败。返回驻地会在此记录资源并结束本次探索；局内强化和掉落实物将清除。请先完成所需突破和蓝图登记。")
+				Ui.button(body, "记录资源、结束探索并返回驻地", "CompleteExploration", _complete, self)
 		"death":
 			Ui.label(body, "此行已尽", 36)
 			_paragraph("本局强化和未记录的资源已清除。\n重新探索将生成新的路线与奖励。")
@@ -189,6 +204,7 @@ func _build() -> void:
 				Ui.button(body, "重试死亡结算保存", "RetryDeath", _retry_death, self)
 			else:
 				Ui.button(body, "重新探索", "NewRun", app.start_new_game, self)
+				Ui.button(body, "返回问道残庭", "ReturnHome", app.return_to_home, self)
 				Ui.button(body, "返回主菜单", "ReturnMenu", app.return_to_menu, self)
 	var feedback := Ui.label(body, route.last_reward, 16)
 	feedback.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -221,6 +237,13 @@ func _buy(id: String) -> void:
 	route.buy(id)
 	_build()
 
+func _npc(action: String, item_id: String = "") -> void:
+	var result: Dictionary = route.npc_action(payload.npc_id, action, item_id)
+	if result.accepted and action == "practice":
+		close()
+	else:
+		_build()
+
 func _equip(id: String, slot: String, worn: bool) -> void:
 	if worn:
 		route.unequip(slot)
@@ -238,6 +261,12 @@ func _retry_death() -> void:
 	route.retry_death()
 	_build()
 
+func _complete() -> void:
+	if route.complete_exploration().accepted:
+		app.return_to_home()
+	else:
+		_build()
+
 func _retry_growth() -> void:
 	route._settle_growth()
 	_build()
@@ -248,7 +277,7 @@ func close() -> void:
 	modal.hide()
 	kind = ""
 	# UI 内的点击/移动不能在恢复时变成世界中的缓冲攻击或跳跃。
-	for action in ["attack", "heavy_attack", "dodge", "jump", "move_left", "move_right", "interact"]:
+	for action in ["attack", "heavy_attack", "dodge", "jump", "move_left", "move_right", "interact", "heal"]:
 		Input.action_release(action)
 	route.player.attack_requested = false
 	route.player.heavy_requested = false

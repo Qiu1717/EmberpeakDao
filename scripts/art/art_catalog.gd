@@ -1,5 +1,5 @@
 extends RefCounted
-## 只提供现有美术资料，不代表NPC、装备或事件系统已实现。
+## 只提供现有美术资料；功能完成情况以阶段报告和实际服务为准。
 static func entries() -> Array:
 	return JSON.parse_string(FileAccess.get_file_as_string("res://assets/art_catalog.json")).entries
 

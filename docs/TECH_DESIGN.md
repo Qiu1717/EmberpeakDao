@@ -1,6 +1,6 @@
 # 《烬山问道》技术设计
 
-版本：0.6。日期：2026-10-24。状态：阶段5新增首图炼气至筑基成长、装备／两武器、祭坛登记、完整局内快照与永久档案、本地存档／继续及失败处理。当前真实接口见第19节；第3节完整模块表和早期阶段说明不代表所有高阶扩展已完成。
+版本：0.7。日期：2026-10-24。状态：阶段6沿用成长／装备／存档，补五NPC真实服务、药品、Boss结算和临时驻地。当前接口见第19–20节；第3节预定模块及早期阶段记录不代表高阶扩展已完成。
 
 唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
@@ -215,3 +215,15 @@ SaveFile读取JSON类型、版本、revision，再调用SnapshotCodec验证Profi
 写盘使用Godot原生临时写入、flush、关闭、重读校验和有效备份替换；不加外部依赖。Windows的覆盖rename有移除目标间隙，不能宣称断电级物理原子性；至少主档／有效备份用于恢复，见PHASE_5_SAVE_FILE.md和[Godot文件API](https://docs.godotengine.org/en/stable/classes/class_fileaccess.html)。备份可能较旧，恢复明确提示版本。死亡写失败设置pending_death，阻止新探索、继续、返回菜单和正常退出，提供重试；外部强杀或磁盘持续不可写时无法承诺旧磁盘快照已失效。
 
 默认user://save_game.json，EMBERPEAK_SAVE_PATH支持隔离开发档。统一测试入口在每个进程启动前指定私有路径；跨进程组共享同一私有档，正式玩家档不备份覆盖或清理。实际验证与未覆盖范围见PHASE_5_REPORT.md及子模块说明。
+
+## 20. 阶段6首图整合接口
+
+NPC服务由resources/npcs/first_map_services.tres集中配置五位身份、静态肖像、教学及既定药品容量2／单次35。RogueRoute.npc_ids／npc_point／near_npc按房间给出真实位置，npc_action检查生命、房间清场和100像素距离；原入口开放沈砚舟木桩教学、顾长庚蓝图／装备、阿蘅药品。残灯婆婆与无面商人直接复用原祭坛／商店流程。NpcMarker只表示临时交互点；NpcDialogue将完整概念板放在面板参考，不把它当动作。
+
+Session.register_blueprint在候选Profile登记实际持有物，并保存完整探索快照；原祭坛登记复用相同持有校验。Session.supply_medicine先保存medicine=2的候选快照，成功才给药。RogueRoute.use_medicine消费真实局内药量、恢复最多35生命并通知HUD，满血／死亡／硬直／攻击／闪避／模态不消费。药量在保存边界进入run_snapshot.medicine，合法整数0..2；阶段5无此字段的快照默认2，保持同一兼容版本。药品不是永久资源，也不引入新经验条。
+
+Boss仍通过原RunState.claim_enemy和首次清场三选一发奖；不新发一笔通关奖励。Session.complete_exploration仅接受Boss已清、奖励已选、活着且靠近原祭坛的操作，将未记录资源记录到候选Profile，并与null局内快照一起提交。成功后RogueRoute清除局内实物／强化并转驻地；失败不记录、不清理、不离开，原地可重试。蓝图需先自行登记，不偷偷保留掉落实物。
+
+App.return_to_home复用场景管理和死亡待重试门禁。home.tscn实例化已有入口CombatRoom的地形、墙与Player，只读永久境界、余额与解锁，可开始新探索或继续既有快照；不创建RunState、不调用begin_run，也不自动记录原探索。该画面明确标为临时驻地，独立建筑及NPC常驻角色未制作。
+
+正式NPC制作／升级／重铸、丹药兑换、个人任务、主动技能、其他区域和正式音频仍不在本轮实现。验收证据与边界见PHASE_6_REPORT.md，美术缺口见PHASE_6_ART_GAPS.md。

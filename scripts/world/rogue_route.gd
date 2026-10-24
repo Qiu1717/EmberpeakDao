@@ -5,6 +5,10 @@ const Graph := preload("res://scripts/roguelite/run_graph.gd")
 const Run := preload("res://scripts/roguelite/run_state.gd")
 const Ui := preload("res://scripts/ui/ui_style.gd")
 const Inventory := preload("res://scripts/inventory/inventory_state.gd")
+const Services := preload("res://resources/npcs/first_map_services.tres")
+const NpcMarker := preload("res://scripts/npcs/npc_marker.gd")
+var services: Resource = Services
+var medicine := 2
 var graph: RefCounted
 var run: RefCounted
 var inventory: RefCounted
@@ -30,6 +34,7 @@ func _ready() -> void:
 		visited = resume_data.visited.duplicate(true)
 		cleared_rooms = resume_data.cleared_rooms.duplicate(true)
 		upgrade_pending = resume_data.upgrade_pending.duplicate(true)
+		medicine = int(resume_data.get("medicine", services.medicine_capacity))
 	else:
 		for id in session.profile.weapon_unlocks:
 			var record := {"instance_id": run.run_id + ":base:" + id, "item_id": id, "name": inventory.catalog.items[id].name}
@@ -78,6 +83,13 @@ func _load_node(id: String, backwards: bool) -> void:
 		marker.position = interaction_point() + Vector2(-130, -125)
 		marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		room.add_child(marker)
+	for npc_id in npc_ids():
+		var npc := Node2D.new()
+		npc.set_script(NpcMarker)
+		npc.name = "NPC_" + npc_id
+		npc.display_name = services.characters[npc_id].name
+		npc.position = npc_point(npc_id)
+		room.add_child(npc)
 
 func travel_to(id: String) -> bool:
 	if transitioning or get_tree().paused or run.ended or player.health <= 0 or not room.is_cleared or upgrade_pending.has(current_id):
@@ -132,6 +144,11 @@ func interact() -> void:
 	if upgrade_pending.has(current_id):
 		request_upgrade()
 		return
+	if current_id == "entry":
+		for npc_id in npc_ids():
+			if near_npc(npc_id):
+				interaction_requested.emit("npc", {"npc_id": npc_id})
+				return
 	var kind: String = graph.nodes[current_id].kind
 	if player.position.distance_to(interaction_point()) < 120:
 		match kind:
@@ -149,6 +166,7 @@ func interact() -> void:
 				last_reward = result.message
 				return
 			"altar":
+				medicine = services.medicine_capacity
 				player.health = player.stats.max_health
 				player.qi = player.stats.qi_max
 				player.health_changed.emit(player.health, player.stats.max_health)
@@ -232,6 +250,8 @@ func status_text() -> String:
 		return "战斗中：剩余 %d，清场后解锁出口" % room.alive
 	if current_id == "boss":
 		return "镇山妖将已败；左侧出口可返回原祭坛，记录材料并突破筑基"
+	if current_id == "entry":
+		return "安全入口：靠近沈砚舟／顾长庚／阿蘅按交互键；右门选择探索路线"
 	return "通路已解锁：靠近右门选择前路，左门返回；中央标记可交互"
 
 func _on_run_changed() -> void:
@@ -278,6 +298,79 @@ func retry_death() -> void:
 	var result: Dictionary = session.save_death()
 	last_reward = result.message
 
+func complete_exploration() -> Dictionary:
+	var result: Dictionary = session.complete_exploration(self)
+	last_reward = result.message
+	if result.accepted:
+		run.finish_run("victory")
+		inventory.items.clear()
+		inventory.equipped.clear()
+		upgrade_pending.clear()
+	return result
+
+func npc_ids() -> Array:
+	if current_id == "entry":
+		return ["shen_yan_zhou", "gu_chang_geng", "a_heng"]
+	if current_id == "altar":
+		return ["can_deng"]
+	if graph.nodes[current_id].kind == "shop":
+		return ["faceless"]
+	return []
+
+func npc_point(id: String) -> Vector2:
+	var x: float = {"shen_yan_zhou": 380.0, "gu_chang_geng": 700.0, "a_heng": 1120.0}.get(id, 920.0)
+	return Vector2(x, room.map.floor_at(x))
+
+func near_npc(id: String) -> bool:
+	return id in npc_ids() and player.position.distance_to(npc_point(id)) < 100
+
+func npc_action(id: String, action: String, item_id: String = "") -> Dictionary:
+	var result: Dictionary = {"accepted": false, "message": "请靠近对应NPC再操作。"}
+	if run.ended or player.health <= 0 or not room.is_cleared or not near_npc(id):
+		return result
+	if id == "gu_chang_geng" and action == "blueprint":
+		result = session.register_blueprint(self, item_id)
+	elif id == "a_heng" and action == "supply":
+		result = session.supply_medicine(self)
+	elif id == "shen_yan_zhou" and action == "practice":
+		_create_practice_target()
+		result = {"accepted": true, "message": "前方木桩可承受攻击，不提供任何奖励。"}
+	last_reward = result.message
+	return result
+
+func _create_practice_target() -> void:
+	if room.has_node("PracticeTarget"):
+		room.get_node("PracticeTarget").health = 200
+		return
+	var target := CharacterBody2D.new()
+	target.set_script(preload("res://scripts/world/training_target.gd"))
+	target.name = "PracticeTarget"
+	target.collision_layer = 4
+	target.collision_mask = 1
+	target.position = Vector2(520, room.map.floor_at(520))
+	var shape := CollisionShape2D.new()
+	shape.shape = RectangleShape2D.new()
+	shape.shape.size = Vector2(36, 60)
+	shape.position.y = -30
+	target.add_child(shape)
+	room.add_child(target)
+
+func use_medicine() -> Dictionary:
+	if run.ended or get_tree().paused or player.state in [player.State.DEAD, player.State.HURT, player.State.ATTACK, player.State.DODGE] or medicine <= 0 or player.health >= player.stats.max_health:
+		return {"accepted": false, "message": "当前不能使用药品，或药品已用尽／生命已满。"}
+	medicine -= 1
+	player.health = mini(player.stats.max_health, player.health + services.medicine_heal)
+	player.health_changed.emit(player.health, player.stats.max_health)
+	last_reward = "使用随身药品，恢复最多%d生命，剩余%d次" % [services.medicine_heal, medicine]
+	return {"accepted": true, "message": last_reward}
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("heal") and not event.is_echo():
+		use_medicine()
+		get_viewport().set_input_as_handled()
+	else:
+		super._unhandled_input(event)
+
 func capture_snapshot(run_override: Dictionary = {}) -> Dictionary:
 	var enemy_health: Dictionary = {}
 	var enemy_armor: Dictionary = {}
@@ -285,4 +378,4 @@ func capture_snapshot(run_override: Dictionary = {}) -> Dictionary:
 		if is_instance_valid(enemy):
 			enemy_health[str(enemy.source_id)] = enemy.health
 			enemy_armor[str(enemy.source_id)] = enemy.armor
-	return {"run": run.to_dict() if run_override.is_empty() else run_override.duplicate(true), "inventory": inventory.to_dict(), "current_id": current_id, "visited": visited.duplicate(true), "cleared_rooms": cleared_rooms.duplicate(true), "upgrade_pending": upgrade_pending.duplicate(true), "health": player.health, "qi": player.qi, "enemies": enemy_health, "enemy_armor": enemy_armor}
+	return {"run": run.to_dict() if run_override.is_empty() else run_override.duplicate(true), "inventory": inventory.to_dict(), "current_id": current_id, "visited": visited.duplicate(true), "cleared_rooms": cleared_rooms.duplicate(true), "upgrade_pending": upgrade_pending.duplicate(true), "health": player.health, "qi": player.qi, "medicine": medicine, "enemies": enemy_health, "enemy_armor": enemy_armor}

@@ -122,15 +122,8 @@ func altar_action(route: Node, action: String, item_id: String = "") -> Dictiona
 				if result.materials[id] == 0:
 					run_data.materials.erase(id)
 		"blueprint":
-			var owned := false
-			for item in route.inventory.items:
-				if item.item_id == item_id:
-					owned = true
-			if not owned or candidate.blueprints.has(item_id):
+			if not _register_owned(candidate, route, item_id):
 				return notify("未持有该实物或蓝图已经登记。")
-			candidate.blueprints.append(item_id)
-			if item_id in ["qing_feng", "po_shan"] and not candidate.weapon_unlocks.has(item_id):
-				candidate.weapon_unlocks.append(item_id)
 		"save":
 			pass
 		_:
@@ -147,6 +140,36 @@ func altar_action(route: Node, action: String, item_id: String = "") -> Dictiona
 func _adjust_health(snapshot: Dictionary, candidate: RefCounted, route: Node) -> void:
 	var maximum: int = candidate.stats().max_health + route.inventory.modifiers().health_bonus + route.run.stat_modifiers().health_bonus
 	snapshot.health = mini(maximum, route.player.health + maxi(0, maximum - route.player.stats.max_health))
+
+func _register_owned(candidate: RefCounted, route: Node, item_id: String) -> bool:
+	if candidate.blueprints.has(item_id):
+		return false
+	for item in route.inventory.items:
+		if item.item_id == item_id:
+			candidate.blueprints.append(item_id)
+			if item_id in ["qing_feng", "po_shan"] and not candidate.weapon_unlocks.has(item_id):
+				candidate.weapon_unlocks.append(item_id)
+			return true
+	return false
+
+func register_blueprint(route: Node, item_id: String) -> Dictionary:
+	if pending_death or route.run.ended or route.player.health <= 0 or not route.near_npc("gu_chang_geng"):
+		return notify("请靠近顾长庚登记蓝图。")
+	var candidate := clone_profile()
+	if not _register_owned(candidate, route, item_id):
+		return notify("未持有该实物或蓝图已经登记。")
+	return commit_state(candidate, route.capture_snapshot())
+
+func supply_medicine(route: Node) -> Dictionary:
+	if pending_death or route.run.ended or route.player.health <= 0 or not route.near_npc("a_heng") or route.medicine >= route.services.medicine_capacity:
+		return notify("请靠近阿蘅；药品已满时无需补给。")
+	var snapshot: Dictionary = route.capture_snapshot()
+	snapshot.medicine = route.services.medicine_capacity
+	var result := commit_state(clone_profile(), snapshot)
+	if result.accepted:
+		route.medicine = route.services.medicine_capacity
+		result.message = "阿蘅已补齐随身药品，并保存当前探索。"
+	return result
 
 func purchase(route: Node, good_id: String) -> Dictionary:
 	var candidate := clone_profile()
@@ -174,6 +197,20 @@ func save_death() -> Dictionary:
 	if pending_death:
 		message = "死亡结算保存失败，旧档未失效；请重试后再离开。 " + result.message
 	return {"accepted": result.accepted, "message": message}
+
+func complete_exploration(route: Node) -> Dictionary:
+	if pending_death or route.run.ended or route.player.health <= 0 or route.current_id != "altar" or not route.room.is_cleared or route.player.position.distance_to(route.room.altar_point) >= 120 or not route.cleared_rooms.has("boss") or not route.upgrade_pending.is_empty():
+		return notify("击败镇山妖将、选完清场奖励后，回原祭坛结算。")
+	var candidate := clone_profile()
+	if not candidate.record_resources(route.run.spirit, route.run.stones, route.run.materials):
+		return notify("资源无效，未结束探索。")
+	if not candidate.boss_kills.has("mountain_general"):
+		candidate.boss_kills.append("mountain_general")
+	var result := commit_state(candidate, null)
+	if result.accepted:
+		result.message = "无名剑冢探索完成；资源已在祭坛记录。境界、余额和解锁保留，局内强化与掉落实物清除。"
+		message = result.message
+	return result
 
 func notify(text: String) -> Dictionary:
 	message = text

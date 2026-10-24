@@ -26,6 +26,8 @@ static func _snapshot(snapshot: Dictionary, profile: RefCounted) -> bool:
 			return false
 	if not snapshot.get("current_id") is String or not Run.whole(snapshot.get("health"), 1):
 		return false
+	if not Run.whole(snapshot.get("medicine", 2), 0, 2):
+		return false
 	var qi: Variant = snapshot.get("qi")
 	if not typeof(qi) in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(qi)) or qi < 0:
 		return false
