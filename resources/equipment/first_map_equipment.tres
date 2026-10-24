@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/inventory/equipment_catalog.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+items = {
+"qing_feng": {"name": "青锋旧剑", "slot": "weapon", "tier": 0, "required_realm": 0, "rarity": "common", "effects": {}, "damage": [14, 18, 24], "icon_path": "res://assets/equipment/concepts/qing_feng.png"},
+"po_shan": {"name": "破山长枪", "slot": "weapon", "tier": 0, "required_realm": 0, "rarity": "common", "effects": {}, "damage": [22, 28, 38], "icon_path": "res://assets/equipment/concepts/po_shan.png"},
+"qing_bu": {"name": "青布道袍", "slot": "armor", "tier": 0, "required_realm": 0, "rarity": "common", "effects": {"max_health": 10, "defense": 3}, "icon_path": "res://assets/equipment/concepts/qing_bu.png"},
+"can_jian": {"name": "残剑坠", "slot": "accessory", "tier": 0, "required_realm": 0, "rarity": "common", "effects": {"third_attack_multiplier": 0.10}, "icon_path": "res://assets/equipment/concepts/can_jian.png"},
+"hui_ling": {"name": "回灵玉佩", "slot": "accessory", "tier": 1, "required_realm": 1, "rarity": "common", "effects": {"qi_regen_multiplier": 0.15}, "icon_path": "res://assets/equipment/concepts/hui_ling.png"},
+"xuan_wen": {"name": "玄纹法衣", "slot": "armor", "tier": 1, "required_realm": 1, "rarity": "common", "effects": {"defense": 8, "max_qi": 10}, "icon_path": ""}
+}

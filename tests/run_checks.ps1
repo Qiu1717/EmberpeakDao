@@ -5,12 +5,18 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$logRoot = Join-Path $projectRoot 'builds\phase4'
+$logRoot = Join-Path $projectRoot 'builds\phase5'
 New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
+$originalSavePath = $env:EMBERPEAK_SAVE_PATH
+$regressionId = [Guid]::NewGuid().ToString('N')
+$env:EMBERPEAK_SAVE_PATH = "user://regression_$regressionId/startup/save.json"
 
 function Invoke-GodotCheck {
     param([string]$Name, [string[]]$Arguments, [string]$Expected = '')
     $logPath = Join-Path $logRoot ($Name + '.log')
+    $saveGroup = if ($Name -in @('persistence-write', 'persistence-read', 'persistence-after-death')) { 'persistence' } else { $Name }
+    $env:EMBERPEAK_SAVE_PATH = if ($Name -like 'persistence-*') { "user://phase5_persistence_$regressionId/$saveGroup/save.json" } else { "user://regression_$regressionId/$saveGroup/save.json" }
+    if ($Name -like 'resume-combat-*') { $env:EMBERPEAK_SAVE_PATH = "user://phase5_resume_combat_$regressionId/$saveGroup/save.json" }
     & $Godot @Arguments *> $logPath
     $exitCode = $LASTEXITCODE
     $output = Get-Content -LiteralPath $logPath -Raw
@@ -67,12 +73,39 @@ try {
     Invoke-GodotCheck 'run-state-headless' $runState 'RUN_STATE_CHECKS_PASSED=57'
     Invoke-GodotCheck 'roguelite-flow-headless' $runFlow 'ROGUELITE_FLOW_PASSED=36'
     Invoke-GodotCheck 'run-runtime-headless' $runRuntime 'RUN_RUNTIME_PASSED=15'
+    $progression = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_progression.gd')
+    $inventory = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_inventory.gd')
+    $weapons = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '3000', '--script', 'res://tests/test_weapons.gd')
+    $saveFile = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_save_file.gd')
+    $snapshotCodec = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_snapshot_codec.gd')
+    $runSnapshot = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_run_snapshot.gd')
+    $session = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_session.gd')
+    $phase5Flow = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_phase5_flow.gd')
+    Invoke-GodotCheck 'progression-headless' $progression 'PROGRESSION_CHECKS_PASSED=78'
+    Invoke-GodotCheck 'inventory-headless' $inventory 'INVENTORY_CHECKS_PASSED=58'
+    Invoke-GodotCheck 'weapons-headless' $weapons 'WEAPON_CHECKS_PASSED=26'
+    Invoke-GodotCheck 'save-file-headless' $saveFile 'SAVE_FILE_CHECKS_PASSED=156'
+    Invoke-GodotCheck 'snapshot-codec-headless' $snapshotCodec 'SNAPSHOT_CODEC_CHECKS_PASSED=96'
+    Invoke-GodotCheck 'run-snapshot-headless' $runSnapshot 'RUN_SNAPSHOT_PASSED=32'
+    Invoke-GodotCheck 'session-headless' $session 'SESSION_CHECKS_PASSED=8'
+    Invoke-GodotCheck 'phase5-flow-headless' $phase5Flow 'PHASE5_FLOW_PASSED=17'
+    $resumeCombat = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_resume_combat.gd')
+    $persistence = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_phase5_persistence.gd')
+    Invoke-GodotCheck 'resume-combat-headless' $resumeCombat 'RESUME_COMBAT_CHECKS_PASSED=15'
+    Invoke-GodotCheck 'persistence-write' ($persistence + @('--', '--write')) 'PERSIST_WRITE_OK'
+    Invoke-GodotCheck 'persistence-read' ($persistence + @('--', '--read')) 'PERSIST_READ_OK'
+    Invoke-GodotCheck 'persistence-after-death' ($persistence + @('--', '--after-death')) 'PERSIST_AFTER_DEATH_OK'
+    Invoke-GodotCheck 'persistence-failures' ($persistence + @('--', '--failures')) 'PERSIST_FAILURES_OK'
     $settingsArgs = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_settings.gd')
     Invoke-GodotCheck 'settings-headless' $settingsArgs 'SETTINGS_CHECKS_PASSED=6'
     $restart = @('--headless', '--path', $projectRoot, '--script', 'res://tests/test_settings_restart.gd')
     Invoke-GodotCheck 'restart-write' ($restart + @('--', '--write')) 'RESTART_WRITE_OK'
     Invoke-GodotCheck 'restart-read' ($restart + @('--', '--read')) 'RESTART_READ_OK'
     if ($Windowed) {
+        Invoke-GodotCheck 'weapons-window' ($weapons | Where-Object { $_ -ne '--headless' }) 'WEAPON_CHECKS_PASSED=26'
+        Invoke-GodotCheck 'phase5-flow-window' ($phase5Flow | Where-Object { $_ -ne '--headless' }) 'PHASE5_FLOW_PASSED=17'
+        Invoke-GodotCheck 'resume-combat-window' ($resumeCombat | Where-Object { $_ -ne '--headless' }) 'RESUME_COMBAT_CHECKS_PASSED=15'
+        Invoke-GodotCheck 'persistence-failures-window' (($persistence | Where-Object { $_ -ne '--headless' }) + @('--', '--failures')) 'PERSIST_FAILURES_OK'
         Invoke-GodotCheck 'run-graph-window' ($runGraph | Where-Object { $_ -ne '--headless' }) 'RUN_GRAPH_CHECKS_PASSED=8919'
         Invoke-GodotCheck 'roguelite-flow-window' ($runFlow | Where-Object { $_ -ne '--headless' }) 'ROGUELITE_FLOW_PASSED=36'
         Invoke-GodotCheck 'run-runtime-window' ($runRuntime | Where-Object { $_ -ne '--headless' }) 'RUN_RUNTIME_PASSED=15'
@@ -93,6 +126,7 @@ try {
     Write-Host "全部框架、战斗、美术、敌人、地图与肉鸽检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
 }
 finally {
+    $env:EMBERPEAK_SAVE_PATH = $originalSavePath
     if ($preferencesExisted) {
         [IO.File]::WriteAllBytes($preferencesPath, $originalBytes)
     } elseif (Test-Path -LiteralPath $preferencesPath) {

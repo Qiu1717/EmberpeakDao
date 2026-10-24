@@ -24,7 +24,7 @@ func enter_room(index: int) -> void:
 	room_index = index
 	_mount_room(Rooms[index], backwards)
 
-func _mount_room(scene: PackedScene, backwards: bool, room_key: String = "", label: String = "") -> void:
+func _mount_room(scene: PackedScene, backwards: bool, room_key: String = "", label: String = "", enemy_states: Dictionary = {}, enemy_armor: Dictionary = {}) -> void:
 	if is_instance_valid(room):
 		remove_child(room)
 		room.queue_free()
@@ -41,7 +41,7 @@ func _mount_room(scene: PackedScene, backwards: bool, room_key: String = "", lab
 	player.reset_motion_at(room.exit_point if backwards else room.entry_point)
 	room.cleared.connect(_on_room_cleared)
 	room.reward_requested.connect(_on_reward)
-	room.enter(player, cleared_rooms.has(room.room_id))
+	room.enter(player, cleared_rooms.has(room.room_id), enemy_states, enemy_armor)
 	get_node("/root/App").log_event("房间", room.display_name)
 	transitioning = false
 	room_changed.emit()

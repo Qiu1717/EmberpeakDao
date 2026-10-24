@@ -57,19 +57,27 @@ func _build_body(rect: Rect2, id: String, one_way: bool = false) -> void:
 	body.add_child(collision)
 	add_child(body)
 
-func enter(player: CharacterBody2D, was_cleared: bool) -> void:
+func enter(player: CharacterBody2D, was_cleared: bool, enemy_states: Dictionary = {}, enemy_armor: Dictionary = {}) -> void:
 	active_player = player
 	if not was_cleared:
 		for index in enemy_data.size():
+			var source := room_id + ":" + str(index)
+			if enemy_states.get(source, 1) == 0:
+				continue
 			var enemy: Node = Enemy.instantiate()
 			enemy.data = enemy_data[index]
-			enemy.source_id = room_id + ":" + str(index)
+			enemy.source_id = source
 			enemy.position = enemy_positions[index]
 			add_child(enemy)
 			enemies.append(enemy)
 			enemy.reward_requested.connect(func(payload: Dictionary): reward_requested.emit(payload))
 			enemy.died.connect(_on_enemy_died)
 			enemy.activate(player)
+			if enemy_states.has(source):
+				# 恢复状态不走伤害公式，避免护甲再减一次伤害或Boss入场拒绝。
+				enemy.health = int(enemy_states[source])
+				enemy.armor = float(enemy_armor.get(source, enemy.armor))
+				enemy.phase = 2 if enemy.data.phase_health > 0 and enemy.health <= enemy.data.max_health * enemy.data.phase_health else 1
 	alive = enemies.size()
 	if alive == 0:
 		_unlock()

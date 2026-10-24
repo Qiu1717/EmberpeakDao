@@ -218,3 +218,96 @@ func _roll(chance: float) -> bool:
 	if chance >= 1.0:
 		return true
 	return _drop_rng.randf() < chance
+
+func to_dict() -> Dictionary:
+	return {"seed": str(seed), "run_id": run_id, "spirit": spirit, "stones": stones, "materials": materials.duplicate(true), "equipment_rewards": equipment_rewards.duplicate(true), "upgrades": upgrades.duplicate(true), "ended": ended, "drop_rng_state": str(_drop_rng.state), "upgrade_rng_state": str(_upgrade_rng.state), "claimed": _claimed.duplicate(true), "offers": _offers.duplicate(true), "chosen": _chosen.duplicate(true), "shops": _shops.duplicate(true), "lethal_guards": _lethal_guards, "equipment_serial": _equipment_serial}
+
+static func whole(value: Variant, minimum: int = 0, maximum: int = 2147483647) -> bool:
+	return typeof(value) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(value)) and float(value) == floor(float(value)) and float(value) >= minimum and float(value) <= maximum
+
+static func _integer_string(value: Variant) -> bool:
+	if not value is String or not value.is_valid_int():
+		return false
+	var digits: String = value.trim_prefix("-")
+	var limit := "9223372036854775808" if value.begins_with("-") else "9223372036854775807"
+	if digits.length() > 19 or (digits.length() == 19 and digits > limit):
+		return false
+	return str(int(value)) == value
+
+static func _flags(value: Variant) -> bool:
+	if not value is Dictionary:
+		return false
+	for id in value:
+		if not id is String or id.is_empty() or not value[id] is bool or not value[id]:
+			return false
+	return true
+
+func restore(data: Dictionary) -> bool:
+	# 所有校验先完成，损坏快照不能部分污染当前探索。
+	for field in ["seed", "run_id", "spirit", "stones", "materials", "equipment_rewards", "upgrades", "ended", "drop_rng_state", "upgrade_rng_state", "claimed", "offers", "chosen", "shops", "lethal_guards", "equipment_serial"]:
+		if not data.has(field):
+			return false
+	if not _integer_string(data.seed) or int(data.seed) < 0 or not _integer_string(data.drop_rng_state) or not _integer_string(data.upgrade_rng_state):
+		return false
+	if not data.run_id is String or data.run_id.is_empty() or not data.ended is bool:
+		return false
+	for field in ["spirit", "stones", "equipment_serial"]:
+		if not whole(data[field]):
+			return false
+	if not whole(data.lethal_guards, 0, 1) or not data.materials is Dictionary or not data.upgrades is Dictionary or not data.equipment_rewards is Array:
+		return false
+	for id in data.materials:
+		if not rules.material_names.has(id) or not whole(data.materials[id], 1):
+			return false
+	for id in data.upgrades:
+		if not rules.upgrades.has(id) or not whole(data.upgrades[id], 1, rules.upgrades[id].cap):
+			return false
+	var item_ids: Dictionary = {}
+	for item in data.equipment_rewards:
+		if not item is Dictionary or not item.get("instance_id") is String or item.instance_id.is_empty() or item_ids.has(item.instance_id) or not rules.equipment.has(item.get("item_id")) or item.get("name") != rules.equipment[item.item_id].name:
+			return false
+		item_ids[item.instance_id] = true
+	if not _flags(data.claimed) or not _flags(data.chosen) or not data.offers is Dictionary or not data.shops is Dictionary:
+		return false
+	for source in data.offers:
+		if not source is String or source.is_empty() or not data.offers[source] is Array or data.offers[source].size() > 3:
+			return false
+		var ids: Dictionary = {}
+		for id in data.offers[source]:
+			if not rules.upgrades.has(id) or rules.upgrades[id].weight <= 0 or ids.has(id):
+				return false
+			ids[id] = true
+	for source in data.chosen:
+		if not data.offers.has(source):
+			return false
+	for source in data.shops:
+		if not source is String or source.is_empty() or not data.shops[source] is Dictionary or data.shops[source].size() != rules.goods.size():
+			return false
+		for id in rules.goods:
+			if not data.shops[source].has(id) or not whole(data.shops[source][id], 0, rules.goods[id].stock):
+				return false
+	seed = int(data.seed)
+	run_id = data.run_id
+	spirit = int(data.spirit)
+	stones = int(data.stones)
+	materials = data.materials.duplicate(true)
+	for id in materials:
+		materials[id] = int(materials[id])
+	equipment_rewards = data.equipment_rewards.duplicate(true)
+	upgrades = data.upgrades.duplicate(true)
+	for id in upgrades:
+		upgrades[id] = int(upgrades[id])
+	ended = data.ended
+	_drop_rng.state = int(data.drop_rng_state)
+	_upgrade_rng.state = int(data.upgrade_rng_state)
+	_claimed = data.claimed.duplicate(true)
+	_offers = data.offers.duplicate(true)
+	_chosen = data.chosen.duplicate(true)
+	_shops = data.shops.duplicate(true)
+	for source in _shops:
+		for id in _shops[source]:
+			_shops[source][id] = int(_shops[source][id])
+	_lethal_guards = int(data.lethal_guards)
+	_equipment_serial = int(data.equipment_serial)
+	changed.emit()
+	return true

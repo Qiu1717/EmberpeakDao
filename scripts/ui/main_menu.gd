@@ -3,6 +3,7 @@ extends Control
 
 const Ui := preload("res://scripts/ui/ui_style.gd")
 const SettingsMenu := preload("res://scenes/ui/settings_menu.tscn")
+var save_message: Label
 
 func _ready() -> void:
 	theme = Ui.theme()
@@ -19,9 +20,14 @@ func _ready() -> void:
 	Ui.button(box, "固定路线测试", "FixedRoute", app.start_fixed_route, self)
 	Ui.button(box, "山魈美术样板", "ArtRoom", app.start_art_room, self)
 	Ui.button(box, "美术图鉴", "Gallery", app.start_gallery, self)
-	var resume := Ui.button(box, "继续游戏", "Continue", Callable(), self)
-	resume.disabled = true
-	resume.tooltip_text = "游戏存档尚未接入，当前没有可继续的探索。"
+	var session: Node = get_node("/root/Session")
+	var resume := Ui.button(box, "继续游戏", "Continue", app.continue_game, self)
+	resume.disabled = not session.can_continue()
+	resume.tooltip_text = "继续最近成功保存的探索；快照中的未记录资源死亡仍丢失。" if not resume.disabled else "当前没有可继续的有效探索。"
+	get_node("%NewGame").tooltip_text = "以现有永久境界开启新探索，放弃上次探索的未记录内容。"
+	save_message = Ui.label(box, session.message if session.blocked or session.message.contains("备份") else "", 14)
+	save_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	session.feedback.connect(_save_feedback)
 	var settings_panel: Control = SettingsMenu.instantiate()
 	settings_panel.name = "SettingsMenu"
 	Ui.button(box, "设置", "Settings", settings_panel.show_menu, self)
@@ -33,3 +39,6 @@ func _ready() -> void:
 			get_node("%Settings").grab_focus()
 	)
 	get_node("%NewGame").grab_focus()
+
+func _save_feedback(text: String) -> void:
+	save_message.text = text

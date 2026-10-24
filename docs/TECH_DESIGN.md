@@ -1,6 +1,6 @@
 # 《烬山问道》技术设计
 
-版本：0.5。日期：2026-10-24。状态：框架、基础战斗、六敌、八模板受控随机路线、局内奖励／强化／奇遇／商店已实现；永久成长、完整装备与游戏存档仍为设计。第3节完整模块表是预定契约；本轮真实接口见第18节，历史阶段说明保留。
+版本：0.6。日期：2026-10-24。状态：阶段5新增首图炼气至筑基成长、装备／两武器、祭坛登记、完整局内快照与永久档案、本地存档／继续及失败处理。当前真实接口见第19节；第3节完整模块表和早期阶段说明不代表所有高阶扩展已完成。
 
 唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
@@ -197,3 +197,21 @@ CombatRoom在map_id有效时由PaintedMap建立1672×941原图世界：远景Spr
 - player.died 同步 finish_run 清空本局状态并恢复基础属性；既有倒下动作播放0.65秒后显示真实丢失摘要。新场景新建 RunState 和随机种子，原继续按钮保持禁用。无虚构永久保留、资源记录、自动突破或存档成功提示。
 
 精确字段、待平衡数值与 API 见 PHASE_4_PLAN.md、PHASE_4_BALANCE.md。配置可替换而不改 NPC、掉落或三选一 UI。
+
+## 19. 阶段5真实持久化与装备接口
+
+Session Autoload在App之前初始化，ProfileState仅包含永久境界、已记录未耗资源、武器解锁／蓝图／Boss标记；RogueRoute持有真实RunState与InventoryState。固定六房／训练入口保持独立回归；新游戏与继续通过Session进入肉鸽场景，不新建第二套灵气或永久经验。
+
+`Session.commit_state(candidate_profile, run_snapshot)`构造save_version=1、递增revision、profile和run_snapshot封套，交SaveFile和SnapshotCodec整体校验写盘。成功后才发布活跃Profile副本与saved；失败保留原状态、返回中文原因。新探索先提交null局内快照防止从菜单复活已放弃旧局；自动小突破、祭坛操作、蓝图登记和交易提交相关快照，死亡提交null。设置不混入游戏档案。
+
+RogueRoute在一次奖励／生命代价／清场回调完成后延迟结算自动小突破，避免保存事件扣血前的状态。Profile先消耗pending再banked，连续小突破止于圆满，大突破必须靠近真实祭坛且材料／灵气齐备。资源记录转移余额与清零Run在同一事务内；保存快照不自动记录。商品先花新增灵石再扣已记录余额，后者同步保存，不能借死亡返还已花灵石。候选Run与Profile副本上完成检查／消耗，写失败不修改原账本。
+
+Inventory使用唯一instance_id、稳定item_id与真实槽位，检查required_realm和tier两个门槛。Root统一从武器配置、境界基准、装备属性、局内加成重算stats；换装不回血，卸武器禁攻。长枪真正使用不同伤害、范围、时序和重击削甲；第三段饰品不影响重击，玉佩恢复倍率作用于实际Player.qi，真气和成长灵气分开。当前仅首图五个成长阶段、两武器和六装备，后续区域数值未配置。
+
+快照含完整Run（RNG状态用十进制字符串）、inventory、current_id、visited、cleared_rooms、upgrade_pending、health、qi、enemies和enemy_armor。读档从房间安全点恢复，死亡敌人不实例化；存活敌人直接恢复生命／护甲并按生命推导阶段，不重新经过伤害减免或入场无敌。不是恢复攻击命中帧。候选、库存、来源标识和RNG均随原局恢复，存档快照中的临时强化仍是局内数据。
+
+SaveFile读取JSON类型、版本、revision，再调用SnapshotCodec验证Profile、Run、Inventory、节点、属性上限、实物来源和敌人／护甲关系。坏档优先报告并读有效备份；Session仅保留恢复的永久档案，停用备份旧探索以防重领奖。新版本或无有效数据阻止覆盖并显示原因，首次无文件建立内存默认档案，直到真实保存才创建文件。没有伪造历史迁移格式。
+
+写盘使用Godot原生临时写入、flush、关闭、重读校验和有效备份替换；不加外部依赖。Windows的覆盖rename有移除目标间隙，不能宣称断电级物理原子性；至少主档／有效备份用于恢复，见PHASE_5_SAVE_FILE.md和[Godot文件API](https://docs.godotengine.org/en/stable/classes/class_fileaccess.html)。备份可能较旧，恢复明确提示版本。死亡写失败设置pending_death，阻止新探索、继续、返回菜单和正常退出，提供重试；外部强杀或磁盘持续不可写时无法承诺旧磁盘快照已失效。
+
+默认user://save_game.json，EMBERPEAK_SAVE_PATH支持隔离开发档。统一测试入口在每个进程启动前指定私有路径；跨进程组共享同一私有档，正式玩家档不备份覆盖或清理。实际验证与未覆盖范围见PHASE_5_REPORT.md及子模块说明。

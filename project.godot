@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 [autoload]
 
 Settings="*res://scripts/managers/settings.gd"
+Session="*res://scripts/managers/session.gd"
 App="*res://scripts/managers/app.gd"
 
 [display]

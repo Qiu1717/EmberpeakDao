@@ -11,7 +11,10 @@ extends Resource
 @export var dodge_cooldown: float = 0.70
 @export var hit_stun: float = 0.20
 @export var sword_damage: PackedFloat32Array = [14.0, 18.0, 24.0]
+@export var third_attack_multiplier: float = 1.0
+@export var qi_max: float = 60.0
 @export_group("训练调试参数，非最终平衡")
+@export var qi_regen: float = 4.0
 @export var gravity: float = 1500.0
 @export var jump_velocity: float = -600.0
 @export var acceleration: float = 2200.0

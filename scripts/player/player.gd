@@ -4,9 +4,16 @@ signal health_changed(current: int, maximum: int)
 signal state_changed(state: int)
 signal died
 const Damage := preload("res://scripts/combat/damage.gd")
+const Enemy := preload("res://scripts/enemies/enemy.gd")
+const WeaponRules := preload("res://resources/weapons/first_map_weapons.tres")
 enum State { IDLE, MOVE, JUMP, ATTACK, DODGE, HURT, DEAD }
 @export var stats: Resource = preload("res://resources/player/training_stats.tres")
 var health: int
+var qi := 0.0
+var weapon_id := "qing_feng"
+var heavy_attack := false
+var _weapon: Dictionary = {}
+var _attack_times := Vector3.ZERO
 var state: State = State.IDLE
 var facing := 1
 var action_time := 0.0
@@ -18,12 +25,15 @@ var coyote_remaining := 0.0
 var hit_targets: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 var attack_requested := false
+var heavy_requested := false
 var dodge_requested := false
 var lethal_guard: Callable
 
 func _ready() -> void:
 	stats = stats.duplicate(true)
 	health = stats.max_health
+	qi = stats.qi_max
+	apply_weapon(weapon_id)
 	rng.seed = 20261023
 	$Artwork.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	health_changed.emit(health, stats.max_health)
@@ -33,13 +43,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("attack"):
 		attack_requested = true
+	if event.is_action_pressed("heavy_attack"):
+		heavy_requested = true
 	if event.is_action_pressed("dodge"):
 		dodge_requested = true
 
 func _physics_process(delta: float) -> void:
 	var attack_input := attack_requested
+	var heavy_input := heavy_requested
 	var dodge_input := dodge_requested
 	attack_requested = false
+	heavy_requested = false
 	dodge_requested = false
 	dodge_remaining = maxf(0, dodge_remaining - delta)
 	combo_remaining = maxf(0, combo_remaining - delta)
@@ -49,6 +63,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += stats.gravity * delta
 		move_and_slide()
 		return
+	qi = minf(stats.qi_max, qi + stats.qi_regen * delta)
 	if state == State.DODGE:
 		var step := minf(delta, stats.dodge_duration - action_time)
 		velocity = Vector2(facing * stats.dodge_distance / stats.dodge_duration * step / delta, 0)
@@ -72,10 +87,10 @@ func _physics_process(delta: float) -> void:
 	if state == State.ATTACK:
 		action_time += delta
 		velocity.x = move_toward(velocity.x, 0, stats.deceleration * delta)
-		if action_time >= stats.attack_windup and action_time < stats.attack_windup + stats.attack_active:
+		if action_time >= attack_windup() and action_time < attack_windup() + attack_active():
 			_query_attack()
 		move_and_slide()
-		if action_time >= stats.attack_duration:
+		if action_time >= attack_duration():
 			_set_state(State.IDLE if is_on_floor() else State.JUMP)
 		queue_redraw()
 		return
@@ -91,11 +106,15 @@ func _physics_process(delta: float) -> void:
 		coyote_remaining = 0
 	move_and_slide()
 	_set_state(State.JUMP if not is_on_floor() else (State.MOVE if absf(velocity.x) > 1 else State.IDLE))
-	if attack_input:
+	if heavy_input:
+		try_heavy_attack()
+	elif attack_input:
 		try_attack()
 	queue_redraw()
 
 func _set_state(value: State) -> void:
+	if value != State.ATTACK:
+		heavy_attack = false
 	if state != value:
 		state = value
 		state_changed.emit(state)
@@ -113,14 +132,60 @@ func try_dodge() -> bool:
 func is_invulnerable() -> bool:
 	return state == State.DODGE and action_time < stats.dodge_iframes
 
-func try_attack() -> bool:
-	if state in [State.ATTACK, State.DODGE, State.HURT, State.DEAD]:
+func apply_weapon(id: String) -> bool:
+	if not id.is_empty() and not WeaponRules.weapons.has(id):
 		return false
-	combo = (combo + 1) % stats.sword_damage.size() if combo_remaining > 0 else 0
-	combo_remaining = stats.combo_window
+	if weapon_id != id:
+		combo = -1
+		combo_remaining = 0
+		if state == State.ATTACK:
+			_set_state(State.IDLE if is_on_floor() else State.JUMP)
+	weapon_id = id
+	if id.is_empty():
+		_weapon = {}
+		return true
+	_weapon = WeaponRules.weapons[id]
+	stats.sword_damage = PackedFloat32Array(_weapon.damage)
+	stats.attack_size = _weapon.attack_size
+	stats.attack_offset = _weapon.attack_offset
+	stats.attack_windup = _weapon.windup
+	stats.attack_active = _weapon.active
+	stats.attack_duration = _weapon.duration
+	if state != State.ATTACK:
+		_attack_times = Vector3(stats.attack_windup, stats.attack_active, stats.attack_duration)
+	return true
+
+func try_attack(heavy: bool = false) -> bool:
+	if weapon_id.is_empty() or state in [State.ATTACK, State.DODGE, State.HURT, State.DEAD]:
+		return false
+	heavy_attack = heavy
+	combo = 0 if heavy else ((combo + 1) % stats.sword_damage.size() if combo_remaining > 0 else 0)
+	combo_remaining = 0.0 if heavy else stats.combo_window
+	_attack_times = Vector3(stats.attack_windup, stats.attack_active, stats.attack_duration)
+	if heavy:
+		var speed_scale: float = stats.attack_duration / _weapon.duration
+		_attack_times = Vector3(_weapon.heavy.windup, _weapon.heavy.active, _weapon.heavy.duration) * speed_scale
 	action_time = 0
 	hit_targets.clear()
 	_set_state(State.ATTACK)
+	return true
+
+func try_heavy_attack() -> bool:
+	return try_attack(true)
+
+func attack_windup() -> float:
+	return _attack_times.x
+
+func attack_active() -> float:
+	return _attack_times.y
+
+func attack_duration() -> float:
+	return _attack_times.z
+
+func spend_qi(amount: float) -> bool:
+	if state == State.DEAD or not is_finite(amount) or amount < 0 or qi < amount:
+		return false
+	qi -= amount
 	return true
 
 func _query_attack() -> void:
@@ -137,7 +202,15 @@ func _query_attack() -> void:
 		hit_targets[target.get_instance_id()] = true
 		var critical: float = stats.critical_multiplier if rng.randf() < stats.critical_chance else 1.0
 		var raw: float = stats.sword_damage[combo] * stats.realm_multiplier * critical
-		target.receive_hit(raw, Vector2(facing * stats.knockback.x, stats.knockback.y))
+		if heavy_attack:
+			raw *= _weapon.heavy.multiplier
+		elif combo == 2:
+			raw *= stats.third_attack_multiplier
+		var impulse := Vector2(facing * stats.knockback.x, stats.knockback.y)
+		if target is Enemy:
+			target.receive_hit(raw, impulse, _weapon.heavy.armor_damage if heavy_attack else 0.0)
+		else:
+			target.receive_hit(raw, impulse)
 
 func receive_hit(amount: float, impulse: Vector2) -> bool:
 	if health <= 0 or is_invulnerable() or amount <= 0:
@@ -156,16 +229,17 @@ func receive_hit(amount: float, impulse: Vector2) -> bool:
 
 func _draw() -> void:
 	if state == State.ATTACK:
-		var active: bool = action_time >= stats.attack_windup and action_time < stats.attack_windup + stats.attack_active
+		var active: bool = action_time >= attack_windup() and action_time < attack_windup() + attack_active()
 		if active:
 			draw_rect(Rect2(Vector2(facing * stats.attack_offset.x, stats.attack_offset.y) - stats.attack_size / 2, stats.attack_size), Color(0.51, 0.86, 0.91, 0.25))
-			draw_line(Vector2(0, -30), Vector2(facing * 105, -30), Color("83dce8"), 4)
+			draw_line(Vector2(0, -30), Vector2(facing * (stats.attack_offset.x + stats.attack_size.x / 2), -30), Color("83dce8"), 4)
 
 func reset_motion_at(spawn: Vector2) -> void:
 	# 换房仅清动作；生命与角色配置保持本次路线的实际值。
 	global_position = spawn
 	velocity = Vector2.ZERO
 	attack_requested = false
+	heavy_requested = false
 	dodge_requested = false
 	action_time = 0
 	combo = -1

@@ -154,6 +154,7 @@ func _run() -> void:
 			await tap("interact")
 			if not check(player.health == player.stats.max_health, "同一祭坛恢复生命"):
 				return
+			ui.close()
 	if not check(route.run.materials.get("foundation_marrow", 0) == 1, "Boss结算一份筑基灵髓"):
 		return
 	if not check(route.travel_to("altar"), "Boss后能返回原祭坛"):
@@ -175,7 +176,7 @@ func _run() -> void:
 	app.start_new_game()
 	await frames(18)
 	route = current_scene.world
-	if not check(route.run.seed != first_seed and not route.run.ended and route.run.upgrades.is_empty() and route.player.health == 100 and route.visited.size() == 1, "重新开始生成新种子且无上局残留"):
+	if not check(route.run.seed != first_seed and not route.run.ended and route.run.upgrades.is_empty() and route.player.health == route.session.profile.stats().max_health and route.visited.size() == 1, "重新开始生成新种子且无局内残留，继承已保存境界"):
 		return
 	await tap("pause")
 	if not check(paused and app.state == app.State.PAUSED, "局内面板关闭后普通暂停仍正常"):

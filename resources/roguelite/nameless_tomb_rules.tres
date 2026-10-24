@@ -43,9 +43,11 @@ goods = {
 equipment = {
 "qing_bu": {"name": "青布道袍", "kind": "armor"},
 "can_jian": {"name": "残剑坠", "kind": "accessory"},
-"po_shan": {"name": "破山长枪", "kind": "weapon"}
+"po_shan": {"name": "破山长枪", "kind": "weapon"},
+"hui_ling": {"name": "回灵玉佩", "kind": "accessory"},
+"xuan_wen": {"name": "玄纹法衣", "kind": "armor"}
 }
-chest = {"spirit": 20, "stones": 20, "equipment_chance": 1.0, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]}
+chest = {"spirit": 20, "stones": 20, "equipment_chance": 1.0, "equipment_pool": ["qing_bu", "can_jian", "po_shan", "hui_ling", "xuan_wen"]}
 material_names = {
 "corpse_iron": "剑冢残铁",
 "spirit_dust": "残魂碎片",

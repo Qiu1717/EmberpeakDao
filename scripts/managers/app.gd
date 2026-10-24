@@ -27,7 +27,13 @@ func enter_playing() -> void:
 	_set_state(State.PLAYING)
 
 func start_new_game() -> void:
+	if not get_node("/root/Session").begin_run():
+		return
 	if await _switch_scene(GAME_SCENE, State.PLAYING):
+		session_started.emit()
+
+func continue_game() -> void:
+	if get_node("/root/Session").continue_run() and await _switch_scene(GAME_SCENE, State.PLAYING):
 		session_started.emit()
 
 func start_training() -> void:
@@ -46,6 +52,9 @@ func start_gallery() -> void:
 	await _switch_scene("res://scenes/art/art_gallery.tscn", State.MENU)
 
 func return_to_menu() -> void:
+	if get_node("/root/Session").pending_death:
+		get_node("/root/Session").notify("请先重试死亡结算保存，再返回菜单。")
+		return
 	await _switch_scene(MENU_SCENE, State.MENU)
 
 func _switch_scene(path: String, next_state: State) -> bool:
@@ -93,6 +102,9 @@ func _notification(what: int) -> void:
 		quit_game()
 
 func quit_game() -> void:
+	if get_node("/root/Session").pending_death:
+		get_node("/root/Session").notify("死亡结算保存失败，请先重试；尚未退出。")
+		return
 	log_event("退出", "正常结束应用")
 	get_tree().paused = false
 	get_tree().quit()

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/realm_rules.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+stages = Array[Dictionary]([{
+"realm": 0, "subrealm": 0, "name": "炼气初期", "max_health": 100, "attack_multiplier": 1.0, "max_qi": 60, "required_spirit": 40, "material_id": ""
+}, {
+"realm": 0, "subrealm": 1, "name": "炼气中期", "max_health": 104, "attack_multiplier": 1.02, "max_qi": 64, "required_spirit": 60, "material_id": ""
+}, {
+"realm": 0, "subrealm": 2, "name": "炼气后期", "max_health": 108, "attack_multiplier": 1.04, "max_qi": 68, "required_spirit": 80, "material_id": ""
+}, {
+"realm": 0, "subrealm": 3, "name": "炼气圆满", "max_health": 112, "attack_multiplier": 1.06, "max_qi": 72, "required_spirit": 100, "material_id": "foundation_marrow"
+}, {
+"realm": 1, "subrealm": 0, "name": "筑基初期", "max_health": 115, "attack_multiplier": 1.08, "max_qi": 75, "required_spirit": 0, "material_id": ""
+}])

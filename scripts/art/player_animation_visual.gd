@@ -30,17 +30,17 @@ func sync_pose() -> void:
 		player.State.JUMP:
 			name = "jump"
 		player.State.ATTACK:
-			if time < player.stats.attack_windup:
+			if time < player.attack_windup():
 				name = "attack_windup"
-				duration = player.stats.attack_windup
-			elif time < player.stats.attack_windup + player.stats.attack_active:
+				duration = player.attack_windup()
+			elif time < player.attack_windup() + player.attack_active():
 				name = "attack_" + str(player.combo + 1)
-				time -= player.stats.attack_windup
-				duration = player.stats.attack_active
+				time -= player.attack_windup()
+				duration = player.attack_active()
 			else:
 				name = "attack_recover"
-				time -= player.stats.attack_windup + player.stats.attack_active
-				duration = player.stats.attack_duration - player.stats.attack_windup - player.stats.attack_active
+				time -= player.attack_windup() + player.attack_active()
+				duration = player.attack_duration() - player.attack_windup() - player.attack_active()
 		player.State.DODGE:
 			name = "dodge"
 			duration = player.stats.dodge_duration
