@@ -131,7 +131,7 @@ func _run() -> void:
 	var banked: int = session.profile.banked_stones
 	var pending_stones: int = route.run.stones
 	var old_store: RefCounted = session.store
-	session.store = load("res://scripts/save/save_file.gd").new("res://project.godot/save.json", load("res://scripts/save/snapshot_codec.gd").validate)
+	session.store = load("res://scripts/save/save_file.gd").new("res://assets/art_catalog.json/save.json", load("res://scripts/save/snapshot_codec.gd").validate)
 	if not check(not route.complete_exploration().accepted and not route.run.ended and session.profile.banked_stones == banked and route.run.stones == pending_stones, "结算写失败不记录资源、不清局，仍可重试"):
 		return
 	session.store = old_store

@@ -11,6 +11,8 @@ config_version=5
 [application]
 
 config/name="烬山问道"
+config/version="0.1.0-rc.1"
+config/icon="res://assets/ui/app_icon.svg"
 run/main_scene="res://scenes/main/main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="EmberpeakDao"

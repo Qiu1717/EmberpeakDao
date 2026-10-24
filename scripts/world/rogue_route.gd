@@ -374,6 +374,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func capture_snapshot(run_override: Dictionary = {}) -> Dictionary:
 	var enemy_health: Dictionary = {}
 	var enemy_armor: Dictionary = {}
+	# 死亡节点和读档时跳过的死敌已不存在，但快照仍须保留其0生命来源。
+	for index in room.enemy_data.size():
+		var source := "%s:%s" % [current_id, index]
+		enemy_health[source] = 0
+		enemy_armor[source] = 0.0
 	for enemy in room.enemies:
 		if is_instance_valid(enemy):
 			enemy_health[str(enemy.source_id)] = enemy.health

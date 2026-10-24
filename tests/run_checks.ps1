@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$logRoot = Join-Path $projectRoot 'builds\phase6'
+$logRoot = Join-Path $projectRoot 'builds\phase7'
 New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
 $originalSavePath = $env:EMBERPEAK_SAVE_PATH
 $regressionId = [Guid]::NewGuid().ToString('N')
@@ -98,6 +98,8 @@ try {
     Invoke-GodotCheck 'phase6-flow-headless' $phase6Flow 'PHASE6_FLOW_PASSED=59'
     Invoke-GodotCheck 'phase6-completion-write' ($phase6Flow + @('--', '--completion-write')) 'COMPLETION_WRITE_OK'
     Invoke-GodotCheck 'phase6-completion-read' ($phase6Flow + @('--', '--completion-read')) 'COMPLETION_READ_OK'
+    $stability = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '6000', '--script', 'res://tests/test_release_stability.gd')
+    Invoke-GodotCheck 'release-stability-headless' $stability 'RELEASE_STABILITY_PASSED=62'
     $resumeCombat = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_resume_combat.gd')
     $persistence = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_phase5_persistence.gd')
     Invoke-GodotCheck 'resume-combat-headless' $resumeCombat 'RESUME_COMBAT_CHECKS_PASSED=15'
@@ -111,6 +113,7 @@ try {
     Invoke-GodotCheck 'restart-write' ($restart + @('--', '--write')) 'RESTART_WRITE_OK'
     Invoke-GodotCheck 'restart-read' ($restart + @('--', '--read')) 'RESTART_READ_OK'
     if ($Windowed) {
+        Invoke-GodotCheck 'release-stability-window' ($stability | Where-Object { $_ -ne '--headless' }) 'RELEASE_STABILITY_PASSED=62'
         Invoke-GodotCheck 'phase6-services-window' ($phase6Services | Where-Object { $_ -ne '--headless' }) 'PHASE6_SERVICES_PASSED=26'
         Invoke-GodotCheck 'phase6-flow-window' ($phase6Flow | Where-Object { $_ -ne '--headless' }) 'PHASE6_FLOW_PASSED=59'
         Invoke-GodotCheck 'weapons-window' ($weapons | Where-Object { $_ -ne '--headless' }) 'WEAPON_CHECKS_PASSED=26'
