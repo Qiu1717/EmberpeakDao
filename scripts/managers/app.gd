@@ -7,9 +7,10 @@ signal scene_changed(path: String)
 
 enum State { BOOT, MENU, PLAYING, PAUSED }
 const MENU_SCENE := "res://scenes/main/main_menu.tscn"
-const GAME_SCENE := "res://scenes/world/game.tscn"
+const GAME_SCENE := "res://scenes/world/roguelite_game.tscn"
 var state: State = State.BOOT
 var transitioning := false
+var modal_active := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -33,6 +34,10 @@ func start_training() -> void:
 	if await _switch_scene("res://scenes/world/training_game.tscn", State.PLAYING):
 		session_started.emit()
 
+func start_fixed_route() -> void:
+	if await _switch_scene("res://scenes/world/game.tscn", State.PLAYING):
+		session_started.emit()
+
 func start_art_room() -> void:
 	if await _switch_scene("res://scenes/art/shan_xiao_art_room.tscn", State.PLAYING):
 		session_started.emit()
@@ -53,6 +58,7 @@ func _switch_scene(path: String, next_state: State) -> bool:
 		push_error("场景加载失败：%s，错误 %s" % [path, error_string(error)])
 		return false
 	get_tree().paused = false
+	modal_active = false
 	_set_state(next_state)
 	await get_tree().scene_changed
 	transitioning = false
@@ -61,17 +67,23 @@ func _switch_scene(path: String, next_state: State) -> bool:
 	return true
 
 func set_paused(value: bool) -> void:
-	if transitioning or state not in [State.PLAYING, State.PAUSED]:
+	if transitioning or modal_active or state not in [State.PLAYING, State.PAUSED]:
 		return
 	get_tree().paused = value
 	_set_state(State.PAUSED if value else State.PLAYING)
 	log_event("暂停", "暂停" if value else "恢复")
+
+func set_modal_active(value: bool) -> void:
+	modal_active = value
+	get_tree().paused = value or state == State.PAUSED
 
 func _set_state(value: State) -> void:
 	state = value
 	state_changed.emit(state)
 
 func _input(event: InputEvent) -> void:
+	if modal_active:
+		return
 	if event.is_action_pressed("pause") and not event.is_echo() and state in [State.PLAYING, State.PAUSED]:
 		set_paused(state == State.PLAYING)
 		get_viewport().set_input_as_handled()

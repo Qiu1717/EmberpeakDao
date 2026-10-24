@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$logRoot = Join-Path $projectRoot 'builds\phase3'
+$logRoot = Join-Path $projectRoot 'builds\phase4'
 New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
 
 function Invoke-GodotCheck {
@@ -59,12 +59,23 @@ try {
     Invoke-GodotCheck 'enemies-headless' $enemies 'ENEMY_CHECKS_PASSED=47'
     Invoke-GodotCheck 'route-headless' $route 'ROUTE_CHECKS_PASSED=41'
     Invoke-GodotCheck 'enemy-regressions-headless' $regressions 'ENEMY_REGRESSIONS_PASSED=6'
+    $runGraph = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '10000', '--script', 'res://tests/test_run_graph.gd')
+    $runState = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_run_state.gd')
+    $runFlow = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '5000', '--script', 'res://tests/test_roguelite_flow.gd')
+    $runRuntime = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '2400', '--script', 'res://tests/test_run_runtime.gd')
+    Invoke-GodotCheck 'run-graph-headless' $runGraph 'RUN_GRAPH_CHECKS_PASSED=8919'
+    Invoke-GodotCheck 'run-state-headless' $runState 'RUN_STATE_CHECKS_PASSED=57'
+    Invoke-GodotCheck 'roguelite-flow-headless' $runFlow 'ROGUELITE_FLOW_PASSED=36'
+    Invoke-GodotCheck 'run-runtime-headless' $runRuntime 'RUN_RUNTIME_PASSED=15'
     $settingsArgs = @('--headless', '--path', $projectRoot, '--max-fps', '120', '--quit-after', '1800', '--script', 'res://tests/test_settings.gd')
     Invoke-GodotCheck 'settings-headless' $settingsArgs 'SETTINGS_CHECKS_PASSED=6'
     $restart = @('--headless', '--path', $projectRoot, '--script', 'res://tests/test_settings_restart.gd')
     Invoke-GodotCheck 'restart-write' ($restart + @('--', '--write')) 'RESTART_WRITE_OK'
     Invoke-GodotCheck 'restart-read' ($restart + @('--', '--read')) 'RESTART_READ_OK'
     if ($Windowed) {
+        Invoke-GodotCheck 'run-graph-window' ($runGraph | Where-Object { $_ -ne '--headless' }) 'RUN_GRAPH_CHECKS_PASSED=8919'
+        Invoke-GodotCheck 'roguelite-flow-window' ($runFlow | Where-Object { $_ -ne '--headless' }) 'ROGUELITE_FLOW_PASSED=36'
+        Invoke-GodotCheck 'run-runtime-window' ($runRuntime | Where-Object { $_ -ne '--headless' }) 'RUN_RUNTIME_PASSED=15'
         $screenshots = Join-Path $logRoot 'screenshots'
         $windowFlow = $flow | Where-Object { $_ -ne '--headless' }
         Invoke-GodotCheck 'framework-window' ($windowFlow + @('--', "--screenshots=$screenshots")) 'FRAMEWORK_CHECKS_PASSED=24'
@@ -79,7 +90,7 @@ try {
         Invoke-GodotCheck 'enemy-regressions-window' ($regressions | Where-Object { $_ -ne '--headless' }) 'ENEMY_REGRESSIONS_PASSED=6'
         Invoke-GodotCheck 'settings-window'  ($settingsArgs | Where-Object { $_ -ne '--headless' }) 'SETTINGS_CHECKS_PASSED=10'
     }
-    Write-Host "全部框架、基础战斗、敌人与路线检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
+    Write-Host "全部框架、战斗、美术、敌人、地图与肉鸽检查通过；逐脚本解析 $($scripts.Count) 项。日志：$logRoot"
 }
 finally {
     if ($preferencesExisted) {

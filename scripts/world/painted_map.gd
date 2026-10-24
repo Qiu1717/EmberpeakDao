@@ -4,6 +4,8 @@ const SIZE := Vector2(1672, 941)
 const LAYOUTS := {
 	"sword_entry": {"surfaces": [[Vector2(0, 644), Vector2(450, 644), Vector2(680, 672), Vector2(1090, 690), Vector2(1672, 700)]], "jump_from": Vector2(320, 644), "spawn": Vector2(140, 644), "return": Vector2(1570, 699), "altar": Vector2.ZERO},
 	"broken_swords": {"surfaces": [[Vector2(0, 640), Vector2(450, 678), Vector2(950, 690), Vector2(1300, 702), Vector2(1672, 696)]], "jump_from": Vector2(650, 682.8), "spawn": Vector2(140, 652), "return": Vector2(1570, 698), "altar": Vector2.ZERO},
+	# 旧碑台阶属于纵深背景，横版行走面沿前景石路的上沿取点。
+	"old_monument": {"surfaces": [[Vector2(0, 655), Vector2(450, 657), Vector2(850, 655), Vector2(1200, 659), Vector2(1672, 661)]], "jump_from": Vector2(650, 656), "spawn": Vector2(140, 655.622), "return": Vector2(1570, 660.568), "altar": Vector2.ZERO},
 	"stepped_corridor": {"surfaces": [[Vector2(0, 690), Vector2(865, 690)], [Vector2(1010, 580), Vector2(1245, 580)], [Vector2(1360, 620), Vector2(1672, 620)]], "platform": Rect2(1010, 580, 235, 20), "jump_from": Vector2(1380, 620), "spawn": Vector2(140, 690), "return": Vector2(1570, 620), "altar": Vector2.ZERO},
 	"elite_den": {"surfaces": [[Vector2(0, 610), Vector2(450, 615), Vector2(1000, 620), Vector2(1672, 622)]], "jump_from": Vector2(640, 616.727), "spawn": Vector2(140, 612), "return": Vector2(1570, 622), "altar": Vector2.ZERO},
 	"spirit_altar": {"surfaces": [[Vector2(0, 688), Vector2(730, 697), Vector2(820, 630), Vector2(1025, 630), Vector2(1090, 697), Vector2(1672, 700)]], "platform": Rect2(820, 630, 205, 20), "jump_from": Vector2(780, 660), "spawn": Vector2(140, 690), "return": Vector2(1570, 700), "altar": Vector2(920, 630)},

@@ -1,0 +1,55 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/roguelite/run_rules.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemies = {
+"shan_xiao": {"spirit": 12, "stones": 6, "materials": {"demon_blood_crystal": 1}, "material_chance": 0.25, "equipment_chance": 0.10, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]},
+"corpse": {"spirit": 10, "stones": 5, "materials": {"corpse_iron": 1}, "material_chance": 0.25, "equipment_chance": 0.10, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]},
+"ghost": {"spirit": 12, "stones": 7, "materials": {"spirit_dust": 1}, "material_chance": 0.25, "equipment_chance": 0.10, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]},
+"crossbow": {"spirit": 10, "stones": 6, "materials": {"puppet_parts": 1}, "material_chance": 0.25, "equipment_chance": 0.10, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]},
+"armored_xiao": {"spirit": 60, "stones": 35, "materials": {"demon_blood_crystal": 1}, "material_chance": 1.0, "equipment_chance": 0.60, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]},
+"mountain_general": {"spirit": 120, "stones": 80, "materials": {"foundation_marrow": 1}, "material_chance": 1.0, "equipment_chance": 1.0, "equipment_pool": ["po_shan"]}
+}
+upgrades = {
+"attack": {"name": "磨砺剑锋", "description": "本次探索攻击力 +5%（最多3层）", "stat": "attack_multiplier", "amount": 0.05, "cap": 3, "weight": 1.0},
+"health": {"name": "淬炼体魄", "description": "最大生命 +10（最多3层）", "stat": "health_bonus", "amount": 10, "cap": 3, "weight": 1.0},
+"defense": {"name": "护身真诀", "description": "防御 +3（最多3层）", "stat": "defense_bonus", "amount": 3, "cap": 3, "weight": 1.0},
+"crit": {"name": "识破要害", "description": "暴击率 +4个百分点（最多3层）", "stat": "crit_bonus", "amount": 0.04, "cap": 3, "weight": 1.0},
+"dodge": {"name": "踏风步", "description": "闪避冷却减少基础值的8%（最多3层）", "stat": "dodge_reduction", "amount": 0.08, "cap": 3, "weight": 1.0},
+"haste": {"name": "迅剑诀", "description": "攻击速度 +5%（最多3层）", "stat": "haste", "amount": 0.05, "cap": 3, "weight": 1.0},
+"sword_insight": {"name": "残剑剑意", "description": "以气血换得剑意，本次探索攻击力 +20%", "stat": "attack_multiplier", "amount": 0.20, "cap": 1, "weight": 0.0}
+}
+events = {
+"sword_question": {
+"name": "残剑问心", "description": "旧碑前剑意不散，您愿以何物问道？",
+"choices": {
+"a": {"name": "以气血换取剑意", "description": "消耗当前生命15%（向下取整），本次探索攻击力 +20%", "health_fraction": 0.15, "upgrade": "sword_insight"},
+"b": {"name": "静坐感悟", "description": "获得10点丹田灵气", "spirit": 10}
+}},
+"well_echo": {
+"name": "古井回声", "description": "幽井之中传来剑鸣，一泓灵泉映着残光。",
+"choices": {
+"a": {"name": "饮用灵泉", "description": "恢复35点生命，最多恢复至生命上限", "heal": 35},
+"b": {"name": "探查井底", "description": "获得一件随机装备实物，本次探索持有", "equipment_chance": 1.0, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]}
+}}
+}
+goods = {
+"heal": {"name": "回春散", "description": "恢复35点生命；满血不能购买", "price": 12, "stock": 2, "heal": 35},
+"attack": {"name": "砺剑石", "description": "攻击力 +5%，与磨砺剑锋共用3层上限", "price": 20, "stock": 1, "upgrade": "attack"},
+"talisman": {"name": "替劫符", "description": "本次探索首次致死伤害后保留1点生命，随后消耗", "price": 40, "stock": 1, "lethal_guard": 1}
+}
+equipment = {
+"qing_bu": {"name": "青布道袍", "kind": "armor"},
+"can_jian": {"name": "残剑坠", "kind": "accessory"},
+"po_shan": {"name": "破山长枪", "kind": "weapon"}
+}
+chest = {"spirit": 20, "stones": 20, "equipment_chance": 1.0, "equipment_pool": ["qing_bu", "can_jian", "po_shan"]}
+material_names = {
+"corpse_iron": "剑冢残铁",
+"spirit_dust": "残魂碎片",
+"puppet_parts": "傀儡机芯",
+"demon_blood_crystal": "妖血结晶",
+"foundation_marrow": "筑基灵髓"
+}

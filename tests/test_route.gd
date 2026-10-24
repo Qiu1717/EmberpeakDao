@@ -26,7 +26,7 @@ func interact() -> void:
 func _run() -> void:
 	if not check(ResourceLoader.exists("res://scenes/rooms/sword_entry.tscn"), "六房间路线入口存在"):
 		return
-	root.get_node("App").start_new_game()
+	root.get_node("App").start_fixed_route()
 	await frames(15)
 	var route: Node = current_scene.get_node("World/SwordRoute")
 	var player: Node = route.player
@@ -123,7 +123,7 @@ func _run() -> void:
 	await frames(12)
 	if not check(route.room_index == 5 and route.room.enemies.is_empty() and rewards.size() == old_count, "重访Boss房无重复敌人或奖励"):
 		return
-	root.get_node("App").start_new_game()
+	root.get_node("App").start_fixed_route()
 	await frames(15)
 	route = current_scene.get_node("World/SwordRoute")
 	if not check(route.room_index == 0 and route.player.health == 100 and route.cleared_rooms.size() == 1, "重新开始完整路线清理战斗和清场状态"):

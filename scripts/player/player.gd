@@ -19,6 +19,7 @@ var hit_targets: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 var attack_requested := false
 var dodge_requested := false
+var lethal_guard: Callable
 
 func _ready() -> void:
 	stats = stats.duplicate(true)
@@ -142,6 +143,8 @@ func receive_hit(amount: float, impulse: Vector2) -> bool:
 	if health <= 0 or is_invulnerable() or amount <= 0:
 		return false
 	health = maxi(0, health - Damage.resolve(amount, stats.defense))
+	if health == 0 and lethal_guard.is_valid() and lethal_guard.call():
+		health = 1
 	velocity = impulse
 	action_time = 0
 	hit_targets.clear()

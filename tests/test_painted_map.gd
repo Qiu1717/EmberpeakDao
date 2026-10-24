@@ -19,7 +19,7 @@ func jump() -> void:
 	await frames(2)
 	Input.action_release("jump")
 func _run() -> void:
-	root.get_node("App").start_new_game()
+	root.get_node("App").start_fixed_route()
 	await frames(15)
 	var route: Node = current_scene.get_node("World/SwordRoute")
 	var player: Node = route.player

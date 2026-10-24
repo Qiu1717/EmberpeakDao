@@ -20,7 +20,7 @@ func capture(id: String) -> void:
 	root.get_texture().get_image().save_png("res://builds/animated_map/" + id + ".png")
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute("res://builds/animated_map")
-	await root.get_node("App").start_new_game()
+	await root.get_node("App").start_fixed_route()
 	await frames(15)
 	var player: Node = current_scene.player
 	capture("entry_idle")

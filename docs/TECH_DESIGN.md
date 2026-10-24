@@ -1,6 +1,6 @@
 # 《烬山问道》技术设计
 
-版本：0.4。日期：2026-10-23。状态：框架、角色基础战斗、第一地图六敌与固定六房路线已实现；成长、完整武器系统、随机地图与游戏存档仍为设计。实际接口见第 11–13 节；第 3 节的完整模块表是预定契约。核心规则取自主方案，待决项不作为实现授权。
+版本：0.5。日期：2026-10-24。状态：框架、基础战斗、六敌、八模板受控随机路线、局内奖励／强化／奇遇／商店已实现；永久成长、完整装备与游戏存档仍为设计。第3节完整模块表是预定契约；本轮真实接口见第18节，历史阶段说明保留。
 
 唯一设计基准：[GAME_DEVELOPMENT_PLAN.md](GAME_DEVELOPMENT_PLAN.md)。本文件细化接口和数据边界，不另设玩法基准。
 
@@ -20,7 +20,7 @@ Windows 单人离线，Godot 4.7.2 stable、GDScript、Git、gl_compatibility。
 - `banked_materials`、`pending_materials`：按材料 ID 存数量。
 - `qi`：战斗主动技能使用的真气，与成长用的丹田灵气不同，不得混用。
 
-有效成长灵气为两个灵气余额之和，不再同时维护经验等级和永久修为两套成长计数。临时强化仍是局内构筑，触发方式须在阶段 6 前确认。
+有效成长灵气为两个灵气余额之和，不再同时维护经验等级和永久修为两套成长计数。用户已确认临时强化由战斗房首次清场三选一触发，与灵气突破分开。
 
 每个小境界门槛为正整数。大境界资源包含四个阶段门槛，前三级自动结算，圆满阶段门槛用于向下一大境界突破。小境界加属性，大境界另解锁武器品阶和能力；属性增量在相关阶段实测后配置。
 
@@ -98,7 +98,7 @@ Boss 永久首杀奖励与可重复获得的突破材料使用不同奖励类型
 
 - 阶段 1：主角最终服饰方向、游戏尺寸、侧视角、动画画布。
 - 阶段 3–7：各小境界门槛、属性增量、奖励量、灵气溢出上限。
-- 阶段 6 前：临时强化何时触发，禁止擅自保留第二条经验条。
+- 用户阶段4已确认强化触发；本轮没有第二条经验条，正式平衡仍待验证。
 - 阶段 7：保存失败时的交互提示和恢复流程，用故障测试验证。
 - 阶段 10：高阶试炼和化神圆满封顶数值。
 
@@ -183,3 +183,17 @@ Backdrop显示静态原图，保持纵横比覆盖视口；Game在room_changed�
 前节是旧轮静态接入。本轮共享Player改挂ArtworkController，非山魈Enemy.Visual改用EnemyAnimationVisual，ActorFrameVisual读取assets/animations的manifest建立AtlasTexture；表现只读真实状态／时钟／位移，不改伤害、判定或AI。可变region、逐姿势native_facing、导入尺寸换算和统一比例详见ANIMATION_RUNTIME.md。
 
 CombatRoom在map_id有效时由PaintedMap建立1672×941原图世界：远景Sprite2D、同UV的可走Polygon2D和CollisionPolygon2D、底部前景，以及对应入口／出口／祭坛坐标。地形轮廓为明确可走面，不能把远景透视阶梯当悬空平台。SwordRoute换房按实际出生点重置主角，Camera限制在原图世界内，Game隐藏旧CanvasLayer背景；训练／山魈样板保留原平面路径。断阶有实际空隙，y>1080接现有死亡流程；敌人普通追踪在所在石台边缘停步，攻击／击退仍可坠落。新地图专项不代表任意斜坡或动态平台均已验证。
+
+## 18. 阶段4真实局内接口（2026-10-24）
+
+- App 新游戏进入 roguelite_game.tscn；start_fixed_route() 保留原 game.tscn，不把旧回归悄悄改成随机流程。RogueRoute 继承 SwordRoute，只抽取共用挂房逻辑，不另写角色或 AI。
+- RunGraph 生成八模板十节点有向无环图；随机入口战斗连边与奖励／商店顺序，必经精英和祭坛，Boss 可回同一祭坛。回退仅沿已访问父节点，战斗未清场、强化待选或角色死亡时不能离开。
+- RunRules Resource 为阶段4奖励／强化／奇遇／商店实际配置。RunState 为每次探索独立 RefCounted，不是 Autoload，不包含永久档案或磁盘存档；spirit/stones/materials/equipment_rewards 都是未记录局内内容。将来接入永久系统时须按第4–6节事务迁接，不能把本局余额当成已记录余额。
+- RunState.claim_enemy / claim_chest 按类型与来源去重，内部 RNG 与地图和强化隔离；reward_granted 与 equipment_dropped 在实际结算后发完整副本。装备实例含 instance_id/item_id/name，后续装备系统应通过稳定 item_id 读完整定义，当前不能穿戴。
+- offer_upgrades 缓存三个不同 ID，choose_upgrade 只接收候选中的一项，层数受 cap 限制。属性相对 base_stats 重算；生命增加只回复实际增加的上限，重复刷新不回血。攻击速度同步缩短原命中窗口，原伤害与 AI 基准不改。
+- resolve_event 检查条件、记录互斥完成标记并返回生命代价／治疗；is_event_completed 供世界入口显示完成状态。地图旧碑使用 sword_question；well_echo 仅有规则配置和单测，尚未布置可玩触发点。
+- shop_inventory / buy 校验余额、库存、治疗与强化上限，成功一次性扣款和应用；治疗由路线写入实际生命，替劫符通过 Player 的可选 lethal_guard Callable 在真实致死伤害时使用一次。
+- RunInterface 负责路线、强化、事件、交易、行囊和总结。App.modal_active 与普通 PAUSED 分开；模态暂停世界但保持界面响应，关闭清理本次缓冲输入。Esc 优先关闭模态，不误开背后暂停层。
+- player.died 同步 finish_run 清空本局状态并恢复基础属性；既有倒下动作播放0.65秒后显示真实丢失摘要。新场景新建 RunState 和随机种子，原继续按钮保持禁用。无虚构永久保留、资源记录、自动突破或存档成功提示。
+
+精确字段、待平衡数值与 API 见 PHASE_4_PLAN.md、PHASE_4_BALANCE.md。配置可替换而不改 NPC、掉落或三选一 UI。

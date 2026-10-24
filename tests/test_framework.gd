@@ -113,7 +113,7 @@ func _run() -> void:
 	settings.apply_options(original)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(test_path))
 	await _click(current_scene.get_node("%NewGame"))
-	if not _check(current_scene.scene_file_path == "res://scenes/world/game.tscn" and app.state == app.State.PLAYING, "新游戏进入真实游戏场景"):
+	if not _check(current_scene.scene_file_path == app.GAME_SCENE and current_scene.has_node("World/RogueRoute") and app.state == app.State.PLAYING, "新游戏进入真实肉鸽游戏场景"):
 		return
 	var game: Node = current_scene
 	if not _check(game.get_node("UI/Overlay").size.x >= root.get_visible_rect().size.x, "游戏界面覆盖完整视口"):

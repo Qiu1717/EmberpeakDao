@@ -21,23 +21,33 @@ func enter_room(index: int) -> void:
 		return
 	transitioning = true
 	var backwards := index < room_index
+	room_index = index
+	_mount_room(Rooms[index], backwards)
+
+func _mount_room(scene: PackedScene, backwards: bool, room_key: String = "", label: String = "") -> void:
 	if is_instance_valid(room):
 		remove_child(room)
 		room.queue_free()
-	room_index = index
-	room = Rooms[index].instantiate()
+	room = scene.instantiate()
+	if not room_key.is_empty():
+		room.room_id = room_key
+	if not label.is_empty():
+		room.display_name = label
 	add_child(room)
 	var camera: Camera2D = player.get_node("Camera2D")
 	camera.limit_right = 1672
 	camera.limit_bottom = 941
 	camera.zoom = Vector2(1.35, 1.35)
 	player.reset_motion_at(room.exit_point if backwards else room.entry_point)
-	room.cleared.connect(func(id: String): cleared_rooms[id] = true)
+	room.cleared.connect(_on_room_cleared)
 	room.reward_requested.connect(_on_reward)
 	room.enter(player, cleared_rooms.has(room.room_id))
 	get_node("/root/App").log_event("房间", room.display_name)
 	transitioning = false
 	room_changed.emit()
+
+func _on_room_cleared(id: String) -> void:
+	cleared_rooms[id] = true
 
 func _on_reward(payload: Dictionary) -> void:
 	if rewards.has(payload.source_id):

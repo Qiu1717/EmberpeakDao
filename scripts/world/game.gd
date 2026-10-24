@@ -3,7 +3,10 @@ extends Control
 
 const Ui := preload("res://scripts/ui/ui_style.gd")
 @export var training_mode := false
+@export var roguelite_mode := false
 const Route := preload("res://scripts/world/sword_route.gd")
+const RogueRoute := preload("res://scripts/world/rogue_route.gd")
+const RunInterface := preload("res://scripts/ui/run_interface.gd")
 const Arena := preload("res://scripts/world/training_arena.gd")
 var player: CharacterBody2D
 var health_bar: ProgressBar
@@ -14,11 +17,12 @@ var enemy_status: Label
 var world: Node
 var concept: TextureRect
 var concept_name: Label
+var run_interface: Control
 
 func _ready() -> void:
 	var arena := Node2D.new()
-	arena.name = "TrainingArena" if training_mode else "SwordRoute"
-	arena.set_script(Arena if training_mode else Route)
+	arena.name = "TrainingArena" if training_mode else ("RogueRoute" if roguelite_mode else "SwordRoute")
+	arena.set_script(Arena if training_mode else (RogueRoute if roguelite_mode else Route))
 	$World.add_child(arena)
 	world = arena
 	if not training_mode:
@@ -48,7 +52,7 @@ func _ready() -> void:
 	enemy_status = Ui.label(layout, "", 16)
 	var tools := HBoxContainer.new()
 	layout.add_child(tools)
-	var actions: Array = [["重新训练" if training_mode else "重新开始路线", "Restart", app.start_training if training_mode else app.start_new_game]]
+	var actions: Array = [["重新训练" if training_mode else "重新开始探索", "Restart", app.start_training if training_mode else (app.start_new_game if roguelite_mode else app.start_fixed_route)]]
 	if training_mode:
 		actions.push_front(["致死测试", "TestDeath", func(): player.receive_hit(1000, Vector2.ZERO)])
 		actions.push_front(["受击测试 −10", "TestHit", func(): player.receive_hit(10, Vector2(-180, -100))])
@@ -80,14 +84,21 @@ func _ready() -> void:
 	# HUD 空白放行世界攻击，按钮仍消费点击。
 	for control in [margin, layout, top, tools, space, health_bar]:
 		control.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	app.log_event("训练场" if training_mode else "固定路线", "主角与碰撞环境已就绪")
+	if roguelite_mode:
+		run_interface = Control.new()
+		run_interface.name = "RunInterface"
+		run_interface.set_script(RunInterface)
+		overlay.add_child(run_interface)
+		run_interface.bind(world)
+	app.log_event("训练场" if training_mode else ("肉鸽探索" if roguelite_mode else "固定路线"), "主角与碰撞环境已就绪")
 
 func _process(_delta: float) -> void:
 	health_bar.value = player.health
+	health_bar.max_value = player.stats.max_health
 	var states := ["待机", "移动", "空中", "攻击", "闪避", "受击", "死亡"]
 	combat_status.text = "生命 %d / %d　%s　闪避冷却 %.2f 秒%s" % [player.health, player.stats.max_health, states[player.state], player.dodge_remaining, ("　已倒下，请重新训练" if training_mode else "　已倒下，请重新开始路线") if player.health == 0 else ""]
 	if not training_mode:
-		room_title.text = "%s　%d / 6" % [world.room.display_name, world.room_index + 1]
+		room_title.text = "%s　探索 %d / %d" % [world.room.display_name, world.visited.size(), world.graph.nodes.size()] if roguelite_mode else "%s　%d / 6" % [world.room.display_name, world.room_index + 1]
 		route_status.text = world.status_text()
 		if not world.last_reward.is_empty():
 			route_status.text += "\n" + world.last_reward

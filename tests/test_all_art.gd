@@ -40,7 +40,7 @@ func run() -> void:
 	if not check(counts == {"主角": 1, "敌人": 6, "NPC": 5, "武器装备": 6, "场景": 8}, "素材分类数量与磁盘清点一致"):
 		return
 	var app: Node = root.get_node("App")
-	await app.start_new_game()
+	await app.start_fixed_route()
 	await frames(5)
 	var game: Node = current_scene
 	var expected := ["sword_entry", "broken_swords", "stepped_corridor", "elite_den", "spirit_altar", "general_hall"]
